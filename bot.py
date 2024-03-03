@@ -21,6 +21,7 @@ class ToriItem(Base):
     area = Column(Integer)
     telegram_id = Column(Integer)
     added_time = Column(DateTime, default=datetime.now)
+    link = Column(String)
 
 Base.metadata.create_all(engine)
 
@@ -38,7 +39,7 @@ def start(update: Update, context: CallbackContext) -> int:
 
 def select_category(update: Update, context: CallbackContext) -> int:
     context.user_data['item'] = update.message.text
-    keyboard = [[category for category in categories_data]]
+    keyboard = [[category] for category in categories_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a category:', reply_markup=reply_markup)
     return SUBCATEGORY
@@ -51,7 +52,7 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
         return select_region(update, context)
 
     subcategories = categories_data[user_category]["subcategories"]
-    keyboard = [[subcategory for subcategory in subcategories]]
+    keyboard = [[subcategory] for subcategory in subcategories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a subcategory:', reply_markup=reply_markup)
     return REGION
@@ -63,7 +64,7 @@ def select_region(update: Update, context: CallbackContext) -> int:
     if user_subcategory.lower() == "kaikki kategoriat":
         context.user_data['subcategory'] = 'null'
     
-    keyboard = [[region for region in locations_data]]
+    keyboard = [[region] for region in locations_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a region:', reply_markup=reply_markup)
     return AREA
@@ -76,7 +77,7 @@ def select_area(update: Update, context: CallbackContext) -> int:
         return save_data(update, context)
 
     areas = locations_data[user_region]["areas"]
-    keyboard = [[area for area in areas]]
+    keyboard = [[area] for area in areas]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose an area:', reply_markup=reply_markup)
     return CONFIRMATION
@@ -106,7 +107,22 @@ def save_data(update: Update, context: CallbackContext) -> int:
         Session = sessionmaker(bind=engine)
         session = Session()
         
-        new_item = ToriItem(item=item, category=category, subcategory=subcategory, region=region, area=area, telegram_id=telegram_id)
+        if category.lower() != 'kaikki kategoriat':
+            subcategory_code = categories_data[category]["subcategories"][subcategory]
+        if region.lower() != 'koko suomi':
+            region_code = locations_data[region]["region_code"]
+            area_code = locations_data[region]["areas"][area]
+
+        tori_link = f"https://api.tori.fi/api/v2/listings/search?ad_type=s&q={item.lower()}"
+        if category.lower() != 'kaikki kategoriat':
+            tori_link += f"&category={subcategory_code}%2C330"
+        if region.lower() != 'koko suomi':
+            if area != 'null':
+                tori_link += f"&municipality={area_code}%2C330"
+            tori_link += f"&region={region_code}%2C18"
+        tori_link += "&suborder=0-1000"
+
+        new_item = ToriItem(item=item, category=category, subcategory=subcategory, region=region, area=area, telegram_id=telegram_id, link=tori_link)
         
         session.add(new_item)
         session.commit()
@@ -118,7 +134,8 @@ def save_data(update: Update, context: CallbackContext) -> int:
         if area != 'null':
             message += f"Area: {area}\n"
         message += f"Added Time: {new_item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
-        update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([['Add a new item', 'Items']], one_time_keyboard=True))
+
+        update.message.reply_text(message + f"The search link for the item: {tori_link}", reply_markup=ReplyKeyboardMarkup([['Add a new item', 'Items']], one_time_keyboard=True))
         
         session.close()
         
