@@ -4,6 +4,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Conve
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import DateTime
+from datetime import datetime
 
 engine = create_engine('sqlite:///tori_data.db')
 Base = declarative_base()
@@ -18,15 +20,16 @@ class ToriItem(Base):
     region = Column(Integer)
     area = Column(Integer)
     telegram_id = Column(Integer)
+    added_time = Column(DateTime, default=datetime.now)
 
 Base.metadata.create_all(engine)
 
 CATEGORY, SUBCATEGORY, REGION, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS = range(6)
 
-with open('jsons/categories.json') as f:
+with open('jsons/categories.json', encoding="utf-8") as f:
     categories_data = json.load(f)
 
-with open('jsons/location.json') as f:
+with open('jsons/location.json', encoding="utf-8") as f:
     locations_data = json.load(f)
 
 def start(update: Update, context: CallbackContext) -> int:
@@ -110,11 +113,11 @@ def save_data(update: Update, context: CallbackContext) -> int:
 
         message = f"A new item was added!\nItem: {item}\nCategory: {category}\n"
         if subcategory != 'null':
-            message += "Subcategory: {subcategory}\n"
+            message += f"Subcategory: {subcategory}\n"
         message += f"Region: {region}\n"
         if area != 'null':
-            message += "Area: {area}"
-        
+            message += f"Area: {area}\n"
+        message += f"Added Time: {new_item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
         update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([['Add a new item', 'Items']], one_time_keyboard=True))
         
         session.close()
@@ -145,7 +148,10 @@ def show_items(update: Update, context: CallbackContext) -> int:
             item_info = f"Item: {item.item}\nCategory: {item.category}\n"
             if item.subcategory != 'null':
                 item_info += f"Subcategory: {item.subcategory}\n"
-            item_info += f"Region: {item.region}\nArea: {item.area}\n\n"
+            item_info += f"Region: {item.region}\n"
+            if item.area != 'null':
+                item_info += f"Area: {item.area}\n"
+            item_info += f"Added Time: {item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
             remove_button = InlineKeyboardButton("Remove item", callback_data=str(item.id))
             keyboard = [[remove_button]]
             reply_markup = InlineKeyboardMarkup(keyboard)
