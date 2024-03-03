@@ -3,7 +3,7 @@
   "AJONEUVOT JA KONEET": {
     "category_code": "2000",
     "subcategories": {
-      "Kaikki alaluokat": null,
+      "Kaikki alaluokat": "2000",
       "Autot": "2010",
       "Renkaat ja vanteet": "2045",
       "Auton varaosat ja tarvikkeet": "2040",
@@ -19,7 +19,7 @@
   "ASUNNOT JA TONTIT": {
     "category_code": "1000",
     "subcategories": {
-      "Kaikki alaluokat": null,
+      "Kaikki alaluokat": "1000",
       "Asunnot": "1010",
       "Mökit ja loma-asunnot": "1020",
       "Tontit": "1030",
@@ -31,7 +31,7 @@
   "KOTI JA ASUMINEN": {
     "category_code": "3000",
     "subcategories": {
-      "Kaikki alaluokat": null,
+      "Kaikki alaluokat": "3000",
       "Kodinkoneet": "3010",
       "Keittiötarvikkeet ja astiat": "3100",
       "Sisustus ja huonekalut": "3020",
@@ -46,7 +46,7 @@
   "VAPAA-AIKA JA HARRASTUKSET": {
     "category_code": "4000",
     "subcategories": {
-      "Kaikki alaluokat": null,
+      "Kaikki alaluokat": "4000",
       "Urheilu ja ulkoilu": "4010",
       "Polkupyörät ja pyöräily": "4150",
       "Musiikki ja soittimet": "4070",
@@ -66,7 +66,7 @@
   "ELEKTRONIIKKA": {
     "category_code": "5000",
     "subcategories": {
-      "Kaikki alaluokat": null,
+      "Kaikki alaluokat": "5000",
       "Puhelimet ja tarvikkeet": "5010",
       "Viihde-elektroniikka": "5020",
       "Tietokoneet ja lisälaitteet": "5030"
@@ -75,7 +75,7 @@
   "LIIKETOIMINTA JA TYÖPAIKAT": {
     "category_code": "6000",
     "subcategories": {
-      "Kaikki alaluokat": null,
+      "Kaikki alaluokat": "6000",
       "Avoimet työpaikat": "6010",
       "CV ja työhakemukset": "6020",
       "Palvelut": "6030",
