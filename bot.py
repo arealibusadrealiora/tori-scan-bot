@@ -203,7 +203,10 @@ def cancel(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 def main():
-    updater = Updater("token", use_context=True)
+
+    with open('token.txt', encoding="utf-8") as file:
+        token = file.read().strip()
+    updater = Updater(token, use_context=True)
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
