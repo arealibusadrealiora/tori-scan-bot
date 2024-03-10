@@ -34,35 +34,51 @@ with open('jsons/location.json', encoding="utf-8") as f:
     locations_data = json.load(f)
 
 def start(update: Update, context: CallbackContext) -> int:
+    context.user_data.clear()
     update.message.reply_text("Please enter the item you're looking for:")
     return CATEGORY
 
 def select_category(update: Update, context: CallbackContext) -> int:
-    context.user_data['item'] = update.message.text
+    if 'item' not in context.user_data:
+        if not (3 <= len(update.message.text) <= 64):
+            update.message.reply_text("Please enter an item name between 3 and 64 characters.")
+            return start(update, context)   
+        context.user_data['item'] = update.message.text
     keyboard = [[category] for category in categories_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a category:', reply_markup=reply_markup)
     return SUBCATEGORY
 
 def select_subcategory(update: Update, context: CallbackContext) -> int:
-    context.user_data['category'] = update.message.text
-    user_category = update.message.text
+    
+    if 'category' not in context.user_data:
+        user_category = update.message.text
+        if user_category not in categories_data:
+            update.message.reply_text("Please select a valid category!")
+            return select_category(update, context)
+        if user_category.lower() == "kaikki kategoriat":
+            context.user_data['category'] = update.message.text
+            return select_region(update, context)
+        else:
+            context.user_data['category'] = update.message.text
 
-    if user_category.lower() == "kaikki kategoriat":
-        return select_region(update, context)
-
-    subcategories = categories_data[user_category]["subcategories"]
+    subcategories = categories_data[context.user_data['category']]["subcategories"]
     keyboard = [[subcategory] for subcategory in subcategories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a subcategory:', reply_markup=reply_markup)
     return REGION
 
 def select_region(update: Update, context: CallbackContext) -> int:
-    context.user_data['subcategory'] = update.message.text
-    user_subcategory = update.message.text
-
-    if user_subcategory.lower() == "kaikki kategoriat":
-        context.user_data['subcategory'] = 'null'
+    user_category = context.user_data.get('category')  
+    if 'subcategory' not in context.user_data:
+        user_subcategory = update.message.text
+        if user_subcategory.lower() != "kaikki kategoriat" and user_subcategory not in categories_data[user_category]["subcategories"]:
+            update.message.reply_text("Please select a valid subcategory!")
+            return select_subcategory(update, context)
+        if user_subcategory.lower() == "kaikki kategoriat":
+            context.user_data['subcategory'] = 'null'
+        else:
+            context.user_data['subcategory'] = update.message.text
     
     keyboard = [[region] for region in locations_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
@@ -70,24 +86,35 @@ def select_region(update: Update, context: CallbackContext) -> int:
     return AREA
 
 def select_area(update: Update, context: CallbackContext) -> int:
-    context.user_data['region'] = update.message.text
-    user_region = update.message.text
+    
+    if 'region' not in context.user_data:
+        user_region = update.message.text
+        if user_region not in locations_data:
+            update.message.reply_text("Please select a valid region!")
+            return select_region(update, context)
+        if user_region.lower() == "koko suomi":
+            context.user_data['region'] = update.message.text
+            return save_data(update, context)
+        else:
+            context.user_data['region'] = update.message.text
 
-    if user_region.lower() == "koko suomi":
-        return save_data(update, context)
-
-    areas = locations_data[user_region]["areas"]
+    areas = locations_data[context.user_data['region']]["areas"]
     keyboard = [[area] for area in areas]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose an area:', reply_markup=reply_markup)
     return CONFIRMATION
 
 def save_data(update: Update, context: CallbackContext) -> int:
-    context.user_data['area'] = update.message.text
-    user_area = update.message.text
-
-    if user_area.lower() == "koko suomi":
-        context.user_data['area'] = 'null'
+    user_region = context.user_data.get('region')  
+    if 'area' not in context.user_data:
+        user_area = update.message.text
+        if user_area.lower() != "koko suomi" and user_area not in locations_data[user_region]["areas"]:
+            update.message.reply_text("Please select a valid area!")
+            return select_area(update, context)
+        if user_area.lower() == "koko suomi":
+            context.user_data['area'] = 'null'
+        else:
+            context.user_data['area'] = update.message.text
 
     required_data = ['item', 'category', 'subcategory', 'region', 'area']
     missing_data = [key for key in required_data if key not in context.user_data]
@@ -169,6 +196,7 @@ def show_items(update: Update, context: CallbackContext) -> int:
             if item.area != 'null':
                 item_info += f"Area: {item.area}\n"
             item_info += f"Added Time: {item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+
             remove_button = InlineKeyboardButton("Remove item", callback_data=str(item.id))
             keyboard = [[remove_button]]
             reply_markup = InlineKeyboardMarkup(keyboard)
