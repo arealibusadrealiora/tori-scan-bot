@@ -1,11 +1,12 @@
 import json
+import requests 
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext, CallbackQueryHandler
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import DateTime
-from datetime import datetime
+from datetime import datetime, timedelta
 
 engine = create_engine('sqlite:///tori_data.db')
 Base = declarative_base()
@@ -22,6 +23,7 @@ class ToriItem(Base):
     telegram_id = Column(Integer)
     added_time = Column(DateTime, default=datetime.now)
     link = Column(String)
+    latest_time = Column(DateTime) 
 
 Base.metadata.create_all(engine)
 
@@ -225,19 +227,46 @@ def remove_item(update: Update, context: CallbackContext) -> None:
         query.message.reply_text("Item not found!")
     session.close()
 
-    
 def cancel(update: Update, context: CallbackContext) -> int:
     update.message.reply_text("Conversation cancelled.")
     return ConversationHandler.END
+
+def check_for_new_items(context: CallbackContext):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    
+    items = session.query(ToriItem).all()
+    for item in items:
+        response = requests.get(item.link)
+        if response.status_code == 200:
+            data = response.json()
+            latest_time = item.latest_time or item.added_time
+            for ad in data['list_ads']:
+                list_time = datetime.strptime(ad['ad']['list_time'], "%Y-%m-%dT%H:%M:%S%z")
+                list_time = list_time.replace(tzinfo=None)  
+                if list_time > latest_time:
+
+                    list_id_code = ad['ad']['list_id_code']
+                    region_label = ad['ad']['location']['region']['label']
+                    tori_link = f"https://www.tori.fi/{region_label.lower()}/{list_id_code}.htm"
+                    message = f"New item found: {ad['ad']['subject']}\n{tori_link}"
+                    context.bot.send_message(item.telegram_id, message)
+
+                    latest_time_str = list_time.strftime("%Y-%m-%d %H:%M:%S")
+                    item.latest_time = datetime.strptime(latest_time_str, "%Y-%m-%d %H:%M:%S")
+                    session.add(item)
+                    session.commit()
+    session.close()
 
 def main():
 
     with open('token.txt', encoding="utf-8") as file:
         token = file.read().strip()
     updater = Updater(token, use_context=True)
+    job_queue = updater.job_queue
 
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[MessageHandler(Filters.text & ~Filters.command, start)],
         states={
             CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_category)],
             SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_subcategory)],
@@ -249,9 +278,12 @@ def main():
         fallbacks=[CommandHandler('cancel', cancel)],
     )
 
+    updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('items', show_items))
     updater.dispatcher.add_handler(CallbackQueryHandler(remove_item)) 
     updater.dispatcher.add_handler(conv_handler)
+    
+    job_queue.run_repeating(check_for_new_items, interval=60, first=0)
 
     updater.start_polling()
     updater.idle()
