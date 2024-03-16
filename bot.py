@@ -1,12 +1,13 @@
 import json
 import requests 
+import pytz
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext, CallbackQueryHandler
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import DateTime
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 
 engine = create_engine('sqlite:///tori_data.db')
 Base = declarative_base()
@@ -241,9 +242,13 @@ def check_for_new_items(context: CallbackContext):
         if response.status_code == 200:
             data = response.json()
             latest_time = item.latest_time or item.added_time
+            latest_time = latest_time.astimezone(pytz.timezone('Europe/Helsinki'))
+            
+            latest_list_time = None 
+
             for ad in data['list_ads']:
                 list_time = datetime.strptime(ad['ad']['list_time'], "%Y-%m-%dT%H:%M:%S%z")
-                list_time = list_time.replace(tzinfo=None)  
+                list_time = list_time.astimezone(pytz.timezone('Europe/Helsinki'))
                 if list_time > latest_time:
 
                     list_id_code = ad['ad']['list_id_code']
@@ -251,11 +256,15 @@ def check_for_new_items(context: CallbackContext):
                     tori_link = f"https://www.tori.fi/{region_label.lower()}/{list_id_code}.htm"
                     message = f"New item found: {ad['ad']['subject']}\n{tori_link}"
                     context.bot.send_message(item.telegram_id, message)
+                    if latest_list_time is None or list_time > latest_list_time:
+                        latest_list_time = list_time  
 
-                    latest_time_str = list_time.strftime("%Y-%m-%d %H:%M:%S")
-                    item.latest_time = datetime.strptime(latest_time_str, "%Y-%m-%d %H:%M:%S")
-                    session.add(item)
-                    session.commit()
+            if latest_list_time is not None:
+                latest_time_str = latest_list_time.strftime("%Y-%m-%d %H:%M:%S")
+                item.latest_time = datetime.strptime(latest_time_str, "%Y-%m-%d %H:%M:%S")
+                session.add(item)
+                session.commit()
+
     session.close()
 
 def main():
