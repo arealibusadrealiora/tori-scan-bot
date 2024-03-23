@@ -256,7 +256,7 @@ def check_for_new_items(context: CallbackContext):
             region_label_link = region_label.lower()
             region_label_link = region_label_link.replace("ä", "a")
             region_label_link = region_label_link.replace("ö", "o")
-            region_label_lint = region_label_link.replace("å", "a")
+            region_label_link = region_label_link.replace("å", "a")
             tori_link = f"https://www.tori.fi/{region_label_link}/{list_id_code}.htm"
             message = f"New item found: {ad['ad']['subject']}\nRegion: {region_label}\nArea: {area_label}\nPrice: {list_price} EUR\n{tori_link}"
             context.bot.send_message(item.telegram_id, message)
