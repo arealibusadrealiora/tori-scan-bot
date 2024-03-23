@@ -239,29 +239,30 @@ def check_for_new_items(context: CallbackContext):
     items = session.query(ToriItem).all()
     for item in items:
         response = requests.get(item.link)
-        if response.status_code == 200:
-            data = response.json()
-            latest_time = item.latest_time or item.added_time
-            latest_time = latest_time.astimezone(pytz.timezone('Europe/Helsinki'))
-            
-            latest_list_time = None 
+        if response.status_code != 200:
+            continue
+        data = response.json()
+        latest_time = item.latest_time or item.added_time
 
-            for ad in data['list_ads']:
-                list_time = datetime.strptime(ad['ad']['list_time'], "%Y-%m-%dT%H:%M:%S%z")
-                list_time = list_time.astimezone(pytz.timezone('Europe/Helsinki'))
-                if list_time > latest_time:
-
-                    list_id_code = ad['ad']['list_id_code']
-                    region_label = ad['ad']['location']['region']['label']
-                    tori_link = f"https://www.tori.fi/{region_label.lower()}/{list_id_code}.htm"
-                    message = f"New item found: {ad['ad']['subject']}\n{tori_link}"
-                    context.bot.send_message(item.telegram_id, message)
-                    if latest_list_time is None or list_time > latest_list_time:
-                        latest_list_time = list_time  
-
-            if latest_list_time is not None:
-                latest_time_str = latest_list_time.strftime("%Y-%m-%d %H:%M:%S")
-                item.latest_time = datetime.strptime(latest_time_str, "%Y-%m-%d %H:%M:%S")
+        for ad in data['list_ads']:
+            list_time = datetime.strptime(ad['ad']['list_time'], "%Y-%m-%dT%H:%M:%S%z")
+            list_time = list_time.replace(tzinfo=None)  
+            if list_time <= latest_time:
+                continue
+            list_id_code = ad['ad']['list_id_code']
+            region_label = ad['ad']['location']['region']['label']
+            area_label = ad['ad']['location']['area']['label']
+            list_price = ad['ad']['list_price']['value']
+            region_label_link = region_label.lower()
+            region_label_link = region_label_link.replace("ä", "a")
+            region_label_link = region_label_link.replace("ö", "o")
+            region_label_lint = region_label_link.replace("å", "a")
+            tori_link = f"https://www.tori.fi/{region_label_link}/{list_id_code}.htm"
+            message = f"New item found: {ad['ad']['subject']}\nRegion: {region_label}\nArea: {area_label}\nPrice: {list_price} EUR\n{tori_link}"
+            context.bot.send_message(item.telegram_id, message)
+            latest_time_new = list_time.strftime("%Y-%m-%d %H:%M:%S")
+            if latest_time_new > latest_time:
+                item.latest_time = datetime.strptime(latest_time_new, "%Y-%m-%d %H:%M:%S")
                 session.add(item)
                 session.commit()
 
