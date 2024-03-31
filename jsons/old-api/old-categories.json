@@ -1,0 +1,93 @@
+{
+  "Kaikki kategoriat": null,
+  "AJONEUVOT JA KONEET": {
+    "category_code": "2000",
+    "subcategories": {
+      "Kaikki alaluokat": "2000",
+      "Autot": "2010",
+      "Renkaat ja vanteet": "2045",
+      "Auton varaosat ja tarvikkeet": "2040",
+      "Matkailuautot ja asuntovaunut": "2020",
+      "Matkailuautojen tarvikkeet": "2090",
+      "Moto": "2030",
+      "Mototarvikkeet ja varaosat": "2070",
+      "Kuljetuskalusto ja raskas kalusto": "2080",
+      "Veneet": "2050",
+      "Venetarvikkeet ja veneily": "2060"
+    }
+  },
+  "ASUNNOT JA TONTIT": {
+    "category_code": "1000",
+    "subcategories": {
+      "Kaikki alaluokat": "1000",
+      "Asunnot": "1010",
+      "Mökit ja loma-asunnot": "1020",
+      "Tontit": "1030",
+      "Metsätilat ja maatilat": "1060",
+      "Autotallit ja varastot": "1040",
+      "Ulkomaan asunnot": "1050"
+    }
+  },
+  "KOTI JA ASUMINEN": {
+    "category_code": "3000",
+    "subcategories": {
+      "Kaikki alaluokat": "3000",
+      "Kodinkoneet": "3010",
+      "Keittiötarvikkeet ja astiat": "3100",
+      "Sisustus ja huonekalut": "3020",
+      "Piha ja puutarha": "3040",
+      "Vaatteet ja kengät": "3050",
+      "Asusteet ja kellot": "3060",
+      "Lastenvaatteet ja kengät": "3070",
+      "Lastentarvikkeet ja lelut": "3080",
+      "Rakennustarvikkeet ja työkalut": "3090"
+    }
+  },
+  "VAPAA-AIKA JA HARRASTUKSET": {
+    "category_code": "4000",
+    "subcategories": {
+      "Kaikki alaluokat": "4000",
+      "Urheilu ja ulkoilu": "4010",
+      "Polkupyörät ja pyöräily": "4150",
+      "Musiikki ja soittimet": "4070",
+      "Metsästys ja kalastus": "4050",
+      "Elokuvat": "4030",
+      "Kirjat ja lehdet": "4130",
+      "Lemmikkieläimet": "4040",
+      "Hevoset ja hevosurheilu": "4060",
+      "Matkat ja liput": "4090",
+      "Keräily": "4080",
+      "Käsityöt": "4170",
+      "Kamerat ja valokuvaus": "4100",
+      "Terveys ja hyvinvointi": "4200",
+      "Pelit ja muut harrastukset": "4190"
+    }
+  },
+  "ELEKTRONIIKKA": {
+    "category_code": "5000",
+    "subcategories": {
+      "Kaikki alaluokat": "5000",
+      "Puhelimet ja tarvikkeet": "5010",
+      "Viihde-elektroniikka": "5020",
+      "Tietokoneet ja lisälaitteet": "5030"
+    }
+  },
+  "LIIKETOIMINTA JA TYÖPAIKAT": {
+    "category_code": "6000",
+    "subcategories": {
+      "Kaikki alaluokat": "6000",
+      "Avoimet työpaikat": "6010",
+      "CV ja työhakemukset": "6020",
+      "Palvelut": "6030",
+      "Maatalous": "6040",
+      "Rakennuspalvelut": "6050",
+      "Liikkeille ja yrityksille": "6060"
+    }
+  },
+  "MUUT": {
+    "category_code": "7000",
+    "subcategories": {
+      "Muut": "7010"
+    }
+  }
+}

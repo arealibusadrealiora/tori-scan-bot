@@ -1,56 +1,42 @@
-import requests
 import json
 
-def get_categories(api_data):
-    categories = {category["label"]: category["code"] for category in api_data["categories"]}
-    return categories
+def extract_category_hierarchy(filters):
+    hierarchy = {}
 
-def get_subcategories(category_data):
-    subcategories = {subcategory["label"]: subcategory["code"] for subcategory in category_data["categories"]}
-    return subcategories
+    for item in filters:
+        if item.get("name") == "category" and item.get("filter_items"):
+            for category in item["filter_items"]:
+                category_name = category["display_name"]
+                category_code = category["value"]
+                category_subcategories = {}
+                
+                for subcategory in category.get("filter_items", []):
+                    subcategory_name = subcategory["display_name"]
+                    subcategory_code = subcategory["value"]
+                    product_types = {}
 
-def find_category_by_label(categories, label):
-    for category in categories:
-        if category["label"] == label:
-            return category
-    return None
+                    for product_type in subcategory.get("filter_items", []):
+                        product_type_name = product_type["display_name"]
+                        product_type_code = product_type["value"]
+                        product_types[product_type_name] = product_type_code
 
-def find_category_code(categories, label):
-    for category in categories:
-        if category["label"] == label:
-            return category.get("code", "N/A")
-    return "N/A"
+                    category_subcategories[subcategory_name] = {"subcategory_code": subcategory_code, "product_types": product_types}
 
-def generate_category_and_subcategory_data(api_url):
-    response = requests.get(api_url)
+                hierarchy[category_name] = {"category_code": category_code, "subcategories": category_subcategories}
 
-    if response.status_code != 200:
-        print("Failed to retrieve data from the API. Status code:", response.status_code)
-        return
-
-    api_data = response.json()
-    categories = get_categories(api_data)
-
-    category_subcategory_data = {}
-
-    for category_name, category_code in categories.items():
-        category_data = find_category_by_label(api_data["categories"], category_name)
-        if category_data:
-            subcategories = get_subcategories(category_data)
-            category_subcategory_data[category_name] = {
-                "category_code": category_code,
-                "subcategories": subcategories
-            }
-
-    return category_subcategory_data
+    return hierarchy
 
 def main():
-    api_url = "https://api.tori.fi/api/v1.2/public/categories/filter"
+    file_path = "filters.json"
 
-    category_subcategory_data = generate_category_and_subcategory_data(api_url)
+    with open(file_path, "r", encoding="utf-8") as json_file:
+        data = json.load(json_file)
+
+    filters = data.get("filters", [])
+    hierarchy = extract_category_hierarchy(filters)
 
     with open("categories.json", "w", encoding="utf-8") as output_file:
-        json.dump(category_subcategory_data, output_file, indent=2, ensure_ascii=False)
+        json.dump(hierarchy, output_file, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
     main()
