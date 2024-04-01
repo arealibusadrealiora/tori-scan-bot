@@ -8,17 +8,17 @@ def extract_hierarchy(filters):
             for region in item["filter_items"]:
                 region_name = region["display_name"]
                 region_code = region["value"]
-                region_areas = {}
-                for area in region.get("filter_items", []):
-                    area_name = area["display_name"]
-                    area_code = area["value"]
-                    area_cities = {}
-                    for city in area.get("filter_items", []):
-                        city_name = city["display_name"]
-                        city_code = city["value"]
-                        area_cities[city_name] = city_code
-                    region_areas[area_name] = {"area_code": area_code, "cities": area_cities}
-                hierarchy[region_name] = {"region_code": region_code, "areas": region_areas}
+                region_cities = {}
+                for city in region.get("filter_items", []):
+                    city_name = city["display_name"]
+                    city_code = city["value"]
+                    city_areas = {}
+                    for area in city.get("filter_items", []):
+                        area_name = area["display_name"]
+                        area_code = area["value"]
+                        city_areas[area_name] = area_code
+                    region_cities[city_name] = {"city_code": city_code, "areas": city_areas}
+                hierarchy[region_name] = {"region_code": region_code, "cities": region_cities}
 
     return hierarchy
 

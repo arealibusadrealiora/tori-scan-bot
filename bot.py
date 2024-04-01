@@ -19,7 +19,9 @@ class ToriItem(Base):
     item = Column(String)
     category = Column(Integer)
     subcategory = Column(Integer)
+    product_category = Column(Integer)
     region = Column(Integer)
+    city = Column(Integer)
     area = Column(Integer)
     telegram_id = Column(Integer)
     added_time = Column(DateTime, default=datetime.now)
@@ -28,12 +30,12 @@ class ToriItem(Base):
 
 Base.metadata.create_all(engine)
 
-CATEGORY, SUBCATEGORY, REGION, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS = range(6)
+CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS = range(8)
 
 with open('jsons/categories.json', encoding="utf-8") as f:
     categories_data = json.load(f)
 
-with open('jsons/location.json', encoding="utf-8") as f:
+with open('jsons/locations.json', encoding="utf-8") as f:
     locations_data = json.load(f)
 
 def start(update: Update, context: CallbackContext) -> int:
@@ -53,7 +55,6 @@ def select_category(update: Update, context: CallbackContext) -> int:
     return SUBCATEGORY
 
 def select_subcategory(update: Update, context: CallbackContext) -> int:
-    
     if 'category' not in context.user_data:
         user_category = update.message.text
         if user_category not in categories_data:
@@ -61,6 +62,7 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
             return select_category(update, context)
         if user_category.lower() == "kaikki kategoriat":
             context.user_data['category'] = update.message.text
+            context.user_data['subcategory'] = 'Kaikki alaluokat'
             return select_region(update, context)
         else:
             context.user_data['category'] = update.message.text
@@ -69,26 +71,43 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
     keyboard = [[subcategory] for subcategory in subcategories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a subcategory:', reply_markup=reply_markup)
+    return PRODUCT_CATEGORY
+
+def select_product_category(update: Update, context: CallbackContext) -> int:
+    if 'subcategory' not in context.user_data:
+        user_subcategory = update.message.text
+        if user_subcategory.lower() != "kaikki kategoriat" and user_subcategory not in categories_data[context.user_data['category']]["subcategories"]:
+            update.message.reply_text("Please select a valid subcategory!")
+            return select_subcategory(update, context)
+        else:
+            context.user_data['subcategory'] = update.message.text
+
+    product_categories = categories_data[context.user_data['category']]["subcategories"][context.user_data['subcategory']].get('product_categories')
+    if not product_categories:
+        context.user_data['product_category'] = 'Kaikki tuoteluokat'
+        return select_region(update, context)
+    keyboard = [[product_category] for product_category in product_categories]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    update.message.reply_text('Please choose a product type:', reply_markup=reply_markup)
     return REGION
 
 def select_region(update: Update, context: CallbackContext) -> int:
-    user_category = context.user_data.get('category')  
-    if 'subcategory' not in context.user_data:
-        user_subcategory = update.message.text
-        if user_subcategory.lower() != "kaikki kategoriat" and user_subcategory not in categories_data[user_category]["subcategories"]:
-            update.message.reply_text("Please select a valid subcategory!")
-            return select_subcategory(update, context)
-        if user_subcategory.lower() == "kaikki kategoriat":
-            context.user_data['subcategory'] = 'null'
+    if 'product_category' not in context.user_data:
+        user_product_category = update.message.text
+        if user_product_category.lower() != 'kaikki alaluokat' and user_product_category.lower() != 'kaikki kategoriat' and user_product_category not in categories_data[context.user_data['category']]["subcategories"][context.user_data['subcategory']]["product_categories"]:
+            update.message.reply_text("Please select a valid product category!")
+            return select_product_category(update, context)
+        if user_product_category.lower() == "kaikki kategoriat" or user_product_category.lower() == "kaikki alaluokat":
+            context.user_data['product_category'] = 'Kaikki tuoteluokat'
         else:
-            context.user_data['subcategory'] = update.message.text
+            context.user_data['product_category'] = update.message.text
     
     keyboard = [[region] for region in locations_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a region:', reply_markup=reply_markup)
-    return AREA
+    return CITY
 
-def select_area(update: Update, context: CallbackContext) -> int:
+def select_city(update: Update, context: CallbackContext) -> int:
     
     if 'region' not in context.user_data:
         user_region = update.message.text
@@ -97,29 +116,45 @@ def select_area(update: Update, context: CallbackContext) -> int:
             return select_region(update, context)
         if user_region.lower() == "koko suomi":
             context.user_data['region'] = update.message.text
+            context.user_data['city'] = 'Kaikki kaupungit'
+            context.user_data['area'] = 'Kaikki alueet'
             return save_data(update, context)
         else:
             context.user_data['region'] = update.message.text
 
-    areas = locations_data[context.user_data['region']]["areas"]
+    cities = locations_data[context.user_data['region']]["cities"]
+    keyboard = [[city] for city in cities]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    update.message.reply_text('Please choose an city:', reply_markup=reply_markup)
+    return AREA
+
+def select_area(update: Update, context: CallbackContext) -> int:
+    if 'city' not in context.user_data:
+        user_city = update.message.text
+        if user_city.lower() != "koko suomi" and user_city not in locations_data[context.user_data['region']]["cities"]:
+            update.message.reply_text("Please select a valid city!")
+            return select_city(update, context)
+        else:
+            context.user_data['city'] = update.message.text
+
+    areas = locations_data[context.user_data['region']]["cities"][context.user_data['city']].get('areas', {})
+    if not areas:
+        return save_data(update, context)
     keyboard = [[area] for area in areas]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose an area:', reply_markup=reply_markup)
     return CONFIRMATION
 
 def save_data(update: Update, context: CallbackContext) -> int:
-    user_region = context.user_data.get('region')  
     if 'area' not in context.user_data:
         user_area = update.message.text
-        if user_area.lower() != "koko suomi" and user_area not in locations_data[user_region]["areas"]:
+        if user_area.lower() != "koko suomi" and user_area not in locations_data[context.user_data['region']]["cities"][context.user_data['city']]["areas"]:
             update.message.reply_text("Please select a valid area!")
             return select_area(update, context)
-        if user_area.lower() == "koko suomi":
-            context.user_data['area'] = 'null'
         else:
             context.user_data['area'] = update.message.text
 
-    required_data = ['item', 'category', 'subcategory', 'region', 'area']
+    required_data = ['item', 'category', 'subcategory', 'product_category', 'region', 'city', 'area']
     missing_data = [key for key in required_data if key not in context.user_data]
 
     if missing_data:
@@ -129,30 +164,40 @@ def save_data(update: Update, context: CallbackContext) -> int:
         item = context.user_data['item']
         category = context.user_data['category']
         subcategory = context.user_data['subcategory']
+        product_category = context.user_data['product_category']
         region = context.user_data['region']
+        city = context.user_data['city']
         area = context.user_data['area']
-        
         telegram_id = update.message.from_user.id
         
         Session = sessionmaker(bind=engine)
         session = Session()
-        
-        if category.lower() != 'kaikki kategoriat':
-            subcategory_code = categories_data[category]["subcategories"][subcategory]
-        if region.lower() != 'koko suomi':
-            region_code = locations_data[region]["region_code"]
-            area_code = locations_data[region]["areas"][area]
 
-        tori_link = f"https://api.tori.fi/api/v2/listings/search?ad_type=s&q={item.lower()}"
+        tori_link = f"https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}"
         if category.lower() != 'kaikki kategoriat':
-            tori_link += f"&category={subcategory_code}%2C330"
+            if subcategory.lower() != 'kaikki alaluokat':
+                if product_category.lower()!= 'kaikki tuoteluokat':
+                    product_category_code = categories_data[category]["subcategories"][subcategory]["product_categories"][product_category]
+                    tori_link += f"&product_category={product_category_code}"
+                else:
+                    subcategory_code = categories_data[category]["subcategories"][subcategory]["subcategory_code"]
+                    tori_link += f"&sub_category={subcategory_code}"
+            else:
+                category_code = categories_data[category]["category_code"]
+                tori_link += f"&category={category_code}"
         if region.lower() != 'koko suomi':
-            if area != 'null':
-                tori_link += f"&municipality={area_code}%2C330"
-            tori_link += f"&region={region_code}%2C18"
-        tori_link += "&suborder=0-1000"
+            if city.lower() != 'kaikki kaupungit':
+                if area.lower() != 'kaikki alueet':
+                    area_code = locations_data[region]["cities"][city]["areas"][area]
+                    tori_link += f"&location={area_code}"
+                else:
+                    city_code = locations_data[region]["cities"][city]["city_code"]
+                    tori_link += f"&location={city_code}"
+            else:
+                region_code = locations_data[region]["region_code"]
+                tori_link += f"&location={region_code}"
 
-        new_item = ToriItem(item=item, category=category, subcategory=subcategory, region=region, area=area, telegram_id=telegram_id, link=tori_link)
+        new_item = ToriItem(item=item, category=category, subcategory=subcategory, product_category=product_category, region=region, city=city, area=area, telegram_id=telegram_id, link=tori_link)
         
         session.add(new_item)
         session.commit()
@@ -161,8 +206,8 @@ def save_data(update: Update, context: CallbackContext) -> int:
         if subcategory != 'null':
             message += f"Subcategory: {subcategory}\n"
         message += f"Region: {region}\n"
-        if area != 'null':
-            message += f"Area: {area}\n"
+        if city != 'null':
+            message += f"City: {city}\n"
         message += f"Added Time: {new_item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
 
         update.message.reply_text(message + f"The search link for the item: {tori_link}", reply_markup=ReplyKeyboardMarkup([['Add a new item', 'Items']], one_time_keyboard=True))
@@ -196,8 +241,8 @@ def show_items(update: Update, context: CallbackContext) -> int:
             if item.subcategory != 'null':
                 item_info += f"Subcategory: {item.subcategory}\n"
             item_info += f"Region: {item.region}\n"
-            if item.area != 'null':
-                item_info += f"Area: {item.area}\n"
+            if item.city != 'null':
+                item_info += f"City: {item.city}\n"
             item_info += f"Added Time: {item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
 
             remove_button = InlineKeyboardButton("Remove item", callback_data=str(item.id))
@@ -251,14 +296,14 @@ def check_for_new_items(context: CallbackContext):
                 continue
             list_id_code = ad['ad']['list_id_code']
             region_label = ad['ad']['location']['region']['label']
-            area_label = ad['ad']['location']['area']['label']
+            city_label = ad['ad']['location']['city']['label']
             list_price = ad['ad']['list_price']['value']
             region_label_link = region_label.lower()
             region_label_link = region_label_link.replace("ä", "a")
             region_label_link = region_label_link.replace("ö", "o")
             region_label_link = region_label_link.replace("å", "a")
             tori_link = f"https://www.tori.fi/{region_label_link}/{list_id_code}.htm"
-            message = f"New item found: {ad['ad']['subject']}\nRegion: {region_label}\nArea: {area_label}\nPrice: {list_price} EUR\n{tori_link}"
+            message = f"New item found: {ad['ad']['subject']}\nRegion: {region_label}\nCity: {city_label}\nPrice: {list_price} EUR\n{tori_link}"
             context.bot.send_message(item.telegram_id, message)
             latest_time_new = list_time.strftime("%Y-%m-%d %H:%M:%S")
             if latest_time_new > latest_time:
@@ -280,7 +325,9 @@ def main():
         states={
             CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_category)],
             SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_subcategory)],
+            PRODUCT_CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_product_category)],
             REGION: [MessageHandler(Filters.text & ~Filters.command, select_region)],
+            CITY: [MessageHandler(Filters.text & ~Filters.command, select_city)],
             AREA: [MessageHandler(Filters.text & ~Filters.command, select_area)],
             CONFIRMATION: [MessageHandler(Filters.text & ~Filters.command, save_data)],
             ADD_OR_SHOW_ITEMS: [MessageHandler(Filters.text & ~Filters.command, add_or_show_items)],

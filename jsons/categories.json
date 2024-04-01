@@ -3,21 +3,23 @@
   "Antiikki ja taide": {
     "category_code": "0.76",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Antiikkihuonekalut": {
         "subcategory_code": "1.76.5178",
-        "product_types": {}
+        "product_categories": null
       },
       "Aterimet ja pöytähopeat": {
         "subcategory_code": "1.76.5179",
-        "product_types": {}
+        "product_categories": null
       },
       "Keramiikka, posliini ja lasi": {
         "subcategory_code": "1.76.5176",
-        "product_types": {}
+        "product_categories": null
       },
       "Taide": {
         "subcategory_code": "1.76.5177",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Akryylimaalaukset": "2.76.5177.385",
           "Grafiikka": "2.76.5177.394",
           "Litografia": "2.76.5177.389",
@@ -33,20 +35,22 @@
       },
       "Muu antiikki": {
         "subcategory_code": "1.76.5175",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Auto-, vene- ja moottoripyörätarvikkeet": {
     "category_code": "0.90",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Asuntoauto- ja matkailuautotarvikkeet": {
         "subcategory_code": "1.90.70",
-        "product_types": {}
+        "product_categories": null
       },
       "Auton osat": {
         "subcategory_code": "1.90.82",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Auton istuimet": "2.90.82.3",
           "Auton sisätilatarvikkeet": "2.90.82.8",
           "Auton varaosat": "2.90.82.2",
@@ -59,7 +63,8 @@
       },
       "Mototarvikkeet ja varaosat": {
         "subcategory_code": "1.90.20",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Moottoripyörän varaosat": "2.90.20.10",
           "Moottoripyörävaatteet": "2.90.20.12",
           "Moottoripyörävarusteet": "2.90.20.11"
@@ -67,11 +72,12 @@
       },
       "Mönkijän varaosat": {
         "subcategory_code": "1.90.3975",
-        "product_types": {}
+        "product_categories": null
       },
       "Trailerit": {
         "subcategory_code": "1.90.80",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Autotrailerit": "2.90.80.17",
           "Hevostrailerit": "2.90.80.19",
           "Kippikärryt": "2.90.80.309",
@@ -86,7 +92,8 @@
       },
       "Veneen varaosat": {
         "subcategory_code": "1.90.30",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Purjevenetarvikkeet": "2.90.30.323",
           "Sähkö- ja putkityöt": "2.90.30.319",
           "Veneen kiinnitystarvikkeet": "2.90.30.324",
@@ -101,16 +108,18 @@
       },
       "Muut autotarvikkeet": {
         "subcategory_code": "1.90.3974",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Elektroniikka ja kodinkoneet": {
     "category_code": "0.93",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Kodin pienkoneet": {
         "subcategory_code": "1.93.3216",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kahvinkeittimet": "2.93.3216.506",
           "Leivänpaahtimet": "2.93.3216.87",
           "Monitoimikoneet ja yleiskoneet": "2.93.3216.507",
@@ -125,7 +134,8 @@
       },
       "Kodinkoneet": {
         "subcategory_code": "1.93.3907",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Astianpesukoneet": "2.93.3907.509",
           "Jääkaapit": "2.93.3907.292",
           "Keittolevyt": "2.93.3907.75",
@@ -141,7 +151,8 @@
       },
       "Puhelimet ja tarvikkeet": {
         "subcategory_code": "1.93.3217",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Matkapuhelimet": "2.93.3217.39",
           "Puhelintarvikkeet": "2.93.3217.41",
           "Muut puhelimet": "2.93.3217.40"
@@ -149,7 +160,8 @@
       },
       "Tietotekniikka": {
         "subcategory_code": "1.93.3215",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kannettavat tietokoneet": "2.93.3215.43",
           "Kiintolevyt ja tallennustila": "2.93.3215.8367",
           "Laskimet": "2.93.3215.47",
@@ -163,7 +175,8 @@
       },
       "Valokuvaus ja video": {
         "subcategory_code": "1.93.3904",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Hybdirikamerat": "2.93.3904.303",
           "Järjestelmäkamerat": "2.93.3904.66",
           "Kameralaukut": "2.93.3904.500",
@@ -175,7 +188,8 @@
       },
       "Videopelit ja konsolit": {
         "subcategory_code": "1.93.3905",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Oheistuotteet": "2.93.3905.65",
           "Pelikonsolit": "2.93.3905.63",
           "Pelit": "2.93.3905.64"
@@ -183,7 +197,8 @@
       },
       "Ääni ja kuva": {
         "subcategory_code": "1.93.3906",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Blu-ray-soittimet": "2.93.3906.56",
           "DVD-soittimet": "2.93.3906.57",
           "Digitelevisiot ja digiboksit": "2.93.3906.61",
@@ -203,24 +218,26 @@
       },
       "Muu elektroniikka ja kodinkoneet": {
         "subcategory_code": "1.93.3213",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Eläimet ja eläintarvikkeet": {
     "category_code": "0.77",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Akvaariot": {
         "subcategory_code": "1.77.3976",
-        "product_types": {}
+        "product_categories": null
       },
       "Eläinten ruokinta, hoito, jalostus ja tallipaikat": {
         "subcategory_code": "1.77.5186",
-        "product_types": {}
+        "product_categories": null
       },
       "Hevoset": {
         "subcategory_code": "1.77.5190",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kylmäveriset hevoset": "2.77.5190.36",
           "Lämminveriset hevoset": "2.77.5190.38",
           "Ponit": "2.77.5190.37"
@@ -228,64 +245,66 @@
       },
       "Hevostarvikkeet ja ratsastustarvikkeet": {
         "subcategory_code": "1.77.5195",
-        "product_types": {}
+        "product_categories": null
       },
       "Hyönteiset ja hämähäkit": {
         "subcategory_code": "1.77.5208",
-        "product_types": {}
+        "product_categories": null
       },
       "Häkit": {
         "subcategory_code": "1.77.3977",
-        "product_types": {}
+        "product_categories": null
       },
       "Jyrsijät ja kanit": {
         "subcategory_code": "1.77.5207",
-        "product_types": {}
+        "product_categories": null
       },
       "Kalat": {
         "subcategory_code": "1.77.5206",
-        "product_types": {}
+        "product_categories": null
       },
       "Kissat": {
         "subcategory_code": "1.77.5191",
-        "product_types": {}
+        "product_categories": null
       },
       "Kissatarvikkeet": {
         "subcategory_code": "1.77.5194",
-        "product_types": {}
+        "product_categories": null
       },
       "Koirat": {
         "subcategory_code": "1.77.5192",
-        "product_types": {}
+        "product_categories": null
       },
       "Koiratarvikkeet": {
         "subcategory_code": "1.77.5193",
-        "product_types": {}
+        "product_categories": null
       },
       "Linnut": {
         "subcategory_code": "1.77.5205",
-        "product_types": {}
+        "product_categories": null
       },
       "Matelijat": {
         "subcategory_code": "1.77.5210",
-        "product_types": {}
+        "product_categories": null
       },
       "Muut eläimet": {
         "subcategory_code": "1.77.5183",
-        "product_types": {}
+        "product_categories": null
       },
       "Muut eläintarvikkeet": {
         "subcategory_code": "1.77.5185",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Huonekalut ja sisustus": {
     "category_code": "0.78",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Hyllyt ja lipastot": {
         "subcategory_code": "1.78.8345",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Lipastot": "2.78.8345.221",
           "Seinähyllyt ja hyllyt": "2.78.8345.219",
           "Senkit": "2.78.8345.220",
@@ -295,7 +314,8 @@
       },
       "Kaapit": {
         "subcategory_code": "1.78.5198",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Astiakaapit": "2.78.5198.222",
           "Vaatekaapit": "2.78.5198.218",
           "Muut kaapit": "2.78.5198.225"
@@ -303,7 +323,8 @@
       },
       "Keittiötarvikkeet ja astiat": {
         "subcategory_code": "1.78.5223",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Astiastot": "2.78.5223.8361",
           "Juomalasit": "2.78.5223.8360",
           "Kahvikupit ja mukit": "2.78.5223.8359",
@@ -316,7 +337,8 @@
       },
       "Koriste- ja sisustusesineet": {
         "subcategory_code": "1.78.5222",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kuvat ja kehykset": "2.78.5222.237",
           "Kynttilänjalat": "2.78.5222.240",
           "Maljakot ja ruukut": "2.78.5222.238",
@@ -327,7 +349,8 @@
       },
       "Makuuhuone": {
         "subcategory_code": "1.78.5197",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Patjat": "2.78.5197.203",
           "Runkopatjat": "2.78.5197.293",
           "Sängyt": "2.78.5197.202"
@@ -335,7 +358,8 @@
       },
       "Matot ja tekstiilit": {
         "subcategory_code": "1.78.5180",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Matot": "2.78.5180.231",
           "Pöytäliinat": "2.78.5180.233",
           "Tyynyt": "2.78.5180.232",
@@ -345,7 +369,8 @@
       },
       "Pöydät ja tuolit": {
         "subcategory_code": "1.78.5196",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Ruokailuryhmät": "2.78.5196.211",
           "Ruokapöydät": "2.78.5196.213",
           "Sohvapöydät": "2.78.5196.212",
@@ -357,7 +382,8 @@
       },
       "Sohvat ja lepotuolit": {
         "subcategory_code": "1.78.7756",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kulmasohvat": "2.78.7756.207",
           "Nojatuolit": "2.78.7756.210",
           "Rahit": "2.78.7756.209",
@@ -368,7 +394,8 @@
       },
       "Valaisimet": {
         "subcategory_code": "1.78.5181",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kattovalaisimet": "2.78.5181.226",
           "Lattiavalaisimet": "2.78.5181.228",
           "Pöytävalaisimet": "2.78.5181.229",
@@ -378,28 +405,30 @@
       },
       "Muut huonekalut ja sisustus": {
         "subcategory_code": "1.78.3971",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Koti, puutarha ja rakentaminen": {
     "category_code": "0.67",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Autotallin ovet ja kalusteet": {
         "subcategory_code": "1.67.8348",
-        "product_types": {}
+        "product_categories": null
       },
       "Hälyttimet ja turvallisuus": {
         "subcategory_code": "1.67.8347",
-        "product_types": {}
+        "product_categories": null
       },
       "Keittiöt": {
         "subcategory_code": "1.67.3900",
-        "product_types": {}
+        "product_categories": null
       },
       "Kylpyhuone ja sauna": {
         "subcategory_code": "1.67.7749",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Hanat": "2.67.7749.156",
           "Höyrysuihkut": "2.67.7749.159",
           "Kylpyammeet": "2.67.7749.157",
@@ -413,7 +442,8 @@
       },
       "Lämmitys ja ilmanvaihto": {
         "subcategory_code": "1.67.5218",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Ilmalämpöpumput": "2.67.5218.154",
           "Ilmastointilaitteet ja tuulettimet": "2.67.5218.297",
           "Lämmittimet": "2.67.5218.155",
@@ -424,11 +454,12 @@
       },
       "Mökkitarvikkeet": {
         "subcategory_code": "1.67.3968",
-        "product_types": {}
+        "product_categories": null
       },
       "Piha ja puutarha": {
         "subcategory_code": "1.67.3901",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Grillit": "2.67.3901.147",
           "Juhlateltat": "2.67.3901.144",
           "Kasvit ja istutus": "2.67.3901.339",
@@ -443,7 +474,8 @@
       },
       "Rakennustarvikkeet ja remontointi": {
         "subcategory_code": "1.67.3899",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Ikkunat": "2.67.3899.168",
           "Lattiat": "2.67.3899.167",
           "Ovet": "2.67.3899.169",
@@ -455,20 +487,22 @@
       },
       "Työkalut": {
         "subcategory_code": "1.67.5219",
-        "product_types": {}
+        "product_categories": null
       },
       "Muu koti, puutarha ja rakentaminen": {
         "subcategory_code": "1.67.3969",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Lapset ja vanhemmat": {
     "category_code": "0.68",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Lasten kalusteet": {
         "subcategory_code": "1.68.3916",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Hoitopöydät": "2.68.3916.316",
           "Koulupöydät ja muut lasten pöydät": "2.68.3916.314",
           "Lasten sängyt": "2.68.3916.312",
@@ -479,15 +513,16 @@
       },
       "Lasten kengät": {
         "subcategory_code": "1.68.3915",
-        "product_types": {}
+        "product_categories": null
       },
       "Lasten kirjat": {
         "subcategory_code": "1.68.8369",
-        "product_types": {}
+        "product_categories": null
       },
       "Lasten vaatteet": {
         "subcategory_code": "1.68.3913",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Lasten hatut, hanskat ja rukkaset": "2.68.3913.8350",
           "Lasten housut ja shortsit": "2.68.3913.8352",
           "Lasten mekot ja hameet": "2.68.3913.8357",
@@ -501,15 +536,16 @@
       },
       "Lastentarvikkeet ja turvallisuus": {
         "subcategory_code": "1.68.3918",
-        "product_types": {}
+        "product_categories": null
       },
       "Lastenvaunut ja rattaat": {
         "subcategory_code": "1.68.3914",
-        "product_types": {}
+        "product_categories": null
       },
       "Lelut": {
         "subcategory_code": "1.68.3912",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Legot ja rakennuspalikat": "2.68.3912.333",
           "Leluautot ja junaradat": "2.68.3912.332",
           "Pehmolelut, nuket ja figuurit": "2.68.3912.331",
@@ -521,28 +557,30 @@
       },
       "Turvaistuimet": {
         "subcategory_code": "1.68.3911",
-        "product_types": {}
+        "product_categories": null
       },
       "Äitiysvaatteet": {
         "subcategory_code": "1.68.3948",
-        "product_types": {}
+        "product_categories": null
       },
       "Muut": {
         "subcategory_code": "1.68.3970",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Liiketoiminta ja palvelut": {
     "category_code": "0.91",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Esitystekniikka": {
         "subcategory_code": "1.91.3110",
-        "product_types": {}
+        "product_categories": null
       },
       "Kauppa ja jälleenmyynti": {
         "subcategory_code": "1.91.3108",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Maksupäätteet": "2.91.3108.358",
           "Myymäläkalusteet": "2.91.3108.359",
           "Myymälävalaistus": "2.91.3108.362",
@@ -554,11 +592,12 @@
       },
       "Konetekniikka ja varaosat": {
         "subcategory_code": "1.91.3112",
-        "product_types": {}
+        "product_categories": null
       },
       "Kontit ja työmaakopit": {
         "subcategory_code": "1.91.3111",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kontit": "2.91.3111.365",
           "Työmaakopit": "2.91.3111.366",
           "Muut rakennusvälineet": "2.91.3111.368"
@@ -566,15 +605,16 @@
       },
       "Maatalous": {
         "subcategory_code": "1.91.3114",
-        "product_types": {}
+        "product_categories": null
       },
       "Rahti ja tavarankuljetus": {
         "subcategory_code": "1.91.3113",
-        "product_types": {}
+        "product_categories": null
       },
       "Rakentaminen ja remontointi": {
         "subcategory_code": "1.91.3102",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kompressorit": "2.91.3102.373",
           "Koneet ja tarvikkeet": "2.91.3102.377",
           "Puuntyöstökoneet": "2.91.3102.375",
@@ -588,7 +628,8 @@
       },
       "Suurtalouskeittiö ja ravintola-ala": {
         "subcategory_code": "1.91.3103",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Astianpesu": "2.91.3103.354",
           "Jääkaapit ja pakastimet": "2.91.3103.352",
           "Kalusteet": "2.91.3103.355",
@@ -599,7 +640,8 @@
       },
       "Terveys ja ensiapu": {
         "subcategory_code": "1.91.8343",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Apuvälineet": "2.91.8343.348",
           "Ensiaputarvikkeet": "2.91.8343.347",
           "Kauneuden- ja terveydenhoito": "2.91.8343.349",
@@ -609,7 +651,8 @@
       },
       "Toimistotarvikkeet ja toimistokalusteet": {
         "subcategory_code": "1.91.3105",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kopiokoneet": "2.91.3105.243",
           "Toimistokalusteet": "2.91.3105.294",
           "Toimistotarvikkeet": "2.91.3105.242",
@@ -618,20 +661,22 @@
       },
       "Web-domainit ja puhelinnumerot": {
         "subcategory_code": "1.91.3106",
-        "product_types": {}
+        "product_categories": null
       },
       "Muu liiketoiminta ja palvelut": {
         "subcategory_code": "1.91.3104",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Urheilu ja ulkoilu": {
     "category_code": "0.69",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Extreme-urheilu": {
         "subcategory_code": "1.69.3938",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kiipeily": "2.69.3938.265",
           "Leijalautailu": "2.69.3938.264",
           "Rullalautailu ja longboarding": "2.69.3938.267"
@@ -639,15 +684,16 @@
       },
       "Fanituotteet": {
         "subcategory_code": "1.69.3937",
-        "product_types": {}
+        "product_categories": null
       },
       "Golf": {
         "subcategory_code": "1.69.5164",
-        "product_types": {}
+        "product_categories": null
       },
       "Hiihto ja laskettelu": {
         "subcategory_code": "1.69.3962",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Laskettelu": "2.69.3962.253",
           "Lumilautailu": "2.69.3962.252",
           "Murtomaahiihto": "2.69.3962.255",
@@ -657,7 +703,8 @@
       },
       "Jääkiekko ja luistelu": {
         "subcategory_code": "1.69.8346",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Jääkiekko- ja luisteluvarusteet": "2.69.8346.406",
           "Lasten luistimet": "2.69.8346.405",
           "Naisten ja miesten luistimet": "2.69.8346.404"
@@ -665,7 +712,8 @@
       },
       "Kuntosalilaitteet": {
         "subcategory_code": "1.69.5166",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Crosstrainerit": "2.69.5166.291",
           "Juoksumatot": "2.69.5166.516",
           "Kuntoiluvälineet": "2.69.5166.289",
@@ -677,7 +725,8 @@
       },
       "Metsästys, kalastus ja ulkoilu": {
         "subcategory_code": "1.69.3964",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Aseet ja patruunat": "2.69.3964.268",
           "Kajakit ja kanootit": "2.69.3964.279",
           "Kalastusvaatteet": "2.69.3964.274",
@@ -696,11 +745,12 @@
       },
       "Osallistujaliput": {
         "subcategory_code": "1.69.3960",
-        "product_types": {}
+        "product_categories": null
       },
       "Pallopelit": {
         "subcategory_code": "1.69.3961",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Jalkapallo": "2.69.3961.245",
           "Koripallo": "2.69.3961.247",
           "Käsipallo": "2.69.3961.246",
@@ -712,7 +762,8 @@
       },
       "Pyöräily": {
         "subcategory_code": "1.69.3963",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Lasten polkupyörät": "2.69.3963.8375",
           "Polkupyörät": "2.69.3963.257",
           "Pyöräilyvarusteet": "2.69.3963.258",
@@ -721,15 +772,16 @@
       },
       "Ravintolisät": {
         "subcategory_code": "1.69.8281",
-        "product_types": {}
+        "product_categories": null
       },
       "Urheilukellot ja aktiivisuusrannekkeet": {
         "subcategory_code": "1.69.3967",
-        "product_types": {}
+        "product_categories": null
       },
       "Urheiluvaatteet ja -kengät": {
         "subcategory_code": "1.69.3940",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Lasten urheiluvaatteet": "2.69.3940.3983",
           "Lenkkarit ja muut urheilukengät": "2.69.3940.3984",
           "Miesten urheiluvaatteet": "2.69.3940.3980",
@@ -739,7 +791,8 @@
       },
       "Vesiurheilu": {
         "subcategory_code": "1.69.7738",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Melonta ja suppailu": "2.69.7738.260",
           "Purjehdus": "2.69.7738.261",
           "Purjelautailu": "2.69.7738.338",
@@ -750,31 +803,34 @@
       },
       "Muu urheilu": {
         "subcategory_code": "1.69.3966",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Vaatteet, kosmetiikka ja asusteet": {
     "category_code": "0.71",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Ihonhoito ja hiustenhoito": {
         "subcategory_code": "1.71.8280",
-        "product_types": {}
+        "product_categories": null
       },
       "Kellot ja rannekellot": {
         "subcategory_code": "1.71.3945",
-        "product_types": {}
+        "product_categories": null
       },
       "Kengät": {
         "subcategory_code": "1.71.3949",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Miesten kengät": "2.71.3949.193",
           "Naisten kengät": "2.71.3949.194"
         }
       },
       "Korut ja korurasiat": {
         "subcategory_code": "1.71.7748",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kaulakorut": "2.71.7748.195",
           "Korurasiat ja säilytys": "2.71.7748.307",
           "Korvakorut": "2.71.7748.197",
@@ -785,15 +841,16 @@
       },
       "Kosmetiikka": {
         "subcategory_code": "1.71.8282",
-        "product_types": {}
+        "product_categories": null
       },
       "Laukut ja lompakot": {
         "subcategory_code": "1.71.3946",
-        "product_types": {}
+        "product_categories": null
       },
       "Miesten vaatteet": {
         "subcategory_code": "1.71.3950",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Collegepaidat ja neuleet": "2.71.3950.186",
           "Frakit, smokit ja saketit": "2.71.3950.190",
           "Kauluspaidat": "2.71.3950.185",
@@ -810,11 +867,12 @@
       },
       "Naamiaisasut": {
         "subcategory_code": "1.71.8349",
-        "product_types": {}
+        "product_categories": null
       },
       "Naisten vaatteet": {
         "subcategory_code": "1.71.3941",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Alusvaatteet": "2.71.3941.181",
           "Farkut": "2.71.3941.8370",
           "Hameet": "2.71.3941.175",
@@ -836,7 +894,8 @@
       },
       "Silmälasit ja linssit": {
         "subcategory_code": "1.71.8344",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Aurinkolasit": "2.71.8344.199",
           "Piilolinssit": "2.71.8344.201",
           "Silmälasit": "2.71.8344.200"
@@ -844,20 +903,22 @@
       },
       "Muut vaatteet, kosmetiikka ja asusteet": {
         "subcategory_code": "1.71.5204",
-        "product_types": {}
+        "product_categories": null
       }
     }
   },
   "Viihde ja harrastukset": {
     "category_code": "0.86",
     "subcategories": {
+      "Kaikki alaluokat": null,
       "Elintarvikkeet": {
         "subcategory_code": "1.86.3972",
-        "product_types": {}
+        "product_categories": null
       },
       "Keräily": {
         "subcategory_code": "1.86.285",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Keräilyfiguurit": "2.86.285.400",
           "Keräilykortit": "2.86.285.396",
           "Keräilylelut": "2.86.285.399",
@@ -872,7 +933,8 @@
       },
       "Kirjat ja lehdet": {
         "subcategory_code": "1.86.5209",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Kaunokirjallisuus": "2.86.5209.514",
           "Keittokirjat": "2.86.5209.94",
           "Lehtiset ja aikakauslehdet": "2.86.5209.512",
@@ -885,7 +947,8 @@
       },
       "Käsityöt": {
         "subcategory_code": "1.86.7734",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Helmet ja jalokivet": "2.86.7734.131",
           "Kangaspuut": "2.86.7734.127",
           "Kankaat": "2.86.7734.125",
@@ -900,7 +963,8 @@
       },
       "Matkat ja matkaliput": {
         "subcategory_code": "1.86.7735",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Junaliput": "2.86.7735.114",
           "Lentoliput": "2.86.7735.113",
           "Pakettimatkat": "2.86.7735.112"
@@ -908,7 +972,8 @@
       },
       "Musiikki ja elokuvat": {
         "subcategory_code": "1.86.3922",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Blu-rayt": "2.86.3922.102",
           "C-kasetit": "2.86.3922.402",
           "CD-levyt": "2.86.3922.98",
@@ -919,11 +984,12 @@
       },
       "Pienoismallit ja rakennussarjat": {
         "subcategory_code": "1.86.7732",
-        "product_types": {}
+        "product_categories": null
       },
       "Radio-ohjattavat": {
         "subcategory_code": "1.86.7733",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Autot": "2.86.7733.133",
           "Droonit": "2.86.7733.401",
           "Helikopterit": "2.86.7733.136",
@@ -933,7 +999,8 @@
       },
       "Seurapelit": {
         "subcategory_code": "1.86.5203",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Lautapelit": "2.86.5203.119",
           "Pulmapelit": "2.86.5203.329",
           "Pöytäpelit": "2.86.5203.120",
@@ -943,7 +1010,8 @@
       },
       "Soittimet": {
         "subcategory_code": "1.86.92",
-        "product_types": {
+        "product_categories": {
+          "Kaikki tuoteluokat": null,
           "Bassot": "2.86.92.296",
           "Harmonikat": "2.86.92.328",
           "Jousisoittimet": "2.86.92.105",
@@ -961,7 +1029,7 @@
       },
       "Muu viihde ja harrastukset": {
         "subcategory_code": "1.86.3973",
-        "product_types": {}
+        "product_categories": null
       }
     }
   }

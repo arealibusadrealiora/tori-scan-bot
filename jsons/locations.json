@@ -1,49 +1,49 @@
 {
-  "Koko Suomi": {
-    "region_code": null,
-    "areas": {
-      "Kaikki kunnat": {
-        "area_code": null
-      }
-    }
-  },
+  "Koko Suomi": null,
   "Ahvenanmaa": {
     "region_code": "0.100015",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Brändö": {
-        "area_code": "1.100015.110035",
-        "cities": {
+        "city_code": "1.100015.110035",
+        "areas": {
+          "Kaikki alueet": null,
           "Torsholma": "2.100015.110035.222910"
         }
       },
       "Finström": {
-        "area_code": "1.100015.110060",
-        "cities": {
+        "city_code": "1.100015.110060",
+        "areas": {
+          "Kaikki alueet": null,
           "Godby": "2.100015.110060.222410"
         }
       },
       "Jomala": {
-        "area_code": "1.100015.110170",
-        "cities": {
+        "city_code": "1.100015.110170",
+        "areas": {
+          "Kaikki alueet": null,
           "Jomala Centrum": "2.100015.110170.222150",
           "Önningby": "2.100015.110170.222140"
         }
       },
       "Kökar": {
-        "area_code": "1.100015.110318",
-        "cities": {
+        "city_code": "1.100015.110318",
+        "areas": {
+          "Kaikki alueet": null,
           "Kökar": "2.100015.110318.222730"
         }
       },
       "Lemland": {
-        "area_code": "1.100015.110417",
-        "cities": {
+        "city_code": "1.100015.110417",
+        "areas": {
+          "Kaikki alueet": null,
           "Lemland": "2.100015.110417.222610"
         }
       },
       "Maarianhamina": {
-        "area_code": "1.100015.110478",
-        "cities": {
+        "city_code": "1.100015.110478",
+        "areas": {
+          "Kaikki alueet": null,
           "Maarianhamina": "2.100015.110478.222100",
           "Möckelö": "2.100015.110478.222120"
         }
@@ -52,10 +52,12 @@
   },
   "Etelä-Karjala": {
     "region_code": "0.100014",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Imatra": {
-        "area_code": "1.100014.110153",
-        "cities": {
+        "city_code": "1.100014.110153",
+        "areas": {
+          "Kaikki alueet": null,
           "Imatra Keskus": "2.100014.110153.255100",
           "Karhumäki-Karhukallio": "2.100014.110153.255420",
           "Mansikkala-Tuulikallio": "2.100014.110153.255120",
@@ -68,8 +70,9 @@
         }
       },
       "Lappeenranta": {
-        "area_code": "1.100014.110405",
-        "cities": {
+        "city_code": "1.100014.110405",
+        "areas": {
+          "Kaikki alueet": null,
           "Hanhijärvi": "2.100014.110405.254260",
           "Hujakkala": "2.100014.110405.254430",
           "Hytti": "2.100014.110405.254310",
@@ -107,16 +110,18 @@
         }
       },
       "Lemi": {
-        "area_code": "1.100014.110416",
-        "cities": {
+        "city_code": "1.100014.110416",
+        "areas": {
+          "Kaikki alueet": null,
           "Kotimäki": "2.100014.110416.254820",
           "Kuukanniemi": "2.100014.110416.254850",
           "Lemi Keskus": "2.100014.110416.254710"
         }
       },
       "Luumäki": {
-        "area_code": "1.100014.110441",
-        "cities": {
+        "city_code": "1.100014.110441",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaitjärvi": "2.100014.110441.254590",
           "Kannuskoski": "2.100014.110441.246530",
           "Luumäki": "2.100014.110441.254530",
@@ -126,8 +131,9 @@
         }
       },
       "Parikkala": {
-        "area_code": "1.100014.110580",
-        "cities": {
+        "city_code": "1.100014.110580",
+        "areas": {
+          "Kaikki alueet": null,
           "Kirjavala": "2.100014.110580.259410",
           "Koitsanlahti": "2.100014.110580.259130",
           "Maironiemi": "2.100014.110580.259510",
@@ -142,8 +148,9 @@
         }
       },
       "Rautjärvi": {
-        "area_code": "1.100014.110689",
-        "cities": {
+        "city_code": "1.100014.110689",
+        "areas": {
+          "Kaikki alueet": null,
           "Laikko": "2.100014.110689.256730",
           "Niska-Pietilä": "2.100014.110689.256550",
           "Purnujärvi": "2.100014.110689.256640",
@@ -152,8 +159,9 @@
         }
       },
       "Ruokolahti": {
-        "area_code": "1.100014.110700",
-        "cities": {
+        "city_code": "1.100014.110700",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaiturinpää": "2.100014.110700.256410",
           "Pohja-Lankila": "2.100014.110700.256440",
           "Puntala": "2.100014.110700.256510",
@@ -166,8 +174,9 @@
         }
       },
       "Savitaipale": {
-        "area_code": "1.100014.110739",
-        "cities": {
+        "city_code": "1.100014.110739",
+        "areas": {
+          "Kaikki alueet": null,
           "Heituinlahti": "2.100014.110739.254770",
           "Laksiainen": "2.100014.110739.254720",
           "Savitaipale Keskus": "2.100014.110739.254800",
@@ -175,8 +184,9 @@
         }
       },
       "Taipalsaari": {
-        "area_code": "1.100014.110831",
-        "cities": {
+        "city_code": "1.100014.110831",
+        "areas": {
+          "Kaikki alueet": null,
           "Levänen": "2.100014.110831.254930",
           "Saimaanharju-Kyläniemi": "2.100014.110831.254915",
           "Solkei": "2.100014.110831.254940",
@@ -188,10 +198,12 @@
   },
   "Etelä-Pohjanmaa": {
     "region_code": "0.100006",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Alajärvi": {
-        "area_code": "1.100006.110005",
-        "cities": {
+        "city_code": "1.100006.110005",
+        "areas": {
+          "Kaikki alueet": null,
           "Alajärvi Keskus": "2.100006.110005.262900",
           "Haukkala": "2.100006.110005.262730",
           "Hernesmaa": "2.100006.110005.263540",
@@ -211,8 +223,9 @@
         }
       },
       "Alavus": {
-        "area_code": "1.100006.110010",
-        "cities": {
+        "city_code": "1.100006.110010",
+        "areas": {
+          "Kaikki alueet": null,
           "Alavus Asemanseutu": "2.100006.110010.263400",
           "Alavus Keskus": "2.100006.110010.263300",
           "Hakojärvi": "2.100006.110010.263680",
@@ -233,8 +246,9 @@
         }
       },
       "Evijärvi": {
-        "area_code": "1.100006.110052",
-        "cities": {
+        "city_code": "1.100006.110052",
+        "areas": {
+          "Kaikki alueet": null,
           "Evijärvi Keskus": "2.100006.110052.262500",
           "Kuoppa-aho": "2.100006.110052.262510",
           "Särkilä": "2.100006.110052.262570",
@@ -242,8 +256,9 @@
         }
       },
       "Ilmajoki": {
-        "area_code": "1.100006.110145",
-        "cities": {
+        "city_code": "1.100006.110145",
+        "areas": {
+          "Kaikki alueet": null,
           "Huissi": "2.100006.110145.261350",
           "Ilmajoki Keskus": "2.100006.110145.260800",
           "Koskenkorva": "2.100006.110145.261330",
@@ -254,8 +269,9 @@
         }
       },
       "Isojoki": {
-        "area_code": "1.100006.110151",
-        "cities": {
+        "city_code": "1.100006.110151",
+        "areas": {
+          "Kaikki alueet": null,
           "Heikkilänjoki": "2.100006.110151.264840",
           "Isojoki Keskus": "2.100006.110151.264900",
           "Kodesjärvi": "2.100006.110151.264930",
@@ -266,8 +282,9 @@
         }
       },
       "Isokyrö": {
-        "area_code": "1.100006.110152",
-        "cities": {
+        "city_code": "1.100006.110152",
+        "areas": {
+          "Kaikki alueet": null,
           "Isokyrö Keskus": "2.100006.110152.261500",
           "Lehmäjoki": "2.100006.110152.261520",
           "Orisberg": "2.100006.110152.261560",
@@ -276,15 +293,17 @@
         }
       },
       "Karijoki": {
-        "area_code": "1.100006.110218",
-        "cities": {
+        "city_code": "1.100006.110218",
+        "areas": {
+          "Kaikki alueet": null,
           "Karijoki Keskus": "2.100006.110218.264350",
           "Myrkky": "2.100006.110218.264370"
         }
       },
       "Kauhajoki": {
-        "area_code": "1.100006.110232",
-        "cities": {
+        "city_code": "1.100006.110232",
+        "areas": {
+          "Kaikki alueet": null,
           "Harja": "2.100006.110232.261860",
           "Hyyppä": "2.100006.110232.261940",
           "Ikkeläjärvi": "2.100006.110232.261880",
@@ -300,8 +319,9 @@
         }
       },
       "Kauhava": {
-        "area_code": "1.100006.110233",
-        "cities": {
+        "city_code": "1.100006.110233",
+        "areas": {
+          "Kaikki alueet": null,
           "Ekola": "2.100006.110233.262350",
           "Hirvijoki": "2.100006.110233.262260",
           "Huhmarkoski": "2.100006.110233.262240",
@@ -323,8 +343,9 @@
         }
       },
       "Kuortane": {
-        "area_code": "1.100006.110300",
-        "cities": {
+        "city_code": "1.100006.110300",
+        "areas": {
+          "Kaikki alueet": null,
           "Kuortane Keskus": "2.100006.110300.263100",
           "Lentilä": "2.100006.110300.263230",
           "Leppälänkylä": "2.100006.110300.263120",
@@ -336,8 +357,9 @@
         }
       },
       "Kurikka": {
-        "area_code": "1.100006.110301",
-        "cities": {
+        "city_code": "1.100006.110301",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Valli": "2.100006.110301.261640",
           "Hakko": "2.100006.110301.266330",
           "Hirvijärvi": "2.100006.110301.261630",
@@ -367,8 +389,9 @@
         }
       },
       "Lappajärvi": {
-        "area_code": "1.100006.110403",
-        "cities": {
+        "city_code": "1.100006.110403",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Seppä": "2.100006.110403.262620",
           "Itäkylä": "2.100006.110403.262660",
           "Karvala": "2.100006.110403.262630",
@@ -377,8 +400,9 @@
         }
       },
       "Lapua": {
-        "area_code": "1.100006.110408",
-        "cities": {
+        "city_code": "1.100006.110408",
+        "areas": {
+          "Kaikki alueet": null,
           "Hellanmaa": "2.100006.110408.262130",
           "Hirvikylä": "2.100006.110408.262290",
           "Karhunkylä": "2.100006.110408.262160",
@@ -393,8 +417,9 @@
         }
       },
       "Seinäjoki": {
-        "area_code": "1.100006.110743",
-        "cities": {
+        "city_code": "1.100006.110743",
+        "areas": {
+          "Kaikki alueet": null,
           "Alakylä-Jouppi": "2.100006.110743.260320",
           "Haapaluoma": "2.100006.110743.261180",
           "Halkosaari": "2.100006.110743.260560",
@@ -423,16 +448,18 @@
         }
       },
       "Soini": {
-        "area_code": "1.100006.110759",
-        "cities": {
+        "city_code": "1.100006.110759",
+        "areas": {
+          "Kaikki alueet": null,
           "Hautakylä": "2.100006.110759.263890",
           "Kukonkylä": "2.100006.110759.263880",
           "Soini Keskus": "2.100006.110759.263800"
         }
       },
       "Teuva": {
-        "area_code": "1.100006.110846",
-        "cities": {
+        "city_code": "1.100006.110846",
+        "areas": {
+          "Kaikki alueet": null,
           "Horo": "2.100006.110846.264740",
           "Norinkylä": "2.100006.110846.261840",
           "Peltola": "2.100006.110846.264760",
@@ -442,16 +469,18 @@
         }
       },
       "Vimpeli": {
-        "area_code": "1.100006.110934",
-        "cities": {
+        "city_code": "1.100006.110934",
+        "areas": {
+          "Kaikki alueet": null,
           "Sahi": "2.100006.110934.262860",
           "Savonjoki": "2.100006.110934.262810",
           "Vimpeli Keskus": "2.100006.110934.262800"
         }
       },
       "Ähtäri": {
-        "area_code": "1.100006.110989",
-        "cities": {
+        "city_code": "1.100006.110989",
+        "areas": {
+          "Kaikki alueet": null,
           "Alastaipale": "2.100006.110989.263780",
           "Inha": "2.100006.110989.263920",
           "Inhan Tehtaat": "2.100006.110989.263910",
@@ -466,10 +495,12 @@
   },
   "Etelä-Savo": {
     "region_code": "0.100013",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Enonkoski": {
-        "area_code": "1.100013.110046",
-        "cities": {
+        "city_code": "1.100013.110046",
+        "areas": {
+          "Kaikki alueet": null,
           "Enonkoski Keskus": "2.100013.110046.258175",
           "Ihamaniemi": "2.100013.110046.258180",
           "Karvila": "2.100013.110046.258160",
@@ -477,8 +508,9 @@
         }
       },
       "Hirvensalmi": {
-        "area_code": "1.100013.110097",
-        "cities": {
+        "city_code": "1.100013.110097",
+        "areas": {
+          "Kaikki alueet": null,
           "Hirvensalmi Keskus": "2.100013.110097.252550",
           "Kuitula": "2.100013.110097.252620",
           "Syväsmäki": "2.100013.110097.252520",
@@ -486,8 +518,9 @@
         }
       },
       "Juva": {
-        "area_code": "1.100013.110178",
-        "cities": {
+        "city_code": "1.100013.110178",
+        "areas": {
+          "Kaikki alueet": null,
           "Hatsola": "2.100013.110178.251820",
           "Härkälä": "2.100013.110178.251940",
           "Juva Keskus": "2.100013.110178.251900",
@@ -503,8 +536,9 @@
         }
       },
       "Kangasniemi": {
-        "area_code": "1.100013.110213",
-        "cities": {
+        "city_code": "1.100013.110213",
+        "areas": {
+          "Kaikki alueet": null,
           "Hännilä-Särkiharju": "2.100013.110213.251340",
           "Kangasniemi Keskus": "2.100013.110213.251200",
           "Koivula-Synsiö": "2.100013.110213.251360",
@@ -518,8 +552,9 @@
         }
       },
       "Mikkeli": {
-        "area_code": "1.100013.110491",
-        "cities": {
+        "city_code": "1.100013.110491",
+        "areas": {
+          "Kaikki alueet": null,
           "Annilanselkä": "2.100013.110491.250800",
           "Anttola": "2.100013.110491.252100",
           "Hangastenmaa": "2.100013.110491.252340",
@@ -565,8 +600,9 @@
         }
       },
       "Mäntyharju": {
-        "area_code": "1.100013.110507",
-        "cities": {
+        "city_code": "1.100013.110507",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahvenainen": "2.100013.110507.252980",
           "Halmeniemi": "2.100013.110507.252850",
           "Karankamäki-Koirakivi": "2.100013.110507.252720",
@@ -581,8 +617,9 @@
         }
       },
       "Pertunmaa": {
-        "area_code": "1.100013.110588",
-        "cities": {
+        "city_code": "1.100013.110588",
+        "areas": {
+          "Kaikki alueet": null,
           "Hartosenpää": "2.100013.110588.219480",
           "Kuortti": "2.100013.110588.219410",
           "Lihavanpää-Hartosenpää": "2.100013.110588.219470",
@@ -592,8 +629,9 @@
         }
       },
       "Pieksämäki": {
-        "area_code": "1.100013.110593",
-        "cities": {
+        "city_code": "1.100013.110593",
+        "areas": {
+          "Kaikki alueet": null,
           "Haapakoski-Partaharju": "2.100013.110593.277520",
           "Halkokumpu": "2.100013.110593.277240",
           "Huumala": "2.100013.110593.277140",
@@ -617,15 +655,17 @@
         }
       },
       "Puumala": {
-        "area_code": "1.100013.110623",
-        "cities": {
+        "city_code": "1.100013.110623",
+        "areas": {
+          "Kaikki alueet": null,
           "Hurissalo": "2.100013.110623.252230",
           "Puumala Keskus": "2.100013.110623.252200"
         }
       },
       "Rantasalmi": {
-        "area_code": "1.100013.110681",
-        "cities": {
+        "city_code": "1.100013.110681",
+        "areas": {
+          "Kaikki alueet": null,
           "Hiltula": "2.100013.110681.258850",
           "Kolkontaipale": "2.100013.110681.258920",
           "Parkumäki": "2.100013.110681.258830",
@@ -635,8 +675,9 @@
         }
       },
       "Savonlinna": {
-        "area_code": "1.100013.110740",
-        "cities": {
+        "city_code": "1.100013.110740",
+        "areas": {
+          "Kaikki alueet": null,
           "Aholahti": "2.100013.110740.257810",
           "Ahvensalmi": "2.100013.110740.258140",
           "Ala-Särkilahti-Piojärvi": "2.100013.110740.258690",
@@ -673,8 +714,9 @@
         }
       },
       "Sulkava": {
-        "area_code": "1.100013.110768",
-        "cities": {
+        "city_code": "1.100013.110768",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaartilankoski": "2.100013.110768.258720",
           "Lohilahti": "2.100013.110768.258620",
           "Sulkava Keskus": "2.100013.110768.258700",
@@ -685,18 +727,21 @@
   },
   "Kainuu": {
     "region_code": "0.100003",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Hyrynsalmi": {
-        "area_code": "1.100003.110105",
-        "cities": {
+        "city_code": "1.100003.110105",
+        "areas": {
+          "Kaikki alueet": null,
           "Hyrynsalmi Keskus": "2.100003.110105.289400",
           "Karhuvaara": "2.100003.110105.289560",
           "Moisiovaara": "2.100003.110105.289540"
         }
       },
       "Kajaani": {
-        "area_code": "1.100003.110205",
-        "cities": {
+        "city_code": "1.100003.110205",
+        "areas": {
+          "Kaikki alueet": null,
           "Jormua": "2.100003.110205.287970",
           "Kajaani Keskus": "2.100003.110205.287100",
           "Karankalahti": "2.100003.110205.287900",
@@ -718,8 +763,9 @@
         }
       },
       "Kuhmo": {
-        "area_code": "1.100003.110290",
-        "cities": {
+        "city_code": "1.100003.110290",
+        "areas": {
+          "Kaikki alueet": null,
           "Iivantiira": "2.100003.110290.288760",
           "Kuhmo Keskus": "2.100003.110290.288900",
           "Lentiira-Kuumu": "2.100003.110290.288930",
@@ -727,8 +773,9 @@
         }
       },
       "Paltamo": {
-        "area_code": "1.100003.110578",
-        "cities": {
+        "city_code": "1.100003.110578",
+        "areas": {
+          "Kaikki alueet": null,
           "Kivesjärvi": "2.100003.110578.288350",
           "Kontiomäki": "2.100003.110578.288470",
           "Melalahti": "2.100003.110578.288310",
@@ -737,8 +784,9 @@
         }
       },
       "Puolanka": {
-        "area_code": "1.100003.110620",
-        "cities": {
+        "city_code": "1.100003.110620",
+        "areas": {
+          "Kaikki alueet": null,
           "Kotila-Törmänmäki": "2.100003.110620.289140",
           "Puokiovaara": "2.100003.110620.289210",
           "Puolanka Keskus": "2.100003.110620.289200",
@@ -746,15 +794,17 @@
         }
       },
       "Ristijärvi": {
-        "area_code": "1.100003.110697",
-        "cities": {
+        "city_code": "1.100003.110697",
+        "areas": {
+          "Kaikki alueet": null,
           "Jokikylä": "2.100003.110697.288440",
           "Ristijärvi Keskus-Hiisijärvi": "2.100003.110697.288400"
         }
       },
       "Sotkamo": {
-        "area_code": "1.100003.110765",
-        "cities": {
+        "city_code": "1.100003.110765",
+        "areas": {
+          "Kaikki alueet": null,
           "Juurikkalahti-Maanselkä": "2.100003.110765.288670",
           "Korholanmäki": "2.100003.110765.288620",
           "Ontojoki": "2.100003.110765.288640",
@@ -766,8 +816,9 @@
         }
       },
       "Suomussalmi": {
-        "area_code": "1.100003.110777",
-        "cities": {
+        "city_code": "1.100003.110777",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahjola": "2.100003.110777.289730",
           "Ala-Vuokki": "2.100003.110777.289830",
           "Jumaliskylä": "2.100003.110777.289610",
@@ -787,10 +838,12 @@
   },
   "Kanta-Häme": {
     "region_code": "0.100017",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Forssa": {
-        "area_code": "1.100017.110061",
-        "cities": {
+        "city_code": "1.100017.110061",
+        "areas": {
+          "Kaikki alueet": null,
           "Forssa Keskus": "2.100017.110061.230100",
           "Koijärvi": "2.100017.110061.231130",
           "Matku": "2.100017.110061.231110",
@@ -800,8 +853,9 @@
         }
       },
       "Hattula": {
-        "area_code": "1.100017.110082",
-        "cities": {
+        "city_code": "1.100017.110082",
+        "areas": {
+          "Kaikki alueet": null,
           "Katinala": "2.100017.110082.213800",
           "Lepaa": "2.100017.110082.214610",
           "Parola": "2.100017.110082.213720",
@@ -813,8 +867,9 @@
         }
       },
       "Hausjärvi": {
-        "area_code": "1.100017.110086",
-        "cities": {
+        "city_code": "1.100017.110086",
+        "areas": {
+          "Kaikki alueet": null,
           "Hausjärvi kk": "2.100017.110086.212210",
           "Hikiä": "2.100017.110086.212240",
           "Mommila": "2.100017.110086.212130",
@@ -824,15 +879,17 @@
         }
       },
       "Humppila": {
-        "area_code": "1.100017.110103",
-        "cities": {
+        "city_code": "1.100017.110103",
+        "areas": {
+          "Kaikki alueet": null,
           "Humppila Keskus": "2.100017.110103.231640",
           "Venäjänkangas": "2.100017.110103.231650"
         }
       },
       "Hämeenlinna": {
-        "area_code": "1.100017.110109",
-        "cities": {
+        "city_code": "1.100017.110109",
+        "areas": {
+          "Kaikki alueet": null,
           "Alvettula": "2.100017.110109.214680",
           "Eteläinen": "2.100017.110109.214770",
           "Evo": "2.100017.110109.216970",
@@ -866,8 +923,9 @@
         }
       },
       "Janakkala": {
-        "area_code": "1.100017.110165",
-        "cities": {
+        "city_code": "1.100017.110165",
+        "areas": {
+          "Kaikki alueet": null,
           "Harviala": "2.100017.110165.213330",
           "Jokimaa": "2.100017.110165.214140",
           "Leppäkoski": "2.100017.110165.212380",
@@ -878,8 +936,9 @@
         }
       },
       "Jokioinen": {
-        "area_code": "1.100017.110169",
-        "cities": {
+        "city_code": "1.100017.110169",
+        "areas": {
+          "Kaikki alueet": null,
           "Jokioinen Keskus": "2.100017.110169.231600",
           "Latovainio": "2.100017.110169.231620",
           "Minkiö": "2.100017.110169.231630",
@@ -887,8 +946,9 @@
         }
       },
       "Loppi": {
-        "area_code": "1.100017.110433",
-        "cities": {
+        "city_code": "1.100017.110433",
+        "areas": {
+          "Kaikki alueet": null,
           "Joentaka": "2.100017.110433.212640",
           "Kormu": "2.100017.110433.212520",
           "Launonen": "2.100017.110433.212540",
@@ -902,8 +962,9 @@
         }
       },
       "Riihimäki": {
-        "area_code": "1.100017.110694",
-        "cities": {
+        "city_code": "1.100017.110694",
+        "areas": {
+          "Kaikki alueet": null,
           "Herajoki": "2.100017.110694.211710",
           "Lasi-Kumela": "2.100017.110694.211910",
           "Peltosaari-Patastenmäki": "2.100017.110694.211130",
@@ -913,8 +974,9 @@
         }
       },
       "Tammela": {
-        "area_code": "1.100017.110834",
-        "cities": {
+        "city_code": "1.100017.110834",
+        "areas": {
+          "Kaikki alueet": null,
           "Letku-Torro": "2.100017.110834.231380",
           "Mustiala": "2.100017.110834.231310",
           "Porras": "2.100017.110834.231340",
@@ -925,8 +987,9 @@
         }
       },
       "Ypäjä": {
-        "area_code": "1.100017.110981",
-        "cities": {
+        "city_code": "1.100017.110981",
+        "areas": {
+          "Kaikki alueet": null,
           "Ypäjä Asemanseutu": "2.100017.110981.232140",
           "Ypäjä Keskus": "2.100017.110981.232100"
         }
@@ -935,32 +998,37 @@
   },
   "Keski-Pohjanmaa": {
     "region_code": "0.100004",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Halsua": {
-        "area_code": "1.100004.110074",
-        "cities": {
+        "city_code": "1.100004.110074",
+        "areas": {
+          "Kaikki alueet": null,
           "Halsua Keskus-Marjusaari": "2.100004.110074.269510",
           "Kanala": "2.100004.110074.269550"
         }
       },
       "Kannus": {
-        "area_code": "1.100004.110217",
-        "cities": {
+        "city_code": "1.100004.110217",
+        "areas": {
+          "Kaikki alueet": null,
           "Eskola": "2.100004.110217.269150",
           "Kannus Keskus": "2.100004.110217.269100",
           "Yli-Kannus": "2.100004.110217.269170"
         }
       },
       "Kaustinen": {
-        "area_code": "1.100004.110236",
-        "cities": {
+        "city_code": "1.100004.110236",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaustinen Keskus": "2.100004.110236.269600",
           "Köyhäjoki": "2.100004.110236.269660"
         }
       },
       "Kokkola": {
-        "area_code": "1.100004.110272",
-        "cities": {
+        "city_code": "1.100004.110272",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Viirre": "2.100004.110272.268240",
           "Halkokari": "2.100004.110272.267300",
           "Karhi": "2.100004.110272.268220",
@@ -984,15 +1052,17 @@
         }
       },
       "Lestijärvi": {
-        "area_code": "1.100004.110421",
-        "cities": {
+        "city_code": "1.100004.110421",
+        "areas": {
+          "Kaikki alueet": null,
           "Lestijärvi Keskus": "2.100004.110421.269440",
           "Yli-Lesti": "2.100004.110421.269450"
         }
       },
       "Perho": {
-        "area_code": "1.100004.110584",
-        "cities": {
+        "city_code": "1.100004.110584",
+        "areas": {
+          "Kaikki alueet": null,
           "Kivikangas": "2.100004.110584.269910",
           "Möttönen": "2.100004.110584.269980",
           "Oksakoski-Kivikangas": "2.100004.110584.269920",
@@ -1000,8 +1070,9 @@
         }
       },
       "Toholampi": {
-        "area_code": "1.100004.110849",
-        "cities": {
+        "city_code": "1.100004.110849",
+        "areas": {
+          "Kaikki alueet": null,
           "Laitala": "2.100004.110849.269310",
           "Määttälä": "2.100004.110849.269330",
           "Purontaka": "2.100004.110849.269340",
@@ -1010,8 +1081,9 @@
         }
       },
       "Veteli": {
-        "area_code": "1.100004.110924",
-        "cities": {
+        "city_code": "1.100004.110924",
+        "areas": {
+          "Kaikki alueet": null,
           "Patana": "2.100004.110924.269850",
           "Pulkkinen": "2.100004.110924.269830",
           "Räyrinki": "2.100004.110924.269820",
@@ -1024,10 +1096,12 @@
   },
   "Keski-Suomi": {
     "region_code": "0.100007",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Hankasalmi": {
-        "area_code": "1.100007.110077",
-        "cities": {
+        "city_code": "1.100007.110077",
+        "areas": {
+          "Kaikki alueet": null,
           "Hankasalmi Asemanseutu": "2.100007.110077.241500",
           "Hankasalmi Keskus": "2.100007.110077.241520",
           "Hannula": "2.100007.110077.241550",
@@ -1039,8 +1113,9 @@
         }
       },
       "Joutsa": {
-        "area_code": "1.100007.110172",
-        "cities": {
+        "city_code": "1.100007.110172",
+        "areas": {
+          "Kaikki alueet": null,
           "Havumäki": "2.100007.110172.241750",
           "Joutsa Keskus": "2.100007.110172.219650",
           "Kivisuo": "2.100007.110172.241730",
@@ -1051,8 +1126,9 @@
         }
       },
       "Jyväskylä": {
-        "area_code": "1.100007.110179",
-        "cities": {
+        "city_code": "1.100007.110179",
+        "areas": {
+          "Kaikki alueet": null,
           "Haapaniemi": "2.100007.110179.240820",
           "Halssila": "2.100007.110179.240400",
           "Huhtasuo": "2.100007.110179.240340",
@@ -1091,8 +1167,9 @@
         }
       },
       "Jämsä": {
-        "area_code": "1.100007.110182",
-        "cities": {
+        "city_code": "1.100007.110182",
+        "areas": {
+          "Kaikki alueet": null,
           "Haavisto": "2.100007.110182.242330",
           "Halli": "2.100007.110182.235600",
           "Juokslahti": "2.100007.110182.242140",
@@ -1105,15 +1182,17 @@
         }
       },
       "Kannonkoski": {
-        "area_code": "1.100007.110216",
-        "cities": {
+        "city_code": "1.100007.110216",
+        "areas": {
+          "Kaikki alueet": null,
           "Kannonjärvi": "2.100007.110216.243340",
           "Kannonkoski Keskus": "2.100007.110216.243300"
         }
       },
       "Karstula": {
-        "area_code": "1.100007.110226",
-        "cities": {
+        "city_code": "1.100007.110226",
+        "areas": {
+          "Kaikki alueet": null,
           "Humppi": "2.100007.110226.243640",
           "Kangasaho": "2.100007.110226.243490",
           "Karstula Keskus": "2.100007.110226.243500",
@@ -1124,8 +1203,9 @@
         }
       },
       "Keuruu": {
-        "area_code": "1.100007.110249",
-        "cities": {
+        "city_code": "1.100007.110249",
+        "areas": {
+          "Kaikki alueet": null,
           "Asunta": "2.100007.110249.242520",
           "Haapamäki": "2.100007.110249.242800",
           "Huttula": "2.100007.110249.241970",
@@ -1138,23 +1218,26 @@
         }
       },
       "Kinnula": {
-        "area_code": "1.100007.110256",
-        "cities": {
+        "city_code": "1.100007.110256",
+        "areas": {
+          "Kaikki alueet": null,
           "Kinnula Keskus": "2.100007.110256.243900",
           "Muhola-Saarensalmi": "2.100007.110256.243940",
           "Saarensalmi": "2.100007.110256.243960"
         }
       },
       "Kivijärvi": {
-        "area_code": "1.100007.110265",
-        "cities": {
+        "city_code": "1.100007.110265",
+        "areas": {
+          "Kaikki alueet": null,
           "Kivijärvi Keskus-Sompala": "2.100007.110265.243800",
           "Lokakylä": "2.100007.110265.243390"
         }
       },
       "Konnevesi": {
-        "area_code": "1.100007.110275",
-        "cities": {
+        "city_code": "1.100007.110275",
+        "areas": {
+          "Kaikki alueet": null,
           "Hytölä": "2.100007.110275.244330",
           "Istunmäki": "2.100007.110275.244350",
           "Konnevesi Keskus": "2.100007.110275.244300",
@@ -1163,15 +1246,17 @@
         }
       },
       "Kyyjärvi": {
-        "area_code": "1.100007.110312",
-        "cities": {
+        "city_code": "1.100007.110312",
+        "areas": {
+          "Kaikki alueet": null,
           "Kumpulainen": "2.100007.110312.243720",
           "Kyyjärvi Keskus": "2.100007.110312.243700"
         }
       },
       "Laukaa": {
-        "area_code": "1.100007.110410",
-        "cities": {
+        "city_code": "1.100007.110410",
+        "areas": {
+          "Kaikki alueet": null,
           "Kuusa": "2.100007.110410.241370",
           "Laukaa Asemanseutu": "2.100007.110410.241350",
           "Laukaa Keskus": "2.100007.110410.241340",
@@ -1185,30 +1270,34 @@
         }
       },
       "Luhanka": {
-        "area_code": "1.100007.110435",
-        "cities": {
+        "city_code": "1.100007.110435",
+        "areas": {
+          "Kaikki alueet": null,
           "Luhanka": "2.100007.110435.219950",
           "Tammijärvi": "2.100007.110435.219910"
         }
       },
       "Multia": {
-        "area_code": "1.100007.110495",
-        "cities": {
+        "city_code": "1.100007.110495",
+        "areas": {
+          "Kaikki alueet": null,
           "Multia Keskus-Väätäiskylä": "2.100007.110495.242600",
           "Sahrajärvi": "2.100007.110495.242660",
           "Väätäiskylä": "2.100007.110495.243430"
         }
       },
       "Muurame": {
-        "area_code": "1.100007.110500",
-        "cities": {
+        "city_code": "1.100007.110500",
+        "areas": {
+          "Kaikki alueet": null,
           "Kinkomaa": "2.100007.110500.240930",
           "Muurame Keskus": "2.100007.110500.240950"
         }
       },
       "Petäjävesi": {
-        "area_code": "1.100007.110592",
-        "cities": {
+        "city_code": "1.100007.110592",
+        "areas": {
+          "Kaikki alueet": null,
           "Kintaus": "2.100007.110592.241920",
           "Kuivasmäki": "2.100007.110592.241980",
           "Petäjävesi Keskus": "2.100007.110592.241900",
@@ -1216,8 +1305,9 @@
         }
       },
       "Pihtipudas": {
-        "area_code": "1.100007.110601",
-        "cities": {
+        "city_code": "1.100007.110601",
+        "areas": {
+          "Kaikki alueet": null,
           "Alvajärvi": "2.100007.110601.244860",
           "Elämäjärvi": "2.100007.110601.244910",
           "Korppinen": "2.100007.110601.244970",
@@ -1228,8 +1318,9 @@
         }
       },
       "Saarijärvi": {
-        "area_code": "1.100007.110729",
-        "cities": {
+        "city_code": "1.100007.110729",
+        "areas": {
+          "Kaikki alueet": null,
           "Hoikankylä": "2.100007.110729.241260",
           "Häkkilä": "2.100007.110729.243170",
           "Kalmari": "2.100007.110729.243270",
@@ -1245,16 +1336,18 @@
         }
       },
       "Toivakka": {
-        "area_code": "1.100007.110850",
-        "cities": {
+        "city_code": "1.100007.110850",
+        "areas": {
+          "Kaikki alueet": null,
           "Kankainen": "2.100007.110850.241410",
           "Ruuhimäki": "2.100007.110850.241440",
           "Toivakka Keskus": "2.100007.110850.241660"
         }
       },
       "Uurainen": {
-        "area_code": "1.100007.110892",
-        "cities": {
+        "city_code": "1.100007.110892",
+        "areas": {
+          "Kaikki alueet": null,
           "Höytiä": "2.100007.110892.241220",
           "Jokihaara": "2.100007.110892.241210",
           "Kangashäkki": "2.100007.110892.241290",
@@ -1263,8 +1356,9 @@
         }
       },
       "Viitasaari": {
-        "area_code": "1.100007.110931",
-        "cities": {
+        "city_code": "1.100007.110931",
+        "areas": {
+          "Kaikki alueet": null,
           "Huopanankoski": "2.100007.110931.244580",
           "Ilmolahti": "2.100007.110931.244530",
           "Keihärinkoski": "2.100007.110931.244760",
@@ -1279,8 +1373,9 @@
         }
       },
       "Äänekoski": {
-        "area_code": "1.100007.110992",
-        "cities": {
+        "city_code": "1.100007.110992",
+        "areas": {
+          "Kaikki alueet": null,
           "Hietama": "2.100007.110992.244170",
           "Huutomäki": "2.100007.110992.244160",
           "Kalaniemi": "2.100007.110992.244460",
@@ -1302,10 +1397,12 @@
   },
   "Kymenlaakso": {
     "region_code": "0.100020",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Hamina": {
-        "area_code": "1.100020.110075",
-        "cities": {
+        "city_code": "1.100020.110075",
+        "areas": {
+          "Kaikki alueet": null,
           "Hamina Keskus": "2.100020.110075.249400",
           "Hillo": "2.100020.110075.249460",
           "Husula": "2.100020.110075.249510",
@@ -1325,8 +1422,9 @@
         }
       },
       "Kotka": {
-        "area_code": "1.100020.110285",
-        "cities": {
+        "city_code": "1.100020.110285",
+        "areas": {
+          "Kaikki alueet": null,
           "Hovinsaari": "2.100020.110285.248200",
           "Huruksela": "2.100020.110285.246930",
           "Juurikorpi": "2.100020.110285.249340",
@@ -1355,8 +1453,9 @@
         }
       },
       "Kouvola": {
-        "area_code": "1.100020.110286",
-        "cities": {
+        "city_code": "1.100020.110286",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahvio": "2.100020.110286.246950",
           "Anjala": "2.100020.110286.246910",
           "Anjalankoski Keskus": "2.100020.110286.246860",
@@ -1408,8 +1507,9 @@
         }
       },
       "Miehikkälä": {
-        "area_code": "1.100020.110489",
-        "cities": {
+        "city_code": "1.100020.110489",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahomäki": "2.100020.110489.254490",
           "Hurttala": "2.100020.110489.249720",
           "Kalliokoski": "2.100020.110489.249750",
@@ -1419,8 +1519,9 @@
         }
       },
       "Pyhtää": {
-        "area_code": "1.100020.110624",
-        "cities": {
+        "city_code": "1.100020.110624",
+        "areas": {
+          "Kaikki alueet": null,
           "Heinlahti": "2.100020.110624.249200",
           "Huutjärvi": "2.100020.110624.249210",
           "Purolanlahti": "2.100020.110624.249240",
@@ -1430,8 +1531,9 @@
         }
       },
       "Virolahti": {
-        "area_code": "1.100020.110935",
-        "cities": {
+        "city_code": "1.100020.110935",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Pihlaja": "2.100020.110935.249960",
           "Klamila": "2.100020.110935.249860",
           "Ravijoki": "2.100020.110935.249980",
@@ -1443,10 +1545,12 @@
   },
   "Lappi": {
     "region_code": "0.100001",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Enontekiö": {
-        "area_code": "1.100001.110047",
-        "cities": {
+        "city_code": "1.100001.110047",
+        "areas": {
+          "Kaikki alueet": null,
           "Enontekiö Keskus": "2.100001.110047.299400",
           "Karesuvanto": "2.100001.110047.299470",
           "Kilpisjärvi": "2.100001.110047.299490",
@@ -1459,8 +1563,9 @@
         }
       },
       "Inari": {
-        "area_code": "1.100001.110148",
-        "cities": {
+        "city_code": "1.100001.110148",
+        "areas": {
+          "Kaikki alueet": null,
           "Inari Keskus-Lemmenjoki": "2.100001.110148.299870",
           "Ivalo": "2.100001.110148.299800",
           "Kaamanen-Partakko": "2.100001.110148.299910",
@@ -1471,8 +1576,9 @@
         }
       },
       "Kemi": {
-        "area_code": "1.100001.110240",
-        "cities": {
+        "city_code": "1.100001.110240",
+        "areas": {
+          "Kaikki alueet": null,
           "Ajos": "2.100001.110240.294900",
           "Kemi Keskus": "2.100001.110240.294100",
           "Pajusaari": "2.100001.110240.294300",
@@ -1484,8 +1590,9 @@
         }
       },
       "Kemijärvi": {
-        "area_code": "1.100001.110320",
-        "cities": {
+        "city_code": "1.100001.110320",
+        "areas": {
+          "Kaikki alueet": null,
           "Isokylä-Ryti-Lehtola": "2.100001.110320.298400",
           "Joutsijärvi": "2.100001.110320.298710",
           "Kallaanvaara": "2.100001.110320.298440",
@@ -1501,8 +1608,9 @@
         }
       },
       "Keminmaa": {
-        "area_code": "1.100001.110241",
-        "cities": {
+        "city_code": "1.100001.110241",
+        "areas": {
+          "Kaikki alueet": null,
           "Itäkoski": "2.100001.110241.295370",
           "Keminmaa Keskus": "2.100001.110241.294400",
           "Lassila-Jokisuu": "2.100001.110241.294450",
@@ -1514,8 +1622,9 @@
         }
       },
       "Kittilä": {
-        "area_code": "1.100001.110261",
-        "cities": {
+        "city_code": "1.100001.110261",
+        "areas": {
+          "Kaikki alueet": null,
           "Alakylä-Sailehto": "2.100001.110261.297470",
           "Hormakumpu": "2.100001.110261.299270",
           "Jeesiöjärvi": "2.100001.110261.299230",
@@ -1533,8 +1642,9 @@
         }
       },
       "Kolari": {
-        "area_code": "1.100001.110273",
-        "cities": {
+        "city_code": "1.100001.110273",
+        "areas": {
+          "Kaikki alueet": null,
           "Kolari Keskus": "2.100001.110273.295900",
           "Kurtakko": "2.100001.110273.295990",
           "Pasmajärvi": "2.100001.110273.295860",
@@ -1547,8 +1657,9 @@
         }
       },
       "Muonio": {
-        "area_code": "1.100001.110498",
-        "cities": {
+        "city_code": "1.100001.110498",
+        "areas": {
+          "Kaikki alueet": null,
           "Kangosjärvi": "2.100001.110498.299360",
           "Kätkäsuvanto": "2.100001.110498.299320",
           "Muonio Keskus": "2.100001.110498.299300",
@@ -1557,8 +1668,9 @@
         }
       },
       "Pelkosenniemi": {
-        "area_code": "1.100001.110583",
-        "cities": {
+        "city_code": "1.100001.110583",
+        "areas": {
+          "Kaikki alueet": null,
           "Aapajärvi": "2.100001.110583.298570",
           "Kairala-Luiro": "2.100001.110583.298560",
           "Pelkosenniemi Keskus": "2.100001.110583.298500",
@@ -1567,8 +1679,9 @@
         }
       },
       "Pello": {
-        "area_code": "1.100001.110854",
-        "cities": {
+        "city_code": "1.100001.110854",
+        "areas": {
+          "Kaikki alueet": null,
           "Juoksenki": "2.100001.110854.295640",
           "Konttajärvi": "2.100001.110854.295760",
           "Lampsijärvi": "2.100001.110854.295790",
@@ -1582,8 +1695,9 @@
         }
       },
       "Posio": {
-        "area_code": "1.100001.110614",
-        "cities": {
+        "city_code": "1.100001.110614",
+        "areas": {
+          "Kaikki alueet": null,
           "Anetjärvi": "2.100001.110614.297980",
           "Karjalaisenniemi": "2.100001.110614.297890",
           "Kynsilä": "2.100001.110614.297965",
@@ -1599,8 +1713,9 @@
         }
       },
       "Ranua": {
-        "area_code": "1.100001.110683",
-        "cities": {
+        "city_code": "1.100001.110683",
+        "areas": {
+          "Kaikki alueet": null,
           "Pohjasperä": "2.100001.110683.297665",
           "Raiskio": "2.100001.110683.297715",
           "Ranua Keskus": "2.100001.110683.297700",
@@ -1609,8 +1724,9 @@
         }
       },
       "Rovaniemi": {
-        "area_code": "1.100001.110698",
-        "cities": {
+        "city_code": "1.100001.110698",
+        "areas": {
+          "Kaikki alueet": null,
           "Autti": "2.100001.110698.297655",
           "Hirvas": "2.100001.110698.297130",
           "Jaatila": "2.100001.110698.297170",
@@ -1660,8 +1776,9 @@
         }
       },
       "Salla": {
-        "area_code": "1.100001.110732",
-        "cities": {
+        "city_code": "1.100001.110732",
+        "areas": {
+          "Kaikki alueet": null,
           "Hautajärvi": "2.100001.110732.298995",
           "Kotalankylä": "2.100001.110732.298930",
           "Kursu": "2.100001.110732.298600",
@@ -1673,8 +1790,9 @@
         }
       },
       "Savukoski": {
-        "area_code": "1.100001.110742",
-        "cities": {
+        "city_code": "1.100001.110742",
+        "areas": {
+          "Kaikki alueet": null,
           "Kuosku": "2.100001.110742.298850",
           "Lunkkaus": "2.100001.110742.298810",
           "Savukoski Keskus-Värriö": "2.100001.110742.298800",
@@ -1683,8 +1801,9 @@
         }
       },
       "Simo": {
-        "area_code": "1.100001.110751",
-        "cities": {
+        "city_code": "1.100001.110751",
+        "areas": {
+          "Kaikki alueet": null,
           "Alaniemi": "2.100001.110751.295255",
           "Filpus": "2.100001.110751.295210",
           "Maksniemi": "2.100001.110751.295230",
@@ -1695,8 +1814,9 @@
         }
       },
       "Sodankylä": {
-        "area_code": "1.100001.110758",
-        "cities": {
+        "city_code": "1.100001.110758",
+        "areas": {
+          "Kaikki alueet": null,
           "Aska-Orakylä": "2.100001.110758.299550",
           "Kelujärvi": "2.100001.110758.299620",
           "Kersilö": "2.100001.110758.299660",
@@ -1716,8 +1836,9 @@
         }
       },
       "Tervola": {
-        "area_code": "1.100001.110845",
-        "cities": {
+        "city_code": "1.100001.110845",
+        "areas": {
+          "Kaikki alueet": null,
           "Koivu-Peura": "2.100001.110845.295355",
           "Loue": "2.100001.110845.295340",
           "Paakkola": "2.100001.110845.295325",
@@ -1728,8 +1849,9 @@
         }
       },
       "Tornio": {
-        "area_code": "1.100001.110851",
-        "cities": {
+        "city_code": "1.100001.110851",
+        "areas": {
+          "Kaikki alueet": null,
           "Aapajoki": "2.100001.110851.295560",
           "Arpela": "2.100001.110851.295590",
           "Kaakamo": "2.100001.110851.294430",
@@ -1749,16 +1871,18 @@
         }
       },
       "Utsjoki": {
-        "area_code": "1.100001.110890",
-        "cities": {
+        "city_code": "1.100001.110890",
+        "areas": {
+          "Kaikki alueet": null,
           "Karigasniemi": "2.100001.110890.299950",
           "Nuorgam": "2.100001.110890.299990",
           "Utsjoki Keskus": "2.100001.110890.299980"
         }
       },
       "Ylitornio": {
-        "area_code": "1.100001.110976",
-        "cities": {
+        "city_code": "1.100001.110976",
+        "areas": {
+          "Kaikki alueet": null,
           "Aavasaksa": "2.100001.110976.295620",
           "Etelä-Portimojärvi": "2.100001.110976.295655",
           "Kainuunkylä": "2.100001.110976.295610",
@@ -1777,10 +1901,12 @@
   },
   "Pirkanmaa": {
     "region_code": "0.100011",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Akaa": {
-        "area_code": "1.100011.110020",
-        "cities": {
+        "city_code": "1.100011.110020",
+        "areas": {
+          "Kaikki alueet": null,
           "Kylmäkoski Asemanseutu": "2.100011.110020.237900",
           "Kylmäkoski Keskus": "2.100011.110020.237910",
           "Sotkia": "2.100011.110020.237960",
@@ -1789,8 +1915,9 @@
         }
       },
       "Hämeenkyrö": {
-        "area_code": "1.100011.110108",
-        "cities": {
+        "city_code": "1.100011.110108",
+        "areas": {
+          "Kaikki alueet": null,
           "Haukijärvi": "2.100011.110108.238490",
           "Herttuala": "2.100011.110108.239180",
           "Hämeenkyrö Keskus": "2.100011.110108.239100",
@@ -1806,8 +1933,9 @@
         }
       },
       "Ikaalinen": {
-        "area_code": "1.100011.110143",
-        "cities": {
+        "city_code": "1.100011.110143",
+        "areas": {
+          "Kaikki alueet": null,
           "Ikaalinen Keskus": "2.100011.110143.239500",
           "Kilvakkala": "2.100011.110143.239530",
           "Kovelahti": "2.100011.110143.239610",
@@ -1819,8 +1947,9 @@
         }
       },
       "Juupajoki": {
-        "area_code": "1.100011.110177",
-        "cities": {
+        "city_code": "1.100011.110177",
+        "areas": {
+          "Kaikki alueet": null,
           "Juupajoki": "2.100011.110177.235540",
           "Korkeakoski": "2.100011.110177.235500",
           "Lyly": "2.100011.110177.235530",
@@ -1829,8 +1958,9 @@
         }
       },
       "Kangasala": {
-        "area_code": "1.100011.110211",
-        "cities": {
+        "city_code": "1.100011.110211",
+        "areas": {
+          "Kaikki alueet": null,
           "Huutijärvi": "2.100011.110211.236270",
           "Kaivanto": "2.100011.110211.236570",
           "Kangasala Asemanseutu": "2.100011.110211.236100",
@@ -1850,16 +1980,18 @@
         }
       },
       "Kihniö": {
-        "area_code": "1.100011.110250",
-        "cities": {
+        "city_code": "1.100011.110250",
+        "areas": {
+          "Kaikki alueet": null,
           "Kihniö Asemanseutu": "2.100011.110250.239880",
           "Kihniö Keskus": "2.100011.110250.239820",
           "Linnankylä": "2.100011.110250.239810"
         }
       },
       "Kuhmoinen": {
-        "area_code": "1.100011.110291",
-        "cities": {
+        "city_code": "1.100011.110291",
+        "areas": {
+          "Kaikki alueet": null,
           "Harjunsalmi": "2.100011.110291.217840",
           "Harmoinen": "2.100011.110291.217780",
           "Kuhmoinen Keskus": "2.100011.110291.217800",
@@ -1867,8 +1999,9 @@
         }
       },
       "Lempäälä": {
-        "area_code": "1.100011.110418",
-        "cities": {
+        "city_code": "1.100011.110418",
+        "areas": {
+          "Kaikki alueet": null,
           "Höytämö": "2.100011.110418.233880",
           "Koivuniemi": "2.100011.110418.237570",
           "Kuivaspää": "2.100011.110418.237550",
@@ -1878,8 +2011,9 @@
         }
       },
       "Mänttä-Vilppula": {
-        "area_code": "1.100011.110508",
-        "cities": {
+        "city_code": "1.100011.110508",
+        "areas": {
+          "Kaikki alueet": null,
           "Asemakulma-Mustalahti": "2.100011.110508.235820",
           "Kolho": "2.100011.110508.235990",
           "Kolkki": "2.100011.110508.242840",
@@ -1889,8 +2023,9 @@
         }
       },
       "Nokia": {
-        "area_code": "1.100011.110536",
-        "cities": {
+        "city_code": "1.100011.110536",
+        "areas": {
+          "Kaikki alueet": null,
           "Alhoniitty": "2.100011.110536.237130",
           "Harjuniitty": "2.100011.110536.237140",
           "Kankaantaka": "2.100011.110536.237150",
@@ -1905,8 +2040,9 @@
         }
       },
       "Orivesi": {
-        "area_code": "1.100011.110562",
-        "cities": {
+        "city_code": "1.100011.110562",
+        "areas": {
+          "Kaikki alueet": null,
           "Eräjärvi": "2.100011.110562.235220",
           "Hirsilä": "2.100011.110562.235320",
           "Orivesi Asemanseutu": "2.100011.110562.235100",
@@ -1917,8 +2053,9 @@
         }
       },
       "Parkano": {
-        "area_code": "1.100011.110581",
-        "cities": {
+        "city_code": "1.100011.110581",
+        "areas": {
+          "Kaikki alueet": null,
           "Alaskylä": "2.100011.110581.239780",
           "Aureskoski": "2.100011.110581.239770",
           "Kovesjoki": "2.100011.110581.239620",
@@ -1928,8 +2065,9 @@
         }
       },
       "Pirkkala": {
-        "area_code": "1.100011.110604",
-        "cities": {
+        "city_code": "1.100011.110604",
+        "areas": {
+          "Kaikki alueet": null,
           "Killo": "2.100011.110604.233950",
           "Pirkkala kk": "2.100011.110604.233980",
           "Suuppa": "2.100011.110604.233960",
@@ -1937,8 +2075,9 @@
         }
       },
       "Punkalaidun": {
-        "area_code": "1.100011.110619",
-        "cities": {
+        "city_code": "1.100011.110619",
+        "areas": {
+          "Kaikki alueet": null,
           "Kanteenmaa": "2.100011.110619.231970",
           "Koskioinen": "2.100011.110619.231850",
           "Oriniemi": "2.100011.110619.231810",
@@ -1948,8 +2087,9 @@
         }
       },
       "Pälkäne": {
-        "area_code": "1.100011.110635",
-        "cities": {
+        "city_code": "1.100011.110635",
+        "areas": {
+          "Kaikki alueet": null,
           "Aitoo": "2.100011.110635.236720",
           "Iltasmäki": "2.100011.110635.236640",
           "Kuohijoki": "2.100011.110635.214980",
@@ -1963,8 +2103,9 @@
         }
       },
       "Ruovesi": {
-        "area_code": "1.100011.110702",
-        "cities": {
+        "city_code": "1.100011.110702",
+        "areas": {
+          "Kaikki alueet": null,
           "Jäminkipohja": "2.100011.110702.234450",
           "Kekkonen": "2.100011.110702.234430",
           "Murole": "2.100011.110702.234410",
@@ -1977,8 +2118,9 @@
         }
       },
       "Sastamala": {
-        "area_code": "1.100011.110790",
-        "cities": {
+        "city_code": "1.100011.110790",
+        "areas": {
+          "Kaikki alueet": null,
           "Ellivuori": "2.100011.110790.238130",
           "Hyynilä": "2.100011.110790.238470",
           "Häijää": "2.100011.110790.238420",
@@ -2000,8 +2142,9 @@
         }
       },
       "Tampere": {
-        "area_code": "1.100011.110837",
-        "cities": {
+        "city_code": "1.100011.110837",
+        "areas": {
+          "Kaikki alueet": null,
           "Aitolahti": "2.100011.110837.233680",
           "Atala-Linnainmaa": "2.100011.110837.233580",
           "Epilä": "2.100011.110837.233270",
@@ -2041,8 +2184,9 @@
         }
       },
       "Urjala": {
-        "area_code": "1.100011.110887",
-        "cities": {
+        "city_code": "1.100011.110887",
+        "areas": {
+          "Kaikki alueet": null,
           "Halkivaha": "2.100011.110887.231830",
           "Honkola": "2.100011.110887.231730",
           "Kehro": "2.100011.110887.231750",
@@ -2055,8 +2199,9 @@
         }
       },
       "Valkeakoski": {
-        "area_code": "1.100011.110908",
-        "cities": {
+        "city_code": "1.100011.110908",
+        "areas": {
+          "Kaikki alueet": null,
           "Haukila": "2.100011.110908.237740",
           "Kärjenniemi": "2.100011.110908.237860",
           "Metsäkansa": "2.100011.110908.237850",
@@ -2068,8 +2213,9 @@
         }
       },
       "Vesilahti": {
-        "area_code": "1.100011.110922",
-        "cities": {
+        "city_code": "1.100011.110922",
+        "areas": {
+          "Kaikki alueet": null,
           "Krääkkiö": "2.100011.110922.237380",
           "Narva": "2.100011.110922.237370",
           "Rämsöö": "2.100011.110922.237350",
@@ -2078,8 +2224,9 @@
         }
       },
       "Virrat": {
-        "area_code": "1.100011.110936",
-        "cities": {
+        "city_code": "1.100011.110936",
+        "areas": {
+          "Kaikki alueet": null,
           "Killinkoski": "2.100011.110936.234980",
           "Koro": "2.100011.110936.234740",
           "Kotala": "2.100011.110936.242870",
@@ -2094,8 +2241,9 @@
         }
       },
       "Ylöjärvi": {
-        "area_code": "1.100011.110980",
-        "cities": {
+        "city_code": "1.100011.110980",
+        "areas": {
+          "Kaikki alueet": null,
           "Itä-Aure": "2.100011.110980.234550",
           "Julkujärvi": "2.100011.110980.239160",
           "Karhe": "2.100011.110980.239340",
@@ -2121,24 +2269,28 @@
   },
   "Pohjanmaa": {
     "region_code": "0.100005",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Kaskinen": {
-        "area_code": "1.100005.110231",
-        "cities": {
+        "city_code": "1.100005.110231",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaskinen": "2.100005.110231.264260"
         }
       },
       "Korsnäs": {
-        "area_code": "1.100005.110280",
-        "cities": {
+        "city_code": "1.100005.110280",
+        "areas": {
+          "Kaikki alueet": null,
           "Harrström": "2.100005.110280.266290",
           "Korsnäs Keskus": "2.100005.110280.266200",
           "Moikipää": "2.100005.110280.266210"
         }
       },
       "Kristiinankaupunki": {
-        "area_code": "1.100005.110287",
-        "cities": {
+        "city_code": "1.100005.110287",
+        "areas": {
+          "Kaikki alueet": null,
           "Dagsmark": "2.100005.110287.264320",
           "Härkmeri": "2.100005.110287.264460",
           "Kristiinankaupunki Keskus": "2.100005.110287.264100",
@@ -2150,8 +2302,9 @@
         }
       },
       "Kruunupyy": {
-        "area_code": "1.100005.110288",
-        "cities": {
+        "city_code": "1.100005.110288",
+        "areas": {
+          "Kaikki alueet": null,
           "Alaveteli": "2.100005.110288.268410",
           "Kruunupyy Keskus": "2.100005.110288.268500",
           "Småbönders": "2.100005.110288.268750",
@@ -2159,8 +2312,9 @@
         }
       },
       "Laihia": {
-        "area_code": "1.100005.110399",
-        "cities": {
+        "city_code": "1.100005.110399",
+        "areas": {
+          "Kaikki alueet": null,
           "Haapala": "2.100005.110399.266460",
           "Jakkula": "2.100005.110399.266450",
           "Jukaja-Jokisalo": "2.100005.110399.266470",
@@ -2169,8 +2323,9 @@
         }
       },
       "Luoto": {
-        "area_code": "1.100005.110440",
-        "cities": {
+        "city_code": "1.100005.110440",
+        "areas": {
+          "Kaikki alueet": null,
           "Bosund": "2.100005.110440.268555",
           "Eugmo": "2.100005.110440.268560",
           "Furuholmen": "2.100005.110440.268580",
@@ -2178,8 +2333,9 @@
         }
       },
       "Maalahti": {
-        "area_code": "1.100005.110475",
-        "cities": {
+        "city_code": "1.100005.110475",
+        "areas": {
+          "Kaikki alueet": null,
           "Bergö": "2.100005.110475.266220",
           "Långåminne": "2.100005.110475.266160",
           "Maalahti": "2.100005.110475.266100",
@@ -2189,8 +2345,9 @@
         }
       },
       "Mustasaari": {
-        "area_code": "1.100005.110499",
-        "cities": {
+        "city_code": "1.100005.110499",
+        "areas": {
+          "Kaikki alueet": null,
           "Björköby": "2.100005.110499.265870",
           "Helsingby": "2.100005.110499.265520",
           "Iskmo": "2.100005.110499.265760",
@@ -2216,8 +2373,9 @@
         }
       },
       "Närpiö": {
-        "area_code": "1.100005.110545",
-        "cities": {
+        "city_code": "1.100005.110545",
+        "areas": {
+          "Kaikki alueet": null,
           "Kalax": "2.100005.110545.264210",
           "Nämpnäs": "2.100005.110545.264510",
           "Närpiö Keskus": "2.100005.110545.264200",
@@ -2230,8 +2388,9 @@
         }
       },
       "Pedersöre": {
-        "area_code": "1.100005.110599",
-        "cities": {
+        "city_code": "1.100005.110599",
+        "areas": {
+          "Kaikki alueet": null,
           "Edsevö": "2.100005.110599.268870",
           "Kolppi": "2.100005.110599.268800",
           "Lillby": "2.100005.110599.268940",
@@ -2245,8 +2404,9 @@
         }
       },
       "Pietarsaari": {
-        "area_code": "1.100005.110598",
-        "cities": {
+        "city_code": "1.100005.110598",
+        "areas": {
+          "Kaikki alueet": null,
           "Kyrkostrand": "2.100005.110598.268630",
           "Pietarsaari Keskus": "2.100005.110598.268600",
           "Skutnäs-Västermalm": "2.100005.110598.268620",
@@ -2254,8 +2414,9 @@
         }
       },
       "Uusikaarlepyy": {
-        "area_code": "1.100005.110893",
-        "cities": {
+        "city_code": "1.100005.110893",
+        "areas": {
+          "Kaikki alueet": null,
           "Hirvlax": "2.100005.110893.266970",
           "Jepua": "2.100005.110893.266850",
           "Kovjoki": "2.100005.110893.266930",
@@ -2266,8 +2427,9 @@
         }
       },
       "Vaasa": {
-        "area_code": "1.100005.110905",
-        "cities": {
+        "city_code": "1.100005.110905",
+        "areas": {
+          "Kaikki alueet": null,
           "Asevelikylä": "2.100005.110905.265300",
           "Gerby": "2.100005.110905.265280",
           "Huutoniemi": "2.100005.110905.265320",
@@ -2285,8 +2447,9 @@
         }
       },
       "Vöyri": {
-        "area_code": "1.100005.110946",
-        "cities": {
+        "city_code": "1.100005.110946",
+        "areas": {
+          "Kaikki alueet": null,
           "Bertby": "2.100005.110946.266660",
           "Kaitsor": "2.100005.110946.266710",
           "Maksamaa": "2.100005.110946.266640",
@@ -2300,10 +2463,12 @@
   },
   "Pohjois-Karjala": {
     "region_code": "0.100009",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Heinävesi": {
-        "area_code": "1.100009.110090",
-        "cities": {
+        "city_code": "1.100009.110090",
+        "areas": {
+          "Kaikki alueet": null,
           "Etelä-Petruma": "2.100009.110090.279885",
           "Heinävesi Keskus": "2.100009.110090.279700",
           "Karvion kanava": "2.100009.110090.279810",
@@ -2316,8 +2481,9 @@
         }
       },
       "Ilomantsi": {
-        "area_code": "1.100009.110146",
-        "cities": {
+        "city_code": "1.100009.110146",
+        "areas": {
+          "Kaikki alueet": null,
           "Hattu": "2.100009.110146.282967",
           "Haukivaara": "2.100009.110146.282830",
           "Huhus-Käenkoski": "2.100009.110146.281450",
@@ -2334,8 +2500,9 @@
         }
       },
       "Joensuu": {
-        "area_code": "1.100009.110167",
-        "cities": {
+        "city_code": "1.100009.110167",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahveninen": "2.100009.110167.281260",
           "Eno Keskus": "2.100009.110167.281200",
           "Haapalahti": "2.100009.110167.281295",
@@ -2376,8 +2543,9 @@
         }
       },
       "Juuka": {
-        "area_code": "1.100009.110176",
-        "cities": {
+        "city_code": "1.100009.110176",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahmovaara": "2.100009.110176.283950",
           "Juuka Keskus": "2.100009.110176.283900",
           "Kajoo": "2.100009.110176.283880",
@@ -2389,8 +2557,9 @@
         }
       },
       "Kitee": {
-        "area_code": "1.100009.110260",
-        "cities": {
+        "city_code": "1.100009.110260",
+        "areas": {
+          "Kaikki alueet": null,
           "Haarajärvi": "2.100009.110260.282395",
           "Heinoniemi": "2.100009.110260.282490",
           "Hummovaara": "2.100009.110260.282460",
@@ -2407,8 +2576,9 @@
         }
       },
       "Kontiolahti": {
-        "area_code": "1.100009.110276",
-        "cities": {
+        "city_code": "1.100009.110276",
+        "areas": {
+          "Kaikki alueet": null,
           "Jakokoski": "2.100009.110276.281220",
           "Katajaranta": "2.100009.110276.281120",
           "Kontiolahti": "2.100009.110276.281100",
@@ -2425,8 +2595,9 @@
         }
       },
       "Lieksa": {
-        "area_code": "1.100009.110422",
-        "cities": {
+        "city_code": "1.100009.110422",
+        "areas": {
+          "Kaikki alueet": null,
           "Hattuvaara": "2.100009.110422.281650",
           "Jamali": "2.100009.110422.281810",
           "Jongunjoki-Pankajärvi": "2.100009.110422.281970",
@@ -2444,8 +2615,9 @@
         }
       },
       "Liperi": {
-        "area_code": "1.100009.110426",
-        "cities": {
+        "city_code": "1.100009.110426",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahonkylä": "2.100009.110426.283480",
           "Harinjärvi": "2.100009.110426.283460",
           "Kaarnalampi": "2.100009.110426.283340",
@@ -2463,8 +2635,9 @@
         }
       },
       "Nurmes": {
-        "area_code": "1.100009.110541",
-        "cities": {
+        "city_code": "1.100009.110541",
+        "areas": {
+          "Kaikki alueet": null,
           "Höljäkkä": "2.100009.110541.275990",
           "Karhunpää": "2.100009.110541.275710",
           "Kohtavaara": "2.100009.110541.275970",
@@ -2478,16 +2651,18 @@
         }
       },
       "Outokumpu": {
-        "area_code": "1.100009.110309",
-        "cities": {
+        "city_code": "1.100009.110309",
+        "areas": {
+          "Kaikki alueet": null,
           "Kuusjärvi": "2.100009.110309.283630",
           "Outokumpu Keskus": "2.100009.110309.283500",
           "Varislahti": "2.100009.110309.283660"
         }
       },
       "Polvijärvi": {
-        "area_code": "1.100009.110607",
-        "cities": {
+        "city_code": "1.100009.110607",
+        "areas": {
+          "Kaikki alueet": null,
           "Horsmanaho": "2.100009.110607.283780",
           "Hukkala": "2.100009.110607.283830",
           "Kinahmo": "2.100009.110607.283825",
@@ -2501,8 +2676,9 @@
         }
       },
       "Rääkkylä": {
-        "area_code": "1.100009.110707",
-        "cities": {
+        "city_code": "1.100009.110707",
+        "areas": {
+          "Kaikki alueet": null,
           "Nieminen": "2.100009.110707.282290",
           "Oravisalo-Varpasalo": "2.100009.110707.282310",
           "Rasivaara": "2.100009.110707.282335",
@@ -2510,8 +2686,9 @@
         }
       },
       "Tohmajärvi": {
-        "area_code": "1.100009.110848",
-        "cities": {
+        "city_code": "1.100009.110848",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaurila": "2.100009.110848.282670",
           "Littilä": "2.100009.110848.282685",
           "Niirala-Jänisjoki": "2.100009.110848.282675",
@@ -2526,17 +2703,20 @@
   },
   "Pohjois-Pohjanmaa": {
     "region_code": "0.100002",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Alavieska": {
-        "area_code": "1.100002.110009",
-        "cities": {
+        "city_code": "1.100002.110009",
+        "areas": {
+          "Kaikki alueet": null,
           "Alavieska Keskus": "2.100002.110009.285200",
           "Talus": "2.100002.110009.285230"
         }
       },
       "Haapajärvi": {
-        "area_code": "1.100002.110069",
-        "cities": {
+        "city_code": "1.100002.110069",
+        "areas": {
+          "Kaikki alueet": null,
           "Haapajärvi Keskus": "2.100002.110069.285800",
           "Kuona": "2.100002.110069.285840",
           "Oksava": "2.100002.110069.285820",
@@ -2545,8 +2725,9 @@
         }
       },
       "Haapavesi": {
-        "area_code": "1.100002.110071",
-        "cities": {
+        "city_code": "1.100002.110071",
+        "areas": {
+          "Kaikki alueet": null,
           "Haapavesi Keskus": "2.100002.110071.286600",
           "Karhukangas": "2.100002.110071.286480",
           "Karsikas": "2.100002.110071.286690",
@@ -2556,14 +2737,16 @@
         }
       },
       "Hailuoto": {
-        "area_code": "1.100002.110072",
-        "cities": {
+        "city_code": "1.100002.110072",
+        "areas": {
+          "Kaikki alueet": null,
           "Hailuoto": "2.100002.110072.290480"
         }
       },
       "Ii": {
-        "area_code": "1.100002.110139",
-        "cities": {
+        "city_code": "1.100002.110139",
+        "areas": {
+          "Kaikki alueet": null,
           "Hyryoja": "2.100002.110139.295130",
           "Ii Asemanseutu": "2.100002.110139.291110",
           "Ii Keskus": "2.100002.110139.291100",
@@ -2575,8 +2758,9 @@
         }
       },
       "Kalajoki": {
-        "area_code": "1.100002.110208",
-        "cities": {
+        "city_code": "1.100002.110208",
+        "areas": {
+          "Kaikki alueet": null,
           "Hillilä": "2.100002.110208.268150",
           "Himanka Keskus": "2.100002.110208.268100",
           "Kalajoki Keskus": "2.100002.110208.285100",
@@ -2588,15 +2772,17 @@
         }
       },
       "Kempele": {
-        "area_code": "1.100002.110244",
-        "cities": {
+        "city_code": "1.100002.110244",
+        "areas": {
+          "Kaikki alueet": null,
           "Honkanen": "2.100002.110244.290450",
           "Kempele Keskus": "2.100002.110244.290440"
         }
       },
       "Kuusamo": {
-        "area_code": "1.100002.110305",
-        "cities": {
+        "city_code": "1.100002.110305",
+        "areas": {
+          "Kaikki alueet": null,
           "Kurkijärvi - Oijusluoma": "2.100002.110305.293700",
           "Kuusamo": "2.100002.110305.293600",
           "Muojärvi": "2.100002.110305.293800",
@@ -2605,36 +2791,41 @@
         }
       },
       "Kärsämäki": {
-        "area_code": "1.100002.110317",
-        "cities": {
+        "city_code": "1.100002.110317",
+        "areas": {
+          "Kaikki alueet": null,
           "Kärsämäki Keskus": "2.100002.110317.286710"
         }
       },
       "Liminka": {
-        "area_code": "1.100002.110425",
-        "cities": {
+        "city_code": "1.100002.110425",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Temmes": "2.100002.110425.291930",
           "Liminka Keskus": "2.100002.110425.291900",
           "Tupos": "2.100002.110425.291910"
         }
       },
       "Lumijoki": {
-        "area_code": "1.100002.110436",
-        "cities": {
+        "city_code": "1.100002.110436",
+        "areas": {
+          "Kaikki alueet": null,
           "Lumijoki": "2.100002.110436.291980"
         }
       },
       "Merijärvi": {
-        "area_code": "1.100002.110483",
-        "cities": {
+        "city_code": "1.100002.110483",
+        "areas": {
+          "Kaikki alueet": null,
           "Merijärvi Keskus": "2.100002.110483.286220",
           "Pyhänkoski": "2.100002.110483.286240",
           "Ylipää": "2.100002.110483.286230"
         }
       },
       "Muhos": {
-        "area_code": "1.100002.110494",
-        "cities": {
+        "city_code": "1.100002.110494",
+        "areas": {
+          "Kaikki alueet": null,
           "Jokirinne": "2.100002.110494.291410",
           "Kylmälänkylä": "2.100002.110494.291560",
           "Leppiniemi": "2.100002.110494.291430",
@@ -2643,8 +2834,9 @@
         }
       },
       "Nivala": {
-        "area_code": "1.100002.110535",
-        "cities": {
+        "city_code": "1.100002.110535",
+        "areas": {
+          "Kaikki alueet": null,
           "Ainastalo": "2.100002.110535.285560",
           "Karvoskylä": "2.100002.110535.285580",
           "Maliskylä": "2.100002.110535.285640",
@@ -2656,8 +2848,9 @@
         }
       },
       "Oulainen": {
-        "area_code": "1.100002.110563",
-        "cities": {
+        "city_code": "1.100002.110563",
+        "areas": {
+          "Kaikki alueet": null,
           "Annonen": "2.100002.110563.286530",
           "Kilpua": "2.100002.110563.286350",
           "Matkaniva": "2.100002.110563.286510",
@@ -2666,8 +2859,9 @@
         }
       },
       "Oulu": {
-        "area_code": "1.100002.110564",
-        "cities": {
+        "city_code": "1.100002.110564",
+        "areas": {
+          "Kaikki alueet": null,
           "Arkala": "2.100002.110564.291310",
           "Haapalehto": "2.100002.110564.290650",
           "Halosenniemi": "2.100002.110564.290860",
@@ -2717,8 +2911,9 @@
         }
       },
       "Pudasjärvi": {
-        "area_code": "1.100002.110615",
-        "cities": {
+        "city_code": "1.100002.110615",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Siurua": "2.100002.110615.293187",
           "Hetejärvi": "2.100002.110615.293160",
           "Iinattijärvi": "2.100002.110615.293277",
@@ -2735,8 +2930,9 @@
         }
       },
       "Pyhäjoki": {
-        "area_code": "1.100002.110625",
-        "cities": {
+        "city_code": "1.100002.110625",
+        "areas": {
+          "Kaikki alueet": null,
           "Parhalahti": "2.100002.110625.286110",
           "Pirttikoski": "2.100002.110625.286160",
           "Pyhäjoki Keskus": "2.100002.110625.286100",
@@ -2744,8 +2940,9 @@
         }
       },
       "Pyhäjärvi": {
-        "area_code": "1.100002.110626",
-        "cities": {
+        "city_code": "1.100002.110626",
+        "areas": {
+          "Kaikki alueet": null,
           "Hiidenniemi": "2.100002.110626.286850",
           "Pellikkaperä": "2.100002.110626.286810",
           "Pyhäkumpu": "2.100002.110626.286900",
@@ -2755,15 +2952,17 @@
         }
       },
       "Pyhäntä": {
-        "area_code": "1.100002.110630",
-        "cities": {
+        "city_code": "1.100002.110630",
+        "areas": {
+          "Kaikki alueet": null,
           "Pyhäntä": "2.100002.110630.292930",
           "Tavastkenkä": "2.100002.110630.292910"
         }
       },
       "Raahe": {
-        "area_code": "1.100002.110678",
-        "cities": {
+        "city_code": "1.100002.110678",
+        "areas": {
+          "Kaikki alueet": null,
           "Alpua": "2.100002.110678.286460",
           "Arkkukari": "2.100002.110678.292210",
           "Ilveskorpi": "2.100002.110678.286360",
@@ -2784,8 +2983,9 @@
         }
       },
       "Reisjärvi": {
-        "area_code": "1.100002.110691",
-        "cities": {
+        "city_code": "1.100002.110691",
+        "areas": {
+          "Kaikki alueet": null,
           "Kangaskylä-Tolpankangas": "2.100002.110691.285930",
           "Köyhänperä": "2.100002.110691.285980",
           "Reisjärvi Keskus": "2.100002.110691.285900",
@@ -2793,8 +2993,9 @@
         }
       },
       "Sievi": {
-        "area_code": "1.100002.110746",
-        "cities": {
+        "city_code": "1.100002.110746",
+        "areas": {
+          "Kaikki alueet": null,
           "Joenkylä": "2.100002.110746.285450",
           "Jyrinki": "2.100002.110746.285340",
           "Kiiskilampi": "2.100002.110746.285470",
@@ -2805,8 +3006,9 @@
         }
       },
       "Siikajoki": {
-        "area_code": "1.100002.110748",
-        "cities": {
+        "city_code": "1.100002.110748",
+        "areas": {
+          "Kaikki alueet": null,
           "Karinkanta": "2.100002.110748.292330",
           "Luohua": "2.100002.110748.292450",
           "Paavola-Huumola": "2.100002.110748.292430",
@@ -2818,8 +3020,9 @@
         }
       },
       "Siikalatva": {
-        "area_code": "1.100002.110791",
-        "cities": {
+        "city_code": "1.100002.110791",
+        "areas": {
+          "Kaikki alueet": null,
           "Kestilä": "2.100002.110791.292700",
           "Laakkola": "2.100002.110791.292650",
           "Leskelä": "2.100002.110791.292640",
@@ -2831,8 +3034,9 @@
         }
       },
       "Taivalkoski": {
-        "area_code": "1.100002.110832",
-        "cities": {
+        "city_code": "1.100002.110832",
+        "areas": {
+          "Kaikki alueet": null,
           "Jurmu": "2.100002.110832.293420",
           "Taivalkoski Keskus": "2.100002.110832.293400",
           "Tyrövaara": "2.100002.110832.293540",
@@ -2840,15 +3044,17 @@
         }
       },
       "Tyrnävä": {
-        "area_code": "1.100002.110859",
-        "cities": {
+        "city_code": "1.100002.110859",
+        "areas": {
+          "Kaikki alueet": null,
           "Temmes": "2.100002.110859.291950",
           "Tyrnävä": "2.100002.110859.291800"
         }
       },
       "Utajärvi": {
-        "area_code": "1.100002.110889",
-        "cities": {
+        "city_code": "1.100002.110889",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahmas": "2.100002.110889.291660",
           "Juorkuna": "2.100002.110889.291630",
           "Sanginkylä": "2.100002.110889.291620",
@@ -2857,8 +3063,9 @@
         }
       },
       "Vaala": {
-        "area_code": "1.100002.110785",
-        "cities": {
+        "city_code": "1.100002.110785",
+        "areas": {
+          "Kaikki alueet": null,
           "Jaalanka-Liminpuro": "2.100002.110785.291740",
           "Kankari": "2.100002.110785.291730",
           "Manamansalo": "2.100002.110785.288340",
@@ -2872,8 +3079,9 @@
         }
       },
       "Ylivieska": {
-        "area_code": "1.100002.110977",
-        "cities": {
+        "city_code": "1.100002.110977",
+        "areas": {
+          "Kaikki alueet": null,
           "Isokoski": "2.100002.110977.284770",
           "Kantokylä": "2.100002.110977.284650",
           "Raudaskylä": "2.100002.110977.284880",
@@ -2886,10 +3094,12 @@
   },
   "Pohjois-Savo": {
     "region_code": "0.100008",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Iisalmi": {
-        "area_code": "1.100008.110140",
-        "cities": {
+        "city_code": "1.100008.110140",
+        "areas": {
+          "Kaikki alueet": null,
           "Hernejärvi": "2.100008.110140.274420",
           "Iisalmi Keskus Eteläinen": "2.100008.110140.274100",
           "Iisalmi Keskus Pohjoinen": "2.100008.110140.274120",
@@ -2907,8 +3117,9 @@
         }
       },
       "Joroinen": {
-        "area_code": "1.100008.110171",
-        "cities": {
+        "city_code": "1.100008.110171",
+        "areas": {
+          "Kaikki alueet": null,
           "Huutokoski": "2.100008.110171.279620",
           "Joroinen Keskus": "2.100008.110171.279600",
           "Kaitainen": "2.100008.110171.279690",
@@ -2920,8 +3131,9 @@
         }
       },
       "Kaavi": {
-        "area_code": "1.100008.110204",
-        "cities": {
+        "city_code": "1.100008.110204",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaavi Keskus": "2.100008.110204.273600",
           "Kortteinen-Rasilampi": "2.100008.110204.273620",
           "Luikonlahti": "2.100008.110204.273670",
@@ -2930,15 +3142,17 @@
         }
       },
       "Keitele": {
-        "area_code": "1.100008.110239",
-        "cities": {
+        "city_code": "1.100008.110239",
+        "areas": {
+          "Kaikki alueet": null,
           "Keitele Keskus": "2.100008.110239.272600",
           "Petäjäkylä": "2.100008.110239.272980"
         }
       },
       "Kiuruvesi": {
-        "area_code": "1.100008.110263",
-        "cities": {
+        "city_code": "1.100008.110263",
+        "areas": {
+          "Kaikki alueet": null,
           "Aittojärvi": "2.100008.110263.274740",
           "Heinäkylä": "2.100008.110263.274630",
           "Honkaranta": "2.100008.110263.274610",
@@ -2952,8 +3166,9 @@
         }
       },
       "Kuopio": {
-        "area_code": "1.100008.110297",
-        "cities": {
+        "city_code": "1.100008.110297",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahkionlahti-Vianta": "2.100008.110297.271760",
           "Airaksela": "2.100008.110297.271490",
           "Etu-Niirala": "2.100008.110297.270110",
@@ -3016,8 +3231,9 @@
         }
       },
       "Lapinlahti": {
-        "area_code": "1.100008.110402",
-        "cities": {
+        "city_code": "1.100008.110402",
+        "areas": {
+          "Kaikki alueet": null,
           "Alapitkä": "2.100008.110402.271910",
           "Korpijärvi": "2.100008.110402.273250",
           "Lapinlahti Keskus": "2.100008.110402.273100",
@@ -3031,8 +3247,9 @@
         }
       },
       "Leppävirta": {
-        "area_code": "1.100008.110420",
-        "cities": {
+        "city_code": "1.100008.110420",
+        "areas": {
+          "Kaikki alueet": null,
           "Itä-Soisalo": "2.100008.110420.279350",
           "Konnuslahti-Valkeamäki": "2.100008.110420.279150",
           "Kotalahti": "2.100008.110420.279140",
@@ -3051,8 +3268,9 @@
         }
       },
       "Pielavesi": {
-        "area_code": "1.100008.110595",
-        "cities": {
+        "city_code": "1.100008.110595",
+        "areas": {
+          "Kaikki alueet": null,
           "Jokijärvi": "2.100008.110595.272510",
           "Jylhänkylä": "2.100008.110595.272810",
           "Kumpula": "2.100008.110595.272430",
@@ -3065,8 +3283,9 @@
         }
       },
       "Rautalampi": {
-        "area_code": "1.100008.110686",
-        "cities": {
+        "city_code": "1.100008.110686",
+        "areas": {
+          "Kaikki alueet": null,
           "Kerkonjoensuu": "2.100008.110686.277930",
           "Myhinpää": "2.100008.110686.277770",
           "Rautalampi Keskus": "2.100008.110686.277700",
@@ -3074,8 +3293,9 @@
         }
       },
       "Rautavaara": {
-        "area_code": "1.100008.110687",
-        "cities": {
+        "city_code": "1.100008.110687",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Luosta-Riitasalo": "2.100008.110687.273850",
           "Kangaslahti": "2.100008.110687.273990",
           "Rautavaara Keskus": "2.100008.110687.273900",
@@ -3083,8 +3303,9 @@
         }
       },
       "Siilinjärvi": {
-        "area_code": "1.100008.110749",
-        "cities": {
+        "city_code": "1.100008.110749",
+        "areas": {
+          "Kaikki alueet": null,
           "Hamula": "2.100008.110749.271890",
           "Harjamäki": "2.100008.110749.271870",
           "Jännevirta": "2.100008.110749.270940",
@@ -3097,8 +3318,9 @@
         }
       },
       "Sonkajärvi": {
-        "area_code": "1.100008.110762",
-        "cities": {
+        "city_code": "1.100008.110762",
+        "areas": {
+          "Kaikki alueet": null,
           "Jyrkkä": "2.100008.110762.274380",
           "Kalliosuo": "2.100008.110762.274345",
           "Sonkajärvi Keskus": "2.100008.110762.274300",
@@ -3107,8 +3329,9 @@
         }
       },
       "Suonenjoki": {
-        "area_code": "1.100008.110778",
-        "cities": {
+        "city_code": "1.100008.110778",
+        "areas": {
+          "Kaikki alueet": null,
           "Iisvesi": "2.100008.110778.277800",
           "Lempyy": "2.100008.110778.277630",
           "Suonenjoki Keskus": "2.100008.110778.277600",
@@ -3116,16 +3339,18 @@
         }
       },
       "Tervo": {
-        "area_code": "1.100008.110844",
-        "cities": {
+        "city_code": "1.100008.110844",
+        "areas": {
+          "Kaikki alueet": null,
           "Eliaksela": "2.100008.110844.272220",
           "Talluskylä": "2.100008.110844.271640",
           "Tervo Keskus-Eliaksela": "2.100008.110844.272210"
         }
       },
       "Tuusniemi": {
-        "area_code": "1.100008.110857",
-        "cities": {
+        "city_code": "1.100008.110857",
+        "areas": {
+          "Kaikki alueet": null,
           "Juurikkamäki": "2.100008.110857.271260",
           "Kosula": "2.100008.110857.271280",
           "Laukka-aho": "2.100008.110857.271170",
@@ -3135,8 +3360,9 @@
         }
       },
       "Varkaus": {
-        "area_code": "1.100008.110915",
-        "cities": {
+        "city_code": "1.100008.110915",
+        "areas": {
+          "Kaikki alueet": null,
           "Akonlahti": "2.100008.110915.278710",
           "Kangaslampi Keskus": "2.100008.110915.279480",
           "Kaura-Aho": "2.100008.110915.278870",
@@ -3153,8 +3379,9 @@
         }
       },
       "Vesanto": {
-        "area_code": "1.100008.110921",
-        "cities": {
+        "city_code": "1.100008.110921",
+        "areas": {
+          "Kaikki alueet": null,
           "Horontaipale": "2.100008.110921.272380",
           "Niinivesi": "2.100008.110921.272310",
           "Närhilä": "2.100008.110921.272360",
@@ -3164,8 +3391,9 @@
         }
       },
       "Vieremä": {
-        "area_code": "1.100008.110925",
-        "cities": {
+        "city_code": "1.100008.110925",
+        "areas": {
+          "Kaikki alueet": null,
           "Kauppilanmäki": "2.100008.110925.274270",
           "Marttisenjärvi": "2.100008.110925.274240",
           "Nissilä": "2.100008.110925.274250",
@@ -3177,10 +3405,12 @@
   },
   "Päijät-Häme": {
     "region_code": "0.100012",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Asikkala": {
-        "area_code": "1.100012.110016",
-        "cities": {
+        "city_code": "1.100012.110016",
+        "areas": {
+          "Kaikki alueet": null,
           "Asikkala": "2.100012.110016.217320",
           "Iso-Äiniö-Vähimaa": "2.100012.110016.217450",
           "Kalkkinen": "2.100012.110016.217240",
@@ -3194,8 +3424,9 @@
         }
       },
       "Hartola": {
-        "area_code": "1.100012.110081",
-        "cities": {
+        "city_code": "1.100012.110081",
+        "areas": {
+          "Kaikki alueet": null,
           "Hartola Keskus": "2.100012.110081.219600",
           "Kalhonkylä": "2.100012.110081.219630",
           "Koitti-Lepsala": "2.100012.110081.219540",
@@ -3204,8 +3435,9 @@
         }
       },
       "Heinola": {
-        "area_code": "1.100012.110111",
-        "cities": {
+        "city_code": "1.100012.110111",
+        "areas": {
+          "Kaikki alueet": null,
           "Heinola Keskus": "2.100012.110111.218100",
           "Heinola kk": "2.100012.110111.218300",
           "Jyränkö": "2.100012.110111.218150",
@@ -3221,8 +3453,9 @@
         }
       },
       "Hollola": {
-        "area_code": "1.100012.110098",
-        "cities": {
+        "city_code": "1.100012.110098",
+        "areas": {
+          "Kaikki alueet": null,
           "Herrala": "2.100012.110098.216500",
           "Hollola kk": "2.100012.110098.216710",
           "Hämeenkoski": "2.100012.110098.216800",
@@ -3239,8 +3472,9 @@
         }
       },
       "Iitti": {
-        "area_code": "1.100012.110142",
-        "cities": {
+        "city_code": "1.100012.110142",
+        "areas": {
+          "Kaikki alueet": null,
           "Haapa-Kimola": "2.100012.110142.247310",
           "Hiisiö": "2.100012.110142.247460",
           "Huutotöyry": "2.100012.110142.219160",
@@ -3254,8 +3488,9 @@
         }
       },
       "Kärkölä": {
-        "area_code": "1.100012.110316",
-        "cities": {
+        "city_code": "1.100012.110316",
+        "areas": {
+          "Kaikki alueet": null,
           "Järvelä": "2.100012.110316.216600",
           "Kärkölä kk": "2.100012.110316.216610",
           "Lappila": "2.100012.110316.216670",
@@ -3263,8 +3498,9 @@
         }
       },
       "Lahti": {
-        "area_code": "1.100012.110398",
-        "cities": {
+        "city_code": "1.100012.110398",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahtiala": "2.100012.110398.215320",
           "Hennala-Jokimaa": "2.100012.110398.215700",
           "Jalkaranta": "2.100012.110398.215900",
@@ -3301,8 +3537,9 @@
         }
       },
       "Orimattila": {
-        "area_code": "1.100012.110560",
-        "cities": {
+        "city_code": "1.100012.110560",
+        "areas": {
+          "Kaikki alueet": null,
           "Artjärvi Keskus": "2.100012.110560.216200",
           "Artjärvi Kirkonkylä": "2.100012.110560.216230",
           "Heinämaa": "2.100012.110560.216330",
@@ -3319,8 +3556,9 @@
         }
       },
       "Padasjoki": {
-        "area_code": "1.100012.110576",
-        "cities": {
+        "city_code": "1.100012.110576",
+        "areas": {
+          "Kaikki alueet": null,
           "Arrakoski": "2.100012.110576.217530",
           "Auttoinen": "2.100012.110576.217610",
           "Kasiniemi-Torittu": "2.100012.110576.217740",
@@ -3332,8 +3570,9 @@
         }
       },
       "Sysmä": {
-        "area_code": "1.100012.110781",
-        "cities": {
+        "city_code": "1.100012.110781",
+        "areas": {
+          "Kaikki alueet": null,
           "Liikola": "2.100012.110781.219740",
           "Nikkaroinen": "2.100012.110781.219320",
           "Nuoramoinen": "2.100012.110781.219370",
@@ -3346,10 +3585,12 @@
   },
   "Satakunta": {
     "region_code": "0.100010",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Eura": {
-        "area_code": "1.100010.110050",
-        "cities": {
+        "city_code": "1.100010.110050",
+        "areas": {
+          "Kaikki alueet": null,
           "Eura Keskus": "2.100010.110050.227510",
           "Harola": "2.100010.110050.227450",
           "Hinnerjoki": "2.100010.110050.227600",
@@ -3363,8 +3604,9 @@
         }
       },
       "Eurajoki": {
-        "area_code": "1.100010.110051",
-        "cities": {
+        "city_code": "1.100010.110051",
+        "areas": {
+          "Kaikki alueet": null,
           "Eurajoki Keskus": "2.100010.110051.227100",
           "Eurajoki asemanseutu": "2.100010.110051.227130",
           "Irjanne": "2.100010.110051.227110",
@@ -3375,14 +3617,16 @@
         }
       },
       "Harjavalta": {
-        "area_code": "1.100010.110079",
-        "cities": {
+        "city_code": "1.100010.110079",
+        "areas": {
+          "Kaikki alueet": null,
           "Harjavalta Keskus": "2.100010.110079.229200"
         }
       },
       "Huittinen": {
-        "area_code": "1.100010.110102",
-        "cities": {
+        "city_code": "1.100010.110102",
+        "areas": {
+          "Kaikki alueet": null,
           "Huhtamo": "2.100010.110102.232770",
           "Huittinen Keskus": "2.100010.110102.232700",
           "Rutava": "2.100010.110102.232620",
@@ -3392,15 +3636,17 @@
         }
       },
       "Jämijärvi": {
-        "area_code": "1.100010.110181",
-        "cities": {
+        "city_code": "1.100010.110181",
+        "areas": {
+          "Kaikki alueet": null,
           "Jämijärvi Keskus": "2.100010.110181.238800",
           "Suurimaa": "2.100010.110181.238860"
         }
       },
       "Kankaanpää": {
-        "area_code": "1.100010.110214",
-        "cities": {
+        "city_code": "1.100010.110214",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Honkajoki": "2.100010.110214.238910",
           "Hapuoja": "2.100010.110214.238740",
           "Honkajoki Keskus": "2.100010.110214.238950",
@@ -3416,8 +3662,9 @@
         }
       },
       "Karvia": {
-        "area_code": "1.100010.110230",
-        "cities": {
+        "city_code": "1.100010.110230",
+        "areas": {
+          "Kaikki alueet": null,
           "Alkkia": "2.100010.110230.239990",
           "Kantti": "2.100010.110230.239940",
           "Karvia Keskus": "2.100010.110230.239930",
@@ -3428,8 +3675,9 @@
         }
       },
       "Kokemäki": {
-        "area_code": "1.100010.110271",
-        "cities": {
+        "city_code": "1.100010.110271",
+        "areas": {
+          "Kaikki alueet": null,
           "Kauvatsa": "2.100010.110271.232920",
           "Kauvatsa Asemanseutu": "2.100010.110271.232910",
           "Kokemäki Keskus": "2.100010.110271.232800",
@@ -3439,8 +3687,9 @@
         }
       },
       "Merikarvia": {
-        "area_code": "1.100010.110484",
-        "cities": {
+        "city_code": "1.100010.110484",
+        "areas": {
+          "Kaikki alueet": null,
           "Etelämaa": "2.100010.110484.229740",
           "Kuvaskangas": "2.100010.110484.229940",
           "Merikarvia Keskus-Rannikko": "2.100010.110484.229900",
@@ -3449,24 +3698,27 @@
         }
       },
       "Nakkila": {
-        "area_code": "1.100010.110531",
-        "cities": {
+        "city_code": "1.100010.110531",
+        "areas": {
+          "Kaikki alueet": null,
           "Hormisto": "2.100010.110531.229270",
           "Järvimaa": "2.100010.110531.229280",
           "Nakkila Keskus": "2.100010.110531.229250"
         }
       },
       "Pomarkku": {
-        "area_code": "1.100010.110608",
-        "cities": {
+        "city_code": "1.100010.110608",
+        "areas": {
+          "Kaikki alueet": null,
           "Honkakoski": "2.100010.110608.229640",
           "Pomarkku Keskus": "2.100010.110608.229630",
           "Tuunajärvi": "2.100010.110608.238680"
         }
       },
       "Pori": {
-        "area_code": "1.100010.110609",
-        "cities": {
+        "city_code": "1.100010.110609",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahlainen": "2.100010.110609.229700",
           "Impola": "2.100010.110609.228130",
           "Isojoenranta": "2.100010.110609.228240",
@@ -3502,8 +3754,9 @@
         }
       },
       "Rauma": {
-        "area_code": "1.100010.110684",
-        "cities": {
+        "city_code": "1.100010.110684",
+        "areas": {
+          "Kaikki alueet": null,
           "Ala-Kieri": "2.100010.110684.227220",
           "Kaaro": "2.100010.110684.226410",
           "Kodiksami": "2.100010.110684.227250",
@@ -3525,8 +3778,9 @@
         }
       },
       "Siikainen": {
-        "area_code": "1.100010.110747",
-        "cities": {
+        "city_code": "1.100010.110747",
+        "areas": {
+          "Kaikki alueet": null,
           "Leväsjoki-Saarineva": "2.100010.110747.229880",
           "Otamo": "2.100010.110747.229860",
           "Sammi": "2.100010.110747.229830",
@@ -3534,8 +3788,9 @@
         }
       },
       "Säkylä": {
-        "area_code": "1.100010.110783",
-        "cities": {
+        "city_code": "1.100010.110783",
+        "areas": {
+          "Kaikki alueet": null,
           "Huovinrinne": "2.100010.110783.227910",
           "Iso-Vimma": "2.100010.110783.227820",
           "Kakkuri": "2.100010.110783.227840",
@@ -3549,8 +3804,9 @@
         }
       },
       "Ulvila": {
-        "area_code": "1.100010.110886",
-        "cities": {
+        "city_code": "1.100010.110886",
+        "areas": {
+          "Kaikki alueet": null,
           "Harjunpää": "2.100010.110886.228260",
           "Kaasmarkku": "2.100010.110886.229310",
           "Kullaa Keskus": "2.100010.110886.229340",
@@ -3564,10 +3820,12 @@
   },
   "Uusimaa": {
     "region_code": "0.100018",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Askola": {
-        "area_code": "1.100018.110018",
-        "cities": {
+        "city_code": "1.100018.110018",
+        "areas": {
+          "Kaikki alueet": null,
           "Askola Kirkonkylä": "2.100018.110018.207500",
           "Huuvari-Tiilää": "2.100018.110018.207590",
           "Juornaankylä": "2.100018.110018.207680",
@@ -3578,8 +3836,9 @@
         }
       },
       "Espoo": {
-        "area_code": "1.100018.110049",
-        "cities": {
+        "city_code": "1.100018.110049",
+        "areas": {
+          "Kaikki alueet": null,
           "Bemböle-Pakankylä": "2.100018.110049.202740",
           "Espoon Keskus": "2.100018.110049.202770",
           "Espoonlahti": "2.100018.110049.202320",
@@ -3629,8 +3888,9 @@
         }
       },
       "Hanko": {
-        "area_code": "1.100018.110078",
-        "cities": {
+        "city_code": "1.100018.110078",
+        "areas": {
+          "Kaikki alueet": null,
           "Hangonkylä": "2.100018.110078.210940",
           "Hanko Keskus": "2.100018.110078.210900",
           "Hanko Pohjoinen": "2.100018.110078.210960",
@@ -3638,8 +3898,9 @@
         }
       },
       "Helsinki": {
-        "area_code": "1.100018.110091",
-        "cities": {
+        "city_code": "1.100018.110091",
+        "areas": {
+          "Kaikki alueet": null,
           "Aurinkolahti": "2.100018.110091.200990",
           "Eira - Hernesaari": "2.100018.110091.200150",
           "Etelä-Haaga": "2.100018.110091.200320",
@@ -3727,8 +3988,9 @@
         }
       },
       "Hyvinkää": {
-        "area_code": "1.100018.110106",
-        "cities": {
+        "city_code": "1.100018.110106",
+        "areas": {
+          "Kaikki alueet": null,
           "Hakalanmäki-Hakala": "2.100018.110106.205460",
           "Hyvinkää Keskus": "2.100018.110106.205800",
           "Hyvinkää sairaala-alue": "2.100018.110106.205850",
@@ -3748,8 +4010,9 @@
         }
       },
       "Inkoo": {
-        "area_code": "1.100018.110149",
-        "cities": {
+        "city_code": "1.100018.110149",
+        "areas": {
+          "Kaikki alueet": null,
           "Degerby": "2.100018.110149.210160",
           "Fagervik": "2.100018.110149.210250",
           "Inkoo Asemanseutu": "2.100018.110149.210230",
@@ -3759,8 +4022,9 @@
         }
       },
       "Järvenpää": {
-        "area_code": "1.100018.110186",
-        "cities": {
+        "city_code": "1.100018.110186",
+        "areas": {
+          "Kaikki alueet": null,
           "Haarajoki": "2.100018.110186.204480",
           "Jamppa": "2.100018.110186.204440",
           "Järvenpää Keskus": "2.100018.110186.204410",
@@ -3771,22 +4035,25 @@
         }
       },
       "Karkkila": {
-        "area_code": "1.100018.110224",
-        "cities": {
+        "city_code": "1.100018.110224",
+        "areas": {
+          "Kaikki alueet": null,
           "Karkkila Keskus": "2.100018.110224.203600",
           "Polari": "2.100018.110224.203620",
           "Uusitalo": "2.100018.110224.203710"
         }
       },
       "Kauniainen": {
-        "area_code": "1.100018.110235",
-        "cities": {
+        "city_code": "1.100018.110235",
+        "areas": {
+          "Kaikki alueet": null,
           "Kauniainen": "2.100018.110235.202700"
         }
       },
       "Kerava": {
-        "area_code": "1.100018.110245",
-        "cities": {
+        "city_code": "1.100018.110245",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahjo-Kaskela": "2.100018.110245.204220",
           "Alikerava": "2.100018.110245.204250",
           "Kerava Keskus": "2.100018.110245.204200",
@@ -3795,8 +4062,9 @@
         }
       },
       "Kirkkonummi": {
-        "area_code": "1.100018.110257",
-        "cities": {
+        "city_code": "1.100018.110257",
+        "areas": {
+          "Kaikki alueet": null,
           "Evitskog": "2.100018.110257.202550",
           "Gesterby": "2.100018.110257.202410",
           "Jorvas": "2.100018.110257.202420",
@@ -3816,8 +4084,9 @@
         }
       },
       "Lapinjärvi": {
-        "area_code": "1.100018.110407",
-        "cities": {
+        "city_code": "1.100018.110407",
+        "areas": {
+          "Kaikki alueet": null,
           "Heikinkylä": "2.100018.110407.207850",
           "Ingermaninkylä": "2.100018.110407.207810",
           "Kimonkylä": "2.100018.110407.247350",
@@ -3828,8 +4097,9 @@
         }
       },
       "Lohja": {
-        "area_code": "1.100018.110444",
-        "cities": {
+        "city_code": "1.100018.110444",
+        "areas": {
+          "Kaikki alueet": null,
           "Hormajärvi": "2.100018.110444.208450",
           "Hyönölä": "2.100018.110444.203870",
           "Ikkala": "2.100018.110444.203810",
@@ -3854,8 +4124,9 @@
         }
       },
       "Loviisa": {
-        "area_code": "1.100018.110434",
-        "cities": {
+        "city_code": "1.100018.110434",
+        "areas": {
+          "Kaikki alueet": null,
           "Ahvenkoski": "2.100018.110434.207960",
           "Etelä-Harju": "2.100018.110434.207920",
           "Gammelby": "2.100018.110434.207740",
@@ -3878,15 +4149,17 @@
         }
       },
       "Myrskylä": {
-        "area_code": "1.100018.110504",
-        "cities": {
+        "city_code": "1.100018.110504",
+        "areas": {
+          "Kaikki alueet": null,
           "Kankkila": "2.100018.110504.207690",
           "Myrskylä Keskus": "2.100018.110504.207600"
         }
       },
       "Mäntsälä": {
-        "area_code": "1.100018.110505",
-        "cities": {
+        "city_code": "1.100018.110505",
+        "areas": {
+          "Kaikki alueet": null,
           "Hautjärvi": "2.100018.110505.204840",
           "Hirvihaara": "2.100018.110505.204680",
           "Kaukalampi": "2.100018.110505.204820",
@@ -3902,8 +4175,9 @@
         }
       },
       "Nurmijärvi": {
-        "area_code": "1.100018.110543",
-        "cities": {
+        "city_code": "1.100018.110543",
+        "areas": {
+          "Kaikki alueet": null,
           "Haikala": "2.100018.110543.201820",
           "Kiljava": "2.100018.110543.205250",
           "Klaukkala": "2.100018.110543.201840",
@@ -3919,16 +4193,18 @@
         }
       },
       "Pornainen": {
-        "area_code": "1.100018.110611",
-        "cities": {
+        "city_code": "1.100018.110611",
+        "areas": {
+          "Kaikki alueet": null,
           "Halkia": "2.100018.110611.207190",
           "Keski-Pornainen": "2.100018.110611.207170",
           "Laukkoski": "2.100018.110611.207150"
         }
       },
       "Porvoo": {
-        "area_code": "1.100018.110638",
-        "cities": {
+        "city_code": "1.100018.110638",
+        "areas": {
+          "Kaikki alueet": null,
           "Anttila": "2.100018.110638.207130",
           "Eestinmäki-Ernestas": "2.100018.110638.206450",
           "Emäsalo": "2.100018.110638.206950",
@@ -3956,16 +4232,18 @@
         }
       },
       "Pukkila": {
-        "area_code": "1.100018.110616",
-        "cities": {
+        "city_code": "1.100018.110616",
+        "areas": {
+          "Kaikki alueet": null,
           "Kantele": "2.100018.110616.207565",
           "Pukkila Keskus": "2.100018.110616.207560",
           "Torpinkylä": "2.100018.110616.207550"
         }
       },
       "Raasepori": {
-        "area_code": "1.100018.110710",
-        "cities": {
+        "city_code": "1.100018.110710",
+        "areas": {
+          "Kaikki alueet": null,
           "Bollsta": "2.100018.110710.210440",
           "Bromarv": "2.100018.110710.210570",
           "Bäljars": "2.100018.110710.210320",
@@ -3988,8 +4266,9 @@
         }
       },
       "Sipoo": {
-        "area_code": "1.100018.110753",
-        "cities": {
+        "city_code": "1.100018.110753",
+        "areas": {
+          "Kaikki alueet": null,
           "Box": "2.100018.110753.201190",
           "Kalkkiranta": "2.100018.110753.201180",
           "Martinkylä": "2.100018.110753.204150",
@@ -4001,16 +4280,18 @@
         }
       },
       "Siuntio": {
-        "area_code": "1.100018.110755",
-        "cities": {
+        "city_code": "1.100018.110755",
+        "areas": {
+          "Kaikki alueet": null,
           "Lappers": "2.100018.110755.202590",
           "Siuntio Asemanseutu": "2.100018.110755.202580",
           "Siuntio Kirkonkylä": "2.100018.110755.202570"
         }
       },
       "Tuusula": {
-        "area_code": "1.100018.110858",
-        "cities": {
+        "city_code": "1.100018.110858",
+        "areas": {
+          "Kaikki alueet": null,
           "Hyrylä": "2.100018.110858.204300",
           "Jokela": "2.100018.110858.205400",
           "Jäniksenlinna": "2.100018.110858.204390",
@@ -4027,8 +4308,9 @@
         }
       },
       "Vantaa": {
-        "area_code": "1.100018.110092",
-        "cities": {
+        "city_code": "1.100018.110092",
+        "areas": {
+          "Kaikki alueet": null,
           "Askisto": "2.100018.110092.201680",
           "Hakunila": "2.100018.110092.201200",
           "Hiekkaharju": "2.100018.110092.201350",
@@ -4069,8 +4351,9 @@
         }
       },
       "Vihti": {
-        "area_code": "1.100018.110927",
-        "cities": {
+        "city_code": "1.100018.110927",
+        "areas": {
+          "Kaikki alueet": null,
           "Huhmari": "2.100018.110927.203150",
           "Jokikunta": "2.100018.110927.203430",
           "Nummela": "2.100018.110927.203100",
@@ -4086,17 +4369,20 @@
   },
   "Varsinais-Suomi": {
     "region_code": "0.100016",
-    "areas": {
+    "cities": {
+      "Kaikki kaupungit": null,
       "Aura": {
-        "area_code": "1.100016.110019",
-        "cities": {
+        "city_code": "1.100016.110019",
+        "areas": {
+          "Kaikki alueet": null,
           "Aura Keskus": "2.100016.110019.221380",
           "Aura kk.": "2.100016.110019.221370"
         }
       },
       "Kaarina": {
-        "area_code": "1.100016.110202",
-        "cities": {
+        "city_code": "1.100016.110202",
+        "areas": {
+          "Kaikki alueet": null,
           "Kaarina Keskus": "2.100016.110202.220780",
           "Kuusisto": "2.100016.110202.221620",
           "Littoinen": "2.100016.110202.220660",
@@ -4105,8 +4391,9 @@
         }
       },
       "Kemiönsaari": {
-        "area_code": "1.100016.110322",
-        "cities": {
+        "city_code": "1.100016.110322",
+        "areas": {
+          "Kaikki alueet": null,
           "Björkboda": "2.100016.110322.225860",
           "Dragsfjärd": "2.100016.110322.225870",
           "Högsåra": "2.100016.110322.225960",
@@ -4123,28 +4410,32 @@
         }
       },
       "Koski Tl": {
-        "area_code": "1.100016.110284",
-        "cities": {
+        "city_code": "1.100016.110284",
+        "areas": {
+          "Kaikki alueet": null,
           "Koski Tl": "2.100016.110284.231500"
         }
       },
       "Kustavi": {
-        "area_code": "1.100016.110304",
-        "cities": {
+        "city_code": "1.100016.110304",
+        "areas": {
+          "Kaikki alueet": null,
           "Kustavi": "2.100016.110304.223360"
         }
       },
       "Laitila": {
-        "area_code": "1.100016.110400",
-        "cities": {
+        "city_code": "1.100016.110400",
+        "areas": {
+          "Kaikki alueet": null,
           "Laitila Keskus": "2.100016.110400.223800",
           "Soukainen": "2.100016.110400.223840",
           "Suontaka": "2.100016.110400.223880"
         }
       },
       "Lieto": {
-        "area_code": "1.100016.110423",
-        "cities": {
+        "city_code": "1.100016.110423",
+        "areas": {
+          "Kaikki alueet": null,
           "Ilmarinen": "2.100016.110423.221350",
           "Lieto Asemanseutu": "2.100016.110423.221360",
           "Lieto Keskus": "2.100016.110423.221420",
@@ -4154,8 +4445,9 @@
         }
       },
       "Loimaa": {
-        "area_code": "1.100016.110430",
-        "cities": {
+        "city_code": "1.100016.110430",
+        "areas": {
+          "Kaikki alueet": null,
           "Alastaro Keskus": "2.100016.110430.232440",
           "Kojonkulma": "2.100016.110430.232250",
           "Kojonperä": "2.100016.110430.232260",
@@ -4171,32 +4463,36 @@
         }
       },
       "Marttila": {
-        "area_code": "1.100016.110480",
-        "cities": {
+        "city_code": "1.100016.110480",
+        "areas": {
+          "Kaikki alueet": null,
           "Marttila": "2.100016.110480.221490",
           "Ollila": "2.100016.110480.221560",
           "Prunkila": "2.100016.110480.221480"
         }
       },
       "Masku": {
-        "area_code": "1.100016.110481",
-        "cities": {
+        "city_code": "1.100016.110481",
+        "areas": {
+          "Kaikki alueet": null,
           "Askainen Keskus": "2.100016.110481.221240",
           "Lemu": "2.100016.110481.221230",
           "Masku": "2.100016.110481.221250"
         }
       },
       "Mynämäki": {
-        "area_code": "1.100016.110503",
-        "cities": {
+        "city_code": "1.100016.110503",
+        "areas": {
+          "Kaikki alueet": null,
           "Hietamäki": "2.100016.110503.223140",
           "Mietoinen Keskus": "2.100016.110503.223120",
           "Mynämäki Keskus": "2.100016.110503.223100"
         }
       },
       "Naantali": {
-        "area_code": "1.100016.110529",
-        "cities": {
+        "city_code": "1.100016.110529",
+        "areas": {
+          "Kaikki alueet": null,
           "Livonsaari": "2.100016.110529.221180",
           "Merimasku": "2.100016.110529.221160",
           "Naantali Keskus": "2.100016.110529.221100",
@@ -4208,21 +4504,24 @@
         }
       },
       "Nousiainen": {
-        "area_code": "1.100016.110538",
-        "cities": {
+        "city_code": "1.100016.110538",
+        "areas": {
+          "Kaikki alueet": null,
           "Nousiainen": "2.100016.110538.221270"
         }
       },
       "Oripää": {
-        "area_code": "1.100016.110561",
-        "cities": {
+        "city_code": "1.100016.110561",
+        "areas": {
+          "Kaikki alueet": null,
           "Latva": "2.100016.110561.232520",
           "Oripää Keskus": "2.100016.110561.232500"
         }
       },
       "Paimio": {
-        "area_code": "1.100016.110577",
-        "cities": {
+        "city_code": "1.100016.110577",
+        "areas": {
+          "Kaikki alueet": null,
           "Hevonpää": "2.100016.110577.221510",
           "Naskarla": "2.100016.110577.221520",
           "Paimio Keskus": "2.100016.110577.221530",
@@ -4231,8 +4530,9 @@
         }
       },
       "Parainen": {
-        "area_code": "1.100016.110445",
-        "cities": {
+        "city_code": "1.100016.110445",
+        "areas": {
+          "Kaikki alueet": null,
           "Houtskär Keskus": "2.100016.110445.221760",
           "Iniö": "2.100016.110445.223390",
           "Kirjala": "2.100016.110445.221610",
@@ -4250,8 +4550,9 @@
         }
       },
       "Pyhäranta": {
-        "area_code": "1.100016.110631",
-        "cities": {
+        "city_code": "1.100016.110631",
+        "areas": {
+          "Kaikki alueet": null,
           "Ihode": "2.100016.110631.227320",
           "Pyhäranta": "2.100016.110631.223950",
           "Reila": "2.100016.110631.227340",
@@ -4259,8 +4560,9 @@
         }
       },
       "Pöytyä": {
-        "area_code": "1.100016.110636",
-        "cities": {
+        "city_code": "1.100016.110636",
+        "areas": {
+          "Kaikki alueet": null,
           "Auvainen": "2.100016.110636.221860",
           "Haveri": "2.100016.110636.221890",
           "Karinainen": "2.100016.110636.221840",
@@ -4273,8 +4575,9 @@
         }
       },
       "Raisio": {
-        "area_code": "1.100016.110680",
-        "cities": {
+        "city_code": "1.100016.110680",
+        "areas": {
+          "Kaikki alueet": null,
           "Hakinmäki": "2.100016.110680.221210",
           "Ihala": "2.100016.110680.221260",
           "Kuloinen": "2.100016.110680.221280",
@@ -4284,15 +4587,17 @@
         }
       },
       "Rusko": {
-        "area_code": "1.100016.110704",
-        "cities": {
+        "city_code": "1.100016.110704",
+        "areas": {
+          "Kaikki alueet": null,
           "Rusko": "2.100016.110704.221290",
           "Vahto": "2.100016.110704.221310"
         }
       },
       "Salo": {
-        "area_code": "1.100016.110734",
-        "cities": {
+        "city_code": "1.100016.110734",
+        "areas": {
+          "Kaikki alueet": null,
           "Aijala": "2.100016.110734.225550",
           "Angelniemi": "2.100016.110734.225230",
           "Finby": "2.100016.110734.225630",
@@ -4336,15 +4641,17 @@
         }
       },
       "Sauvo": {
-        "area_code": "1.100016.110738",
-        "cities": {
+        "city_code": "1.100016.110738",
+        "areas": {
+          "Kaikki alueet": null,
           "Karuna": "2.100016.110738.221590",
           "Sauvo Keskus": "2.100016.110738.221570"
         }
       },
       "Somero": {
-        "area_code": "1.100016.110761",
-        "cities": {
+        "city_code": "1.100016.110761",
+        "areas": {
+          "Kaikki alueet": null,
           "Hirsjärvi": "2.100016.110761.231460",
           "Häntälä": "2.100016.110761.231450",
           "Pitkäjärvi": "2.100016.110761.231520",
@@ -4356,14 +4663,16 @@
         }
       },
       "Taivassalo": {
-        "area_code": "1.100016.110833",
-        "cities": {
+        "city_code": "1.100016.110833",
+        "areas": {
+          "Kaikki alueet": null,
           "Taivassalo": "2.100016.110833.223310"
         }
       },
       "Turku": {
-        "area_code": "1.100016.110853",
-        "cities": {
+        "city_code": "1.100016.110853",
+        "areas": {
+          "Kaikki alueet": null,
           "Ammattikorkeakoulu": "2.100016.110853.220800",
           "Huhkola-Lauste-Vaala": "2.100016.110853.220750",
           "Ilpoinen-Harittu": "2.100016.110853.220740",
@@ -4394,8 +4703,9 @@
         }
       },
       "Uusikaupunki": {
-        "area_code": "1.100016.110895",
-        "cities": {
+        "city_code": "1.100016.110895",
+        "areas": {
+          "Kaikki alueet": null,
           "Kalanti Asemanseutu": "2.100016.110895.223660",
           "Kalanti Keskus": "2.100016.110895.223600",
           "Lokalahti": "2.100016.110895.223450",
@@ -4404,8 +4714,9 @@
         }
       },
       "Vehmaa": {
-        "area_code": "1.100016.110918",
-        "cities": {
+        "city_code": "1.100016.110918",
+        "areas": {
+          "Kaikki alueet": null,
           "Rautila": "2.100016.110918.223260",
           "Vehmaa": "2.100016.110918.223210",
           "Vinkkilä": "2.100016.110918.223200"
