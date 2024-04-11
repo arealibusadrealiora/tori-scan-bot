@@ -196,6 +196,7 @@ def save_data(update: Update, context: CallbackContext) -> int:
             else:
                 region_code = locations_data[region]["region_code"]
                 tori_link += f"&location={region_code}"
+        tori_link += '&sort=PUBLISHED_DESC'
 
         new_item = ToriItem(item=item, category=category, subcategory=subcategory, product_category=product_category, region=region, city=city, area=area, telegram_id=telegram_id, link=tori_link)
         
@@ -203,11 +204,15 @@ def save_data(update: Update, context: CallbackContext) -> int:
         session.commit()
 
         message = f"A new item was added!\nItem: {item}\nCategory: {category}\n"
-        if subcategory != 'null':
+        if subcategory.lower() != 'kaikki alaluokat':
             message += f"Subcategory: {subcategory}\n"
+        if product_category.lower() != 'kaikki tuoteluokat':
+            message += f"Product type: {product_category}\n"
         message += f"Region: {region}\n"
-        if city != 'null':
+        if city.lower() != 'kaikki kaupungit':
             message += f"City: {city}\n"
+        if area.lower() != 'kaikki alueet':
+            message += f"Area: {area}\n"
         message += f"Added Time: {new_item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
 
         update.message.reply_text(message + f"The search link for the item: {tori_link}", reply_markup=ReplyKeyboardMarkup([['Add a new item', 'Items']], one_time_keyboard=True))
