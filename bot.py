@@ -285,38 +285,45 @@ def cancel(update: Update, context: CallbackContext) -> int:
 def check_for_new_items(context: CallbackContext):
     Session = sessionmaker(bind=engine)
     session = Session()
-    
+
     items = session.query(ToriItem).all()
+
     for item in items:
         response = requests.get(item.link)
         if response.status_code != 200:
             continue
-        data = response.json()
-        latest_time = item.latest_time or item.added_time
 
-        for ad in data['list_ads']:
-            list_time = datetime.strptime(ad['ad']['list_time'], "%Y-%m-%dT%H:%M:%S%z")
-            list_time = list_time.replace(tzinfo=None)  
-            if list_time <= latest_time:
+        data = response.json()
+        new_items = data.get('docs', [])
+
+        if not new_items:
+            continue
+
+        latest_time = item.latest_time or item.added_time
+        for i, ad in enumerate(new_items):
+            timestamp = ad.get('timestamp')
+            if timestamp is None:
                 continue
-            list_id_code = ad['ad']['list_id_code']
-            region_label = ad['ad']['location']['region']['label']
-            city_label = ad['ad']['location']['city']['label']
-            list_price = ad['ad']['list_price']['value']
-            region_label_link = region_label.lower()
-            region_label_link = region_label_link.replace("ä", "a")
-            region_label_link = region_label_link.replace("ö", "o")
-            region_label_link = region_label_link.replace("å", "a")
-            tori_link = f"https://www.tori.fi/{region_label_link}/{list_id_code}.htm"
-            message = f"New item found: {ad['ad']['subject']}\nRegion: {region_label}\nCity: {city_label}\nPrice: {list_price} EUR\n{tori_link}"
+
+            item_time = datetime.fromtimestamp(timestamp / 1000.0)
+            if item_time <= latest_time:
+                break
+
+            region = ad.get('location')
+            canonical_url = ad.get('canonical_url')
+            price = ad.get('price', {}).get('value')
+            trade_type = ad.get('trade_type')
+            message = f"New item found: {ad.get('heading')}\nRegion: {region}\nPrice: {price} EUR\nTrade Type: {trade_type}\n{canonical_url}"
+
             context.bot.send_message(item.telegram_id, message)
-            latest_time_new = list_time.strftime("%Y-%m-%d %H:%M:%S")
-            if latest_time_new > latest_time:
-                item.latest_time = datetime.strptime(latest_time_new, "%Y-%m-%d %H:%M:%S")
-                session.add(item)
-                session.commit()
+            latest_time = item_time
+
+        item.latest_time = latest_time
+        session.add(item)
+        session.commit()
 
     session.close()
+
 
 def main():
 
