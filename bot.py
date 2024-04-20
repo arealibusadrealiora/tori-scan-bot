@@ -1,13 +1,12 @@
-import json
-import requests 
-import pytz
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext, CallbackQueryHandler
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import DateTime
-from datetime import datetime, timezone
+from datetime import datetime
+import json
+import requests
 
 engine = create_engine('sqlite:///tori_data.db')
 Base = declarative_base()
@@ -300,29 +299,36 @@ def check_for_new_items(context: CallbackContext):
             continue
 
         latest_time = item.latest_time or item.added_time
-        for i, ad in enumerate(new_items):
+        latest_item_time = None
+
+        for ad in new_items:
             timestamp = ad.get('timestamp')
             if timestamp is None:
                 continue
 
             item_time = datetime.fromtimestamp(timestamp / 1000.0)
             if item_time <= latest_time:
-                break
+                continue
 
             region = ad.get('location')
             canonical_url = ad.get('canonical_url')
-            price = ad.get('price', {}).get('value')
+            price = ad.get('price', {}).get('amount')
             trade_type = ad.get('trade_type')
-            message = f"New item found: {ad.get('heading')}\nRegion: {region}\nPrice: {price} EUR\nTrade Type: {trade_type}\n{canonical_url}"
+            message = f"New item found: {ad.get('heading')}\nRegion: {region}\nPrice: {price} EUR\nTrade Type: {trade_type}\nLink: {canonical_url}"
 
             context.bot.send_message(item.telegram_id, message)
-            latest_time = item_time
 
-        item.latest_time = latest_time
-        session.add(item)
-        session.commit()
+            if latest_item_time is None or item_time > latest_item_time:
+                latest_item_time = item_time
+
+        if latest_item_time:
+            latest_time = latest_item_time
+            item.latest_time = latest_time
+            session.add(item)
+            session.commit()
 
     session.close()
+
 
 
 def main():
@@ -352,7 +358,7 @@ def main():
     updater.dispatcher.add_handler(CallbackQueryHandler(remove_item)) 
     updater.dispatcher.add_handler(conv_handler)
     
-    job_queue.run_repeating(check_for_new_items, interval=60, first=0)
+    job_queue.run_repeating(check_for_new_items, interval=300, first=0)
 
     updater.start_polling()
     updater.idle()
