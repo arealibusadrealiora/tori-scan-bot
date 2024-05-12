@@ -1,0 +1,1036 @@
+{
+    "All Categories": null,
+    "Antiques and art": {
+      "category_code": "0.76",
+      "subcategories": {
+        "All subcategories": null,
+        "Antique furniture": {
+          "subcategory_code": "1.76.5178",
+          "product_categories": null
+        },
+        "Cutlery and silverware": {
+          "subcategory_code": "1.76.5179",
+          "product_categories": null
+        },
+        "Ceramics, porcelain and glass": {
+          "subcategory_code": "1.76.5176",
+          "product_categories": null
+        },
+        "Art": {
+          "subcategory_code": "1.76.5177",
+          "product_categories": {
+            "All product categories": null,
+            "Acrylic paintings": "2.76.5177.385",
+            "Graphics": "2.76.5177.394",
+            "Lithograph": "2.76.5177.389",
+            "Drawings": "2.76.5177.392",
+            "Woodcuts": "2.76.5177.393",
+            "Mixed technique works": "2.76.5177.387",
+            "Photos": "2.76.5177.388",
+            "Sculptures": "2.76.5177.391",
+            "Watercolor paintings": "2.76.5177.386",
+            "Oil paintings": "2.76.5177.390",
+            "Other art": "2.76.5177.395"
+          }
+        },
+        "Other antiques": {
+          "subcategory_code": "1.76.5175",
+          "product_categories": null
+        }
+      }
+    },
+    "Car, boat and motorcycle accessories": {
+      "category_code": "0.90",
+      "subcategories": {
+        "All subcategories": null,
+        "Motorhome and motorhome accessories": {
+          "subcategory_code": "1.90.70",
+          "product_categories": null
+        },
+        "Car parts": {
+          "subcategory_code": "1.90.82",
+          "product_categories": {
+            "All product categories": null,
+            "Car seats": "2.90.82.3",
+            "Car interior accessories": "2.90.82.8",
+            "Car spare parts": "2.90.82.2",
+            "Car stereos": "2.90.82.5",
+            "Roof racks and ski boxes": "2.90.82.4",
+            "Car navigators": "2.90.82.344",
+            "Tires and rims": "2.90.82.6",
+            "Other car parts": "2.90.82.9"
+          }
+        },
+        "Motorcycle accessories and spare parts": {
+          "subcategory_code": "1.90.20",
+          "product_categories": {
+            "All product categories": null,
+            "Motorcycle spare parts": "2.90.20.10",
+            "Motorcycle clothing": "2.90.20.12",
+            "Motorcycle accessories": "2.90.20.11"
+          }
+        },
+        "ATV spare parts": {
+          "subcategory_code": "1.90.3975",
+          "product_categories": null
+        },
+        "Trailers": {
+          "subcategory_code": "1.90.80",
+          "product_categories": {
+            "All product categories": null,
+            "Car trailers": "2.90.80.17",
+            "Horse trailers": "2.90.80.19",
+            "Tippers": "2.90.80.309",
+            "Canopy trolley": "2.90.80.15",
+            "Flatcarts": "2.90.80.18",
+            "Sales trolleys and kiosk trolleys": "2.90.80.517",
+            "ATV and motorcycle carts": "2.90.80.16",
+            "Trailer": "2.90.80.13",
+            "Trailer accessories": "2.90.80.308",
+            "Boat and storage trailers": "2.90.80.14"
+          }
+        },
+        "Boat spare parts": {
+          "subcategory_code": "1.90.30",
+          "product_categories": {
+            "All product categories": null,
+            "Sailing accessories": "2.90.30.323",
+            "Electrical and plumbing works": "2.90.30.319",
+            "Boat fastening accessories": "2.90.30.324",
+            "Boat engine spare parts": "2.90.30.340",
+            "Boat navigators": "2.90.30.345",
+            "Boat steering and winches": "2.90.30.321",
+            "Boat benches and interior": "2.90.30.320",
+            "Boat electrical accessories": "2.90.30.318",
+            "Boat safety": "2.90.30.322",
+            "Other boat accessories": "2.90.30.325"
+          }
+        },
+        "Other car accessories": {
+          "subcategory_code": "1.90.3974",
+          "product_categories": null
+        }
+      }
+    },
+    "Electronics and household appliances": {
+      "category_code": "0.93",
+      "subcategories": {
+        "All subcategories": null,
+        "Home appliances": {
+          "subcategory_code": "1.93.3216",
+          "product_categories": {
+            "All product categories": null,
+            "Coffee machines": "2.93.3216.506",
+            "Toasters": "2.93.3216.87",
+            "Multifunctional machines and general machines": "2.93.3216.507",
+            "Vacuum cleaners": "2.93.3216.81",
+            "Stand mixers and electric beaters": "2.93.3216.89",
+            "Irons": "2.93.3216.84",
+            "Power mixers and blenders": "2.93.3216.83",
+            "Kettles": "2.93.3216.85",
+            "Waffle irons and sandwich grills": "2.93.3216.88",
+            "Other small household appliances": "2.93.3216.304"
+          }
+        },
+        "Household appliances": {
+          "subcategory_code": "1.93.3907",
+          "product_categories": {
+            "All product categories": null,
+            "Dishwashers": "2.93.3907.509",
+            "Refrigerators": "2.93.3907.292",
+            "Hobs": "2.93.3907.75",
+            "Drying drums and drying cabinets": "2.93.3907.510",
+            "Stoves": "2.93.3907.73",
+            "Stove hoods": "2.93.3907.511",
+            "Microwave ovens": "2.93.3907.508",
+            "Freezers": "2.93.3907.72",
+            "Washing machines": "2.93.3907.79",
+            "Ovens": "2.93.3907.74",
+            "Other household appliances": "2.93.3907.305"
+         }
+       },
+       "Phones and accessories": {
+         "subcategory_code": "1.93.3217",
+         "product_categories": {
+           "All product categories": null,
+           "Mobile phones": "2.93.3217.39",
+           "Phone accessories": "2.93.3217.41",
+           "Other phones": "2.93.3217.40"
+         }
+       },
+       "Information Technology": {
+         "subcategory_code": "1.93.3215",
+         "product_categories": {
+           "All product categories": null,
+           "Laptops": "2.93.3215.43",
+           "Hard drives and storage": "2.93.3215.8367",
+           "Calculators": "2.93.3215.47",
+           "Displays": "2.93.3215.45",
+           "Peripherals": "2.93.3215.46",
+           "Software": "2.93.3215.49",
+           "Desktop machines": "2.93.3215.44",
+           "Tablets and reading devices": "2.93.3215.48",
+           "Computer Components": "2.93.3215.8368"
+         }
+       },
+       "Photography and video": {
+         "subcategory_code": "1.93.3904",
+         "product_categories": {
+           "All product categories": null,
+           "Hybrid cameras": "2.93.3904.303",
+           "System cameras": "2.93.3904.66",
+           "Camera bags": "2.93.3904.500",
+           "Compact cameras": "2.93.3904.502",
+           "Lens": "2.93.3904.503",
+           "Video cameras": "2.93.3904.504",
+           "Other photography accessories": "2.93.3904.505"
+         }
+       },
+       "Video games and consoles": {
+         "subcategory_code": "1.93.3905",
+         "product_categories": {
+           "All product categories": null,
+           "Accessories": "2.93.3905.65",
+           "Game consoles": "2.93.3905.63",
+           "Games": "2.93.3905.64"
+         }
+       },
+       "Sound and picture": {
+         "subcategory_code": "1.93.3906",
+         "product_categories": {
+           "All product categories": null,
+           "Blu-ray players": "2.93.3906.56",
+           "DVD Players": "2.93.3906.57",
+           "Digital televisions and set-top boxes": "2.93.3906.61",
+           "Cables and peripherals": "2.93.3906.326",
+           "Speakers": "2.93.3906.53",
+           "Home theater equipment": "2.93.3906.59",
+           "Headphones": "2.93.3906.51",
+           "MP3 players and other portable players": "2.93.3906.50",
+           "PA equipment": "2.93.3906.54",
+           "Radios": "2.93.3906.302",
+           "Stereos": "2.93.3906.55",
+           "TV": "2.93.3906.62",
+           "Amplifiers and tuners": "2.93.3906.52",
+           "VCRs": "2.93.3906.58",
+           "Video cannons and screens": "2.93.3906.60"
+         }
+       },
+       "Other electronics and household appliances": {
+         "subcategory_code": "1.93.3213",
+         "product_categories": null
+       }
+     }
+   },
+   "Animals and animal accessories": {
+     "category_code": "0.77",
+     "subcategories": {
+       "All subcategories": null,
+       "Aquariums": {
+         "subcategory_code": "1.77.3976",
+         "product_categories": null
+       },
+       "Animal feeding, care, breeding and stables": {
+         "subcategory_code": "1.77.5186",
+         "product_categories": null
+       },
+       "Horses": {
+         "subcategory_code": "1.77.5190",
+         "product_categories": {
+           "All product categories": null,
+           "Cold-blooded horses": "2.77.5190.36",
+           "Warm-blooded horses": "2.77.5190.38",
+           "Ponies": "2.77.5190.37"
+         }
+       },
+       "Horse accessories and riding accessories": {
+         "subcategory_code": "1.77.5195",
+         "product_categories": null
+       },
+       "Insects and Spiders": {
+         "subcategory_code": "1.77.5208",
+         "product_categories": null
+       },
+       "Cages": {
+         "subcategory_code": "1.77.3977",
+         "product_categories": null
+       },
+       "Rodents and rabbits": {
+         "subcategory_code": "1.77.5207",
+         "product_categories": null
+       },
+       "Pisces": {
+         "subcategory_code": "1.77.5206",
+         "product_categories": null
+       },
+       "Cats": {
+         "subcategory_code": "1.77.5191",
+         "product_categories": null
+       },
+       "Cat accessories": {
+         "subcategory_code": "1.77.5194",
+         "product_categories": null
+       },
+       "Dogs": {
+         "subcategory_code": "1.77.5192",
+         "product_categories": null
+       },
+       "Dog accessories": {
+         "subcategory_code": "1.77.5193",
+         "product_categories": null
+       },
+       "Birds": {
+         "subcategory_code": "1.77.5205",
+         "product_categories": null
+       },
+       "Reptiles": {
+         "subcategory_code": "1.77.5210",
+         "product_categories": null
+       },
+       "Other animals": {
+         "subcategory_code": "1.77.5183",
+         "product_categories": null
+       },
+       "Other animal supplies": {
+         "subcategory_code": "1.77.5185",
+         "product_categories": null
+        }
+      }
+    },
+    "Furniture and decoration": {
+      "category_code": "0.78",
+      "subcategories": {
+        "All subcategories": null,
+        "Shelves and dressers": {
+          "subcategory_code": "1.78.8345",
+          "product_categories": {
+            "All product categories": null,
+            "Dressers": "2.78.8345.221",
+            "Wall shelves and shelves": "2.78.8345.219",
+            "Sideboards": "2.78.8345.220",
+            "TV stands and other TV furniture": "2.78.8345.224",
+            "Nightstands": "2.78.8345.223"
+          }
+        },
+        "Cabinets": {
+          "subcategory_code": "1.78.5198",
+          "product_categories": {
+            "All product categories": null,
+            "Dish cabinets": "2.78.5198.222",
+            "Wardrobes": "2.78.5198.218",
+            "Other cabinets": "2.78.5198.225"
+          }
+        },
+        "Kitchenware and dishes": {
+          "subcategory_code": "1.78.5223",
+          "product_categories": {
+            "All product categories": null,
+            "Tableware": "2.78.5223.8361",
+            "Drinking glasses": "2.78.5223.8360",
+            "Coffee cups and mugs": "2.78.5223.8359",
+            "Kitchen utensils": "2.78.5223.8364",
+            "Cutlery": "2.78.5223.8362",
+            "Storage containers": "2.78.5223.8365",
+            "Serving dishes": "2.78.5223.8363",
+            "Other kitchen accessories": "2.78.5223.8366"
+          }
+        },
+        "Decorative and interior items": {
+          "subcategory_code": "1.78.5222",
+          "product_categories": {
+            "All product categories": null,
+            "Pictures and frames": "2.78.5222.237",
+            "Candlesticks": "2.78.5222.240",
+            "Vases and pots": "2.78.5222.238",
+            "Mirrors": "2.78.5222.299",
+            "Wall plates": "2.78.5222.239",
+            "Other decorative items": "2.78.5222.241"
+          }
+        },
+        "Bedroom": {
+          "subcategory_code": "1.78.5197",
+          "product_categories": {
+            "All product categories": null,
+            "Mattresses": "2.78.5197.203",
+            "Frame mattresses": "2.78.5197.293",
+            "Beds": "2.78.5197.202"
+          }
+        },
+        "Carpets and textiles": {
+          "subcategory_code": "1.78.5180",
+          "product_categories": {
+            "All product categories": null,
+            "Carpets": "2.78.5180.231",
+            "Tablecloths": "2.78.5180.233",
+            "Pillows": "2.78.5180.232",
+            "Curtains": "2.78.5180.234",
+            "Other carpets and textiles": "2.78.5180.235"
+          }
+        },
+        "Tables and chairs": {
+          "subcategory_code": "1.78.5196",
+          "product_categories": {
+            "All product categories": null,
+            "Dining groups": "2.78.5196.211",
+            "Dining tables": "2.78.5196.213",
+            "Coffee tables": "2.78.5196.212",
+            "Office chairs": "2.78.5196.215",
+            "Chairs and stools": "2.78.5196.216",
+            "Desktops": "2.78.5196.214",
+            "Other tables and chairs": "2.78.5196.217"
+          }
+        },
+        "Sofas and lounge chairs": {
+          "subcategory_code": "1.78.7756",
+          "product_categories": {
+            "All product categories": null,
+            "Corner sofas": "2.78.7756.207",
+            "Armchairs": "2.78.7756.210",
+            "Rahit": "2.78.7756.209",
+            "Sofa groups": "2.78.7756.208",
+            "Couches": "2.78.7756.8374",
+            "Sofa beds": "2.78.7756.206"
+          }
+        },
+        "Lamps": {
+          "subcategory_code": "1.78.5181",
+          "product_categories": {
+            "All product categories": null,
+            "Ceiling lamps": "2.78.5181.226",
+            "Floor lamps": "2.78.5181.228",
+            "Table lamps": "2.78.5181.229",
+            "Wall lamps": "2.78.5181.227",
+            "Other lamps": "2.78.5181.230"
+          }
+        },
+        "Other furniture and decoration": {
+          "subcategory_code": "1.78.3971",
+          "product_categories": null
+        }
+      }
+    },
+    "Home, garden and construction": {
+      "category_code": "0.67",
+      "subcategories": {
+        "All subcategories": null,
+        "Garage doors and furniture": {
+          "subcategory_code": "1.67.8348",
+          "product_categories": null
+        },
+        "Alarms and security": {
+          "subcategory_code": "1.67.8347",
+          "product_categories": null
+        },
+        "Kitchens": {
+          "subcategory_code": "1.67.3900",
+          "product_categories": null
+        },
+        "Bathroom and sauna": {
+          "subcategory_code": "1.67.7749",
+          "product_categories": {
+            "All product categories": null,
+            "Faucet": "2.67.7749.156",
+            "Steam showers": "2.67.7749.159",
+            "Bathtubs": "2.67.7749.157",
+            "Bathroom furniture": "2.67.7749.164",
+            "Bathroom accessories": "2.67.7749.163",
+            "Sinks": "2.67.7749.162",
+            "Saunas": "2.67.7749.158",
+            "Shower walls and shower cabinets": "2.67.7749.160",
+            "WC seats": "2.67.7749.161"
+          }
+        },
+        "Heating and ventilation": {
+          "subcategory_code": "1.67.5218",
+          "product_categories": {
+            "All product categories": null,
+            "Air heat pumps": "2.67.5218.154",
+            "Air conditioners and fans": "2.67.5218.297",
+            "Heaters": "2.67.5218.155",
+            "Batteries": "2.67.5218.151",
+            "Firewood and fuels": "2.67.5218.153",
+            "Fireplaces": "2.67.5218.152"
+          }
+        },
+        "Cottage accessories": {
+          "subcategory_code": "1.67.3968",
+          "product_categories": null
+        },
+        "Yard and garden": {
+          "subcategory_code": "1.67.3901",
+          "product_categories": {
+            "All product categories": null,
+            "Grills": "2.67.3901.147",
+            "Party tents": "2.67.3901.144",
+            "Plants and planting": "2.67.3901.339",
+            "Snowmaking": "2.67.3901.148",
+            "Awnings and parasols": "2.67.3901.146",
+            "Garden furniture": "2.67.3901.142",
+            "Garden tools": "2.67.3901.143",
+            "Lawn mowers": "2.67.3901.149",
+            "Swimming pools and outdoor hot tubs": "2.67.3901.150",
+            "Other garden accessories": "2.67.3901.145"
+          }
+        },
+        "Building supplies and renovation": {
+          "subcategory_code": "1.67.3899",
+          "product_categories": {
+            "All product categories": null,
+            "Windows": "2.67.3899.168",
+            "Floors": "2.67.3899.167",
+            "Doors": "2.67.3899.169",
+            "Stairs": "2.67.3899.346",
+            "House packages": "2.67.3899.166",
+            "Wallpapers and paints": "2.67.3899.301",
+            "Other building materials": "2.67.3899.165"
+          }
+        },
+        "Tools": {
+          "subcategory_code": "1.67.5219",
+          "product_categories": null
+        },
+        "Other home, garden and construction": {
+          "subcategory_code": "1.67.3969",
+          "product_categories": null
+        }
+      }
+    },
+    "Children and parents": {
+      "category_code": "0.68",
+      "subcategories": {
+        "All subcategories": null,
+        "Children's furniture": {
+          "subcategory_code": "1.68.3916",
+          "product_categories": {
+            "All product categories": null,
+            "Treatment tables": "2.68.3916.316",
+            "School desks and other children's desks": "2.68.3916.314",
+            "Children's beds": "2.68.3916.312",
+            "Children's chairs": "2.68.3916.313",
+            "Children's room storage furniture": "2.68.3916.315",
+            "Other children's furniture": "2.68.3916.317"
+          }
+        },
+        "Childrens shoes": {
+          "subcategory_code": "1.68.3915",
+          "product_categories": null
+        },
+        "Children's books": {
+          "subcategory_code": "1.68.8369",
+          "product_categories": null
+        },
+        "Children's clothes": {
+          "subcategory_code": "1.68.3913",
+          "product_categories": {
+            "All product categories": null,
+            "Children's hats, gloves and mittens": "2.68.3913.8350",
+            "Children's pants and shorts": "2.68.3913.8352",
+            "Children's dresses and skirts": "2.68.3913.8357",
+            "Children's clothing and sleepwear": "2.68.3913.8353",
+            "Children's t-shirts and shirts": "2.68.3913.8355",
+            "Children's outerwear": "2.68.3913.8356",
+            "Children's sweaters and other knitwear": "2.68.3913.8354",
+            "Baby bodysuits": "2.68.3913.8351",
+            "Other children's clothes": "2.68.3913.8358"
+          }
+        },
+        "Children's accessories and safety": {
+          "subcategory_code": "1.68.3918",
+          "product_categories": null
+        },
+        "Baby carriages and strollers": {
+          "subcategory_code": "1.68.3914",
+          "product_categories": null
+        },
+        "Toys": {
+          "subcategory_code": "1.68.3912",
+          "product_categories": {
+            "All product categories": null,
+            "Legos and building blocks": "2.68.3912.333",
+            "Toy cars and train tracks": "2.68.3912.332",
+            "Soft toys, dolls and figures": "2.68.3912.331",
+            "Drawing and craft supplies": "2.68.3912.334",
+            "Outdoor games for children": "2.68.3912.335",
+            "Baby toys": "2.68.3912.330",
+            "Other toys": "2.68.3912.336"
+          }
+        },
+        "Safety seats": {
+          "subcategory_code": "1.68.3911",
+          "product_categories": null
+        },
+        "Maternity clothes": {
+          "subcategory_code": "1.68.3948",
+          "product_categories": null
+        },
+        "Other": {
+          "subcategory_code": "1.68.3970",
+          "product_categories": null
+        }
+      }
+    },
+    "Business and services": {
+      "category_code": "0.91",
+      "subcategories": {
+        "All subcategories": null,
+        "Presentation technology": {
+          "subcategory_code": "1.91.3110",
+          "product_categories": null
+        },
+        "Trade and retail": {
+          "subcategory_code": "1.91.3108",
+          "product_categories": {
+            "All product categories": null,
+            "Payment terminals": "2.91.3108.358",
+            "Shop furniture": "2.91.3108.359",
+            "Store lighting": "2.91.3108.362",
+            "Lots of goods and bankruptcy estates": "2.91.3108.363",
+            "Security and Surveillance": "2.91.3108.360",
+            "Warehouse furniture and accessories": "2.91.3108.361",
+            "Other store supplies": "2.91.3108.364"
+        }
+      },
+      "Mechanical engineering and spare parts": {
+        "subcategory_code": "1.91.3112",
+        "product_categories": null
+      },
+      "Containers and construction booths": {
+        "subcategory_code": "1.91.3111",
+        "product_categories": {
+          "All product categories": null,
+          "Containers": "2.91.3111.365",
+          "Workshop booths": "2.91.3111.366",
+          "Other construction equipment": "2.91.3111.368"
+        }
+      },
+      "Agriculture": {
+        "subcategory_code": "1.91.3114",
+        "product_categories": null
+      },
+      "Freight and goods transport": {
+        "subcategory_code": "1.91.3113",
+        "product_categories": null
+      },
+      "Construction and renovation": {
+        "subcategory_code": "1.91.3102",
+        "product_categories": {
+          "All product categories": null,
+          "Compressors": "2.91.3102.373",
+          "Machines and accessories": "2.91.3102.377",
+          "Woodworking machines": "2.91.3102.375",
+          "Scaffolding": "2.91.3102.374",
+          "Workshop accessories": "2.91.3102.370",
+          "Work tools": "2.91.3102.369",
+          "Lighting": "2.91.3102.371",
+          "Stocks": "2.91.3102.378",
+          "Other accessories": "2.91.3102.379"
+        }
+      },
+      "Large-scale kitchen and restaurant industry": {
+        "subcategory_code": "1.91.3103",
+        "product_categories": {
+          "All product categories": null,
+          "Dishwasher": "2.91.3103.354",
+          "Refrigerators and freezers": "2.91.3103.352",
+          "Furniture": "2.91.3103.355",
+          "Kitchen accessories": "2.91.3103.351",
+          "Cooking utensils": "2.91.3103.353",
+          "Other means": "2.91.3103.356"
+        }
+      },
+      "Health and first aid": {
+        "subcategory_code": "1.91.8343",
+        "product_categories": {
+          "All product categories": null,
+          "Auxiliaries": "2.91.8343.348",
+          "First aid supplies": "2.91.8343.347",
+          "Beauty and health care": "2.91.8343.349",
+          "Stock clearance": "2.91.8343.350",
+          "Other health and first aid": "2.91.8343.357"
+        }
+      },
+      "Office supplies and office furniture": {
+        "subcategory_code": "1.91.3105",
+        "product_categories": {
+          "All product categories": null,
+          "Copiers": "2.91.3105.243",
+          "Office furniture": "2.91.3105.294",
+          "Office supplies": "2.91.3105.242",
+          "Printers": "2.91.3105.244"
+        }
+      },
+      "Web domains and phone numbers": {
+        "subcategory_code": "1.91.3106",
+        "product_categories": null
+      },
+      "Other business and services": {
+        "subcategory_code": "1.91.3104",
+        "product_categories": null
+      }
+    }
+  },
+  "Sports and outdoor activities": {
+    "category_code": "0.69",
+    "subcategories": {
+      "All subcategories": null,
+      "Extreme Sports": {
+        "subcategory_code": "1.69.3938",
+        "product_categories": {
+          "All product categories": null,
+          "Climbing": "2.69.3938.265",
+          "Kiteboarding": "2.69.3938.264",
+          "Skateboarding and longboarding": "2.69.3938.267"
+        }
+      },
+      "Fan Products": {
+        "subcategory_code": "1.69.3937",
+        "product_categories": null
+      },
+      "Golf": {
+        "subcategory_code": "1.69.5164",
+        "product_categories": null
+      },
+      "Skiing and skiing": {
+        "subcategory_code": "1.69.3962",
+        "product_categories": {
+          "All product categories": null,
+          "Skiing": "2.69.3962.253",
+          "Snowboarding": "2.69.3962.252",
+          "Cross-country skiing": "2.69.3962.255",
+          "Telemark": "2.69.3962.254",
+          "Other ski equipment": "2.69.3962.256"
+        }
+      },
+      "Hockey and skating": {
+        "subcategory_code": "1.69.8346",
+        "product_categories": {
+          "All product categories": null,
+          "Hockey and skating equipment": "2.69.8346.406",
+          "Children's skates": "2.69.8346.405",
+          "Women's and men's skates": "2.69.8346.404"
+        }
+      },
+      "Gym equipment": {
+        "subcategory_code": "1.69.5166",
+        "product_categories": {
+          "All product categories": null,
+          "Cross trainers": "2.69.5166.291",
+          "Treadmills": "2.69.5166.516",
+          "Exercise equipment": "2.69.5166.289",
+          "Exercise bikes": "2.69.5166.286",
+          "Rowing equipment": "2.69.5166.287",
+          "Quilting boards": "2.69.5166.290",
+          "Strength training": "2.69.5166.288"
+        }
+      },
+      "Hunting, fishing and outdoor activities": {
+        "subcategory_code": "1.69.3964",
+        "product_categories": {
+          "All product categories": null,
+          "Guns and cartridges": "2.69.3964.268",
+          "Kayaks and Canoes": "2.69.3964.279",
+          "Fishing clothes": "2.69.3964.274",
+          "Reels, flies and hooks": "2.69.3964.273",
+          "Binoculars and telescopes": "2.69.3964.300",
+          "Sleeping bags": "2.69.3964.276",
+          "Hunting clothes": "2.69.3964.269",
+          "Backpacks and rucksacks": "2.69.3964.278",
+          "Tents": "2.69.3964.277",
+          "Rods": "2.69.3964.271",
+          "Nets, traps and seas": "2.69.3964.272",
+          "Other fishing accessories": "2.69.3964.275",
+          "Other hunting equipment": "2.69.3964.270",
+          "Other camping equipment": "2.69.3964.280"
+        }
+      },
+      "Participant tickets": {
+        "subcategory_code": "1.69.3960",
+        "product_categories": null
+      },
+      "Ball games": {
+        "subcategory_code": "1.69.3961",
+        "product_categories": {
+          "All product categories": null,
+          "Soccer": "2.69.3961.245",
+          "Basketball": "2.69.3961.247",
+          "Handball": "2.69.3961.246",
+          "Volleyball": "2.69.3961.248",
+          "Floorball": "2.69.3961.250",
+          "Tennis": "2.69.3961.249",
+          "Other ball games": "2.69.3961.251"
+        }
+      },
+      "Cycling": {
+        "subcategory_code": "1.69.3963",
+        "product_categories": {
+          "All product categories": null,
+          "Children's bicycles": "2.69.3963.8375",
+          "Bicycles": "2.69.3963.257",
+          "Cycling equipment": "2.69.3963.258",
+          "Scooters": "2.69.3963.8376"
+        }
+      },
+      "Nutritional supplements": {
+        "subcategory_code": "1.69.8281",
+        "product_categories": null
+      },
+      "Sports watches and activity bracelets": {
+        "subcategory_code": "1.69.3967",
+        "product_categories": null
+      },
+      "Sportswear and shoes": {
+        "subcategory_code": "1.69.3940",
+        "product_categories": {
+          "All product categories": null,
+          "Children's sportswear": "2.69.3940.3983",
+          "Sneakers and other sports shoes": "2.69.3940.3984",
+          "Men's sportswear": "2.69.3940.3980",
+          "Women's sportswear": "2.69.3940.3981",
+          "Unisex Sportswear": "2.69.3940.3982"
+        }
+      },
+      "Water Sports": {
+        "subcategory_code": "1.69.7738",
+        "product_categories": {
+          "All product categories": null,
+          "Canoeing and snorkeling": "2.69.7738.260",
+          "Sailing": "2.69.7738.261",
+          "Windsurfing": "2.69.7738.338",
+          "Diving": "2.69.7738.259",
+          "Surfing": "2.69.7738.262",
+          "Other water sports": "2.69.7738.263"
+        }
+      },
+      "Other sports": {
+        "subcategory_code": "1.69.3966",
+        "product_categories": null
+      }
+    }
+  },
+  "Clothing, cosmetics and accessories": {
+    "category_code": "0.71",
+    "subcategories": {
+      "All subcategories": null,
+      "Skin care and hair care": {
+        "subcategory_code": "1.71.8280",
+        "product_categories": null
+      },
+      "Watches and wristwatches": {
+        "subcategory_code": "1.71.3945",
+        "product_categories": null
+      },
+      "Shoes": {
+        "subcategory_code": "1.71.3949",
+        "product_categories": {
+          "All product categories": null,
+          "Men's shoes": "2.71.3949.193",
+          "Women's shoes": "2.71.3949.194"
+        }
+      },
+      "Jewelry and jewelry boxes": {
+        "subcategory_code": "1.71.7748",
+        "product_categories": {
+          "All product categories": null,
+          "Necklaces": "2.71.7748.195",
+          "Jewelry boxes and storage": "2.71.7748.307",
+          "Earrings": "2.71.7748.197",
+          "Bracelets": "2.71.7748.198",
+          "Rings": "2.71.7748.196",
+          "Other jewelry": "2.71.7748.306"
+        }
+      },
+      "Cosmetics": {
+        "subcategory_code": "1.71.8282",
+        "product_categories": null
+      },
+      "Bags and wallets": {
+        "subcategory_code": "1.71.3946",
+        "product_categories": null
+      },
+      "Men's clothing": {
+        "subcategory_code": "1.71.3950",
+        "product_categories": {
+          "All product categories": null,
+          "Hoodies and sweaters": "2.71.3950.186",
+          "Frock coats, tuxedos and jackets": "2.71.3950.190",
+          "Collar shirts": "2.71.3950.185",
+          "Men's T-shirts and shirts": "2.71.3950.187",
+          "Men's underwear": "2.71.3950.191",
+          "Men's jeans": "2.71.3950.8373",
+          "Men's hats, scarves and gloves": "2.71.3950.311",
+          "Men's trousers and shorts": "2.71.3950.184",
+          "Men's national costumes": "2.71.3950.188",
+          "Men's suits": "2.71.3950.189",
+          "Outer clothing": "2.71.3950.183",
+          "Other men's clothing": "2.71.3950.192"
+        }
+      },
+      "Masquerade costumes": {
+        "subcategory_code": "1.71.8349",
+        "product_categories": null
+      },
+      "Ladieswear": {
+        "subcategory_code": "1.71.3941",
+        "product_categories": {
+          "All product categories": null,
+          "Underwear": "2.71.3941.181",
+          "Jeans": "2.71.3941.8370",
+          "Skirts": "2.71.3941.175",
+          "Hats, scarves and gloves": "2.71.3941.310",
+          "Pants and shorts": "2.71.3941.174",
+          "Wedding dresses": "2.71.3941.171",
+           "Jumpsuits and overalls": "2.71.3941.8372",
+           "National costumes": "2.71.3941.170",
+           "Dresses": "2.71.3941.172",
+           "Shirts and blouses": "2.71.3941.180",
+           "Suits and Blazers": "2.71.3941.8371",
+           "T-shirts": "2.71.3941.179",
+           "Coats": "2.71.3941.178",
+           "Tops": "2.71.3941.176",
+           "Sweaters and other knitwear": "2.71.3941.177",
+           "Other women's clothing": "2.71.3941.182",
+           "Other outerwear": "2.71.3941.173"
+         }
+       },
+       "Eyeglasses and lenses": {
+         "subcategory_code": "1.71.8344",
+         "product_categories": {
+           "All product categories": null,
+           "Sunglasses": "2.71.8344.199",
+           "Contact lenses": "2.71.8344.201",
+           "Eyeglasses": "2.71.8344.200"
+         }
+       },
+       "Other clothing, cosmetics and accessories": {
+         "subcategory_code": "1.71.5204",
+         "product_categories": null
+       }
+     }
+   },
+   "Entertainment and hobbies": {
+     "category_code": "0.86",
+     "subcategories": {
+       "All subcategories": null,
+       "Foodstuffs": {
+         "subcategory_code": "1.86.3972",
+         "product_categories": null
+       },
+       "Collection": {
+         "subcategory_code": "1.86.285",
+         "product_categories": {
+           "All product categories": null,
+           "Collectible figures": "2.86.285.400",
+           "Collectible cards": "2.86.285.396",
+           "Collectible toys": "2.86.285.399",
+           "Coins and notes": "2.86.285.138",
+           "Signs and posters": "2.86.285.398",
+           "Militaria": "2.86.285.397",
+           "Pins": "2.86.285.139",
+           "Postcards": "2.86.285.140",
+           "Stamps": "2.86.285.137",
+           "Other collection items": "2.86.285.141"
+         }
+       },
+       "Books and magazines": {
+         "subcategory_code": "1.86.5209",
+         "product_categories": {
+           "All product categories": null,
+           "Fiction": "2.86.5209.514",
+           "Cookbooks": "2.86.5209.94",
+           "Newspapers and magazines": "2.86.5209.512",
+           "Textbooks": "2.86.5209.513",
+           "Comics": "2.86.5209.515",
+           "Nonfiction": "2.86.5209.520",
+           "General works, dictionaries": "2.86.5209.521",
+           "Other books": "2.86.5209.97"
+         }
+       },
+       "Crafts": {
+         "subcategory_code": "1.86.7734",
+         "product_categories": {
+           "All product categories": null,
+           "Pearls and precious stones": "2.86.7734.131",
+           "Fabric trees": "2.86.7734.127",
+           "Fabrics": "2.86.7734.125",
+           "Threads": "2.86.7734.124",
+           "Paints and painting supplies": "2.86.7734.128",
+           "Sewing machines": "2.86.7734.123",
+           "Sewing accessories and knitting accessories": "2.86.7734.126",
+           "Woodwork": "2.86.7734.132",
+           "Clay works": "2.86.7734.130",
+           "Scratch": "2.86.7734.129"
+         }
+       },
+       "Travels and travel tickets": {
+         "subcategory_code": "1.86.7735",
+         "product_categories": {
+           "All product categories": null,
+           "Train tickets": "2.86.7735.114",
+           "Flight tickets": "2.86.7735.113",
+           "Package trips": "2.86.7735.112"
+         }
+       },
+       "Music and Movies": {
+         "subcategory_code": "1.86.3922",
+         "product_categories": {
+           "All product categories": null,
+           "Blu-ray": "2.86.3922.102",
+           "C cartridges": "2.86.3922.402",
+           "CDs": "2.86.3922.98",
+           "DVDs": "2.86.3922.100",
+           "VHS tapes": "2.86.3922.101",
+           "Vinyl records": "2.86.3922.99"
+         }
+       },
+       "Miniature models and construction kits": {
+         "subcategory_code": "1.86.7732",
+         "product_categories": null
+       },
+       "Radio controlled": {
+         "subcategory_code": "1.86.7733",
+         "product_categories": {
+           "All product categories": null,
+           "Cars": "2.86.7733.133",
+           "Drones": "2.86.7733.401",
+           "Helicopters": "2.86.7733.136",
+           "Airplanes": "2.86.7733.135",
+           "Boats": "2.86.7733.134"
+         }
+       },
+       "Board Games": {
+         "subcategory_code": "1.86.5203",
+         "product_categories": {
+           "All product categories": null,
+           "Board Games": "2.86.5203.119",
+           "Puzzle games": "2.86.5203.329",
+           "Board games": "2.86.5203.120",
+           "Outdoor games": "2.86.5203.121",
+           "Other games": "2.86.5203.122"
+         }
+       },
+       "Instruments": {
+         "subcategory_code": "1.86.92",
+         "product_categories": {
+           "All product categories": null,
+           "Bass": "2.86.92.296",
+           "Accordions": "2.86.92.328",
+           "String instruments": "2.86.92.105",
+           "Guitars": "2.86.92.295",
+           "Keyboard instruments and synthesizers": "2.86.92.110",
+           "Percussion pointers and drums": "2.86.92.107",
+           "Pianos and grand pianos": "2.86.92.109",
+           "Wood fans": "2.86.92.103",
+           "Studio Equipment": "2.86.92.108",
+           "Organ": "2.86.92.337",
+           "Brass instruments": "2.86.92.104",
+           "Other string instruments": "2.86.92.106",
+           "Other instruments": "2.86.92.111"
+         }
+       },
+       "Other entertainment and hobbies": {
+         "subcategory_code": "1.86.3973",
+         "product_categories": null
+       }
+     }
+   }
+}
