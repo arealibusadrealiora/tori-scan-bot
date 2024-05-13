@@ -29,39 +29,82 @@ class ToriItem(Base):
 
 Base.metadata.create_all(engine)
 
-CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS = range(8)
+LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS = range(9)
 
-with open('jsons/categories.json', encoding="utf-8") as f:
-    categories_data = json.load(f)
+ALL_CATEGORIES = ["kaikki kategoriat", "all categories", "все категории", "всі категорії"]
+ALL_SUBCATEGORIES = ["kaikki alaluokat", "all subcategories", "все подкатегории", "всі підкатегорії"]
+ALL_PRODUCT_CATEGORIES = ["kaikki tuoteluokat", "all product categories", "все категории товаров", "всі категорії товарів"]
+
+def load_categories(language: str) -> dict:
+    with open(f'jsons/categories/{language}.json', encoding="utf-8") as f:
+        categories_data = json.load(f)
+    return categories_data
 
 with open('jsons/locations.json', encoding="utf-8") as f:
     locations_data = json.load(f)
 
 def start(update: Update, context: CallbackContext) -> int:
-    context.user_data.clear()
+    update.message.reply_text("Hi! Welcome to ToriFind! Please select your preferrable language:", reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
+    return LANGUAGE_SELECTION
+
+def language_selection(update: Update, context: CallbackContext) -> int:
+    context.user_data.pop('item', None)
+    context.user_data.pop('category', None)
+    context.user_data.pop('subcategory', None)
+    context.user_data.pop('product_category', None)
+    context.user_data.pop('region', None)
+    context.user_data.pop('city', None)
+    context.user_data.pop('area', None)
+
+    if 'language' not in context.user_data:
+        language = update.message.text
+        if language in ['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']:
+            context.user_data['language'] = language
+        else:
+            update.message.reply_text("Please select a valid language.")
+            return start(update, context)
+                
     update.message.reply_text("Please enter the item you're looking for:")
     return CATEGORY
 
 def select_category(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', 'english')
+    categories_data = load_categories(language)
+
     if 'item' not in context.user_data:
         if not (3 <= len(update.message.text) <= 64):
             update.message.reply_text("Please enter an item name between 3 and 64 characters.")
-            return start(update, context)   
+            return language_selection(update, context)   
         context.user_data['item'] = update.message.text
+
     keyboard = [[category] for category in categories_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a category:', reply_markup=reply_markup)
     return SUBCATEGORY
 
 def select_subcategory(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', 'english')
+    categories_data = load_categories(language)
+
     if 'category' not in context.user_data:
         user_category = update.message.text
         if user_category not in categories_data:
             update.message.reply_text("Please select a valid category!")
             return select_category(update, context)
-        if user_category.lower() == "kaikki kategoriat":
-            context.user_data['category'] = update.message.text
-            context.user_data['subcategory'] = 'Kaikki alaluokat'
+        elif user_category.lower() in ALL_CATEGORIES:
+            # Set the appropriate translation based on the user's language
+            if language == '🇫🇮 Suomi':
+                context.user_data['category'] = 'Kaikki kategoriat'
+                context.user_data['subcategory'] = 'Kaikki alaluokat'
+            elif language == '🇬🇧 English':
+                context.user_data['category'] = 'All categories'
+                context.user_data['subcategory'] = 'All subcategories'
+            elif language == '🇺🇦 Українська':
+                context.user_data['category'] = 'Всі категорії'
+                context.user_data['subcategory'] = 'Всі підкатегорії'
+            elif language == '🇷🇺 Русский':
+                context.user_data['category'] = 'Все категории'
+                context.user_data['subcategory'] = 'Все подкатегории'
             return select_region(update, context)
         else:
             context.user_data['category'] = update.message.text
@@ -73,9 +116,22 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
     return PRODUCT_CATEGORY
 
 def select_product_category(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', 'english')
+    categories_data = load_categories(language)
+
     if 'subcategory' not in context.user_data:
         user_subcategory = update.message.text
-        if user_subcategory.lower() != "kaikki kategoriat" and user_subcategory not in categories_data[context.user_data['category']]["subcategories"]:
+        if user_subcategory.lower() in ALL_SUBCATEGORIES:
+            if language == '🇫🇮 Suomi':
+                context.user_data['subcategory'] = 'Kaikki alaluokat'
+            elif language == '🇬🇧 English':
+                context.user_data['subcategory'] = 'All subcategories'
+            elif language == '🇺🇦 Українська':
+                context.user_data['subcategory'] = 'Всі підкатегорії'
+            elif language == '🇷🇺 Русский':
+                context.user_data['subcategory'] = 'Все подкатегории'
+            return select_region(update, context)
+        elif user_subcategory not in categories_data[context.user_data['category']]["subcategories"]:
             update.message.reply_text("Please select a valid subcategory!")
             return select_subcategory(update, context)
         else:
@@ -83,21 +139,40 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
 
     product_categories = categories_data[context.user_data['category']]["subcategories"][context.user_data['subcategory']].get('product_categories')
     if not product_categories:
-        context.user_data['product_category'] = 'Kaikki tuoteluokat'
+        if language == '🇫🇮 Suomi':
+            context.user_data['product_category'] = 'Kaikki tuoteluokat'
+        elif language == '🇬🇧 English':
+            context.user_data['product_category'] = 'All product categories'
+        elif language == '🇺🇦 Українська':
+            context.user_data['product_category'] = 'Всі категорії товарів'
+        elif language == '🇷🇺 Русский':
+            context.user_data['product_category'] = 'Все категории товаров'
         return select_region(update, context)
+    
     keyboard = [[product_category] for product_category in product_categories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text('Please choose a product type:', reply_markup=reply_markup)
     return REGION
 
 def select_region(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', 'english')
+    categories_data = load_categories(language)
+
     if 'product_category' not in context.user_data:
         user_product_category = update.message.text
-        if user_product_category.lower() != 'kaikki alaluokat' and user_product_category.lower() != 'kaikki kategoriat' and user_product_category not in categories_data[context.user_data['category']]["subcategories"][context.user_data['subcategory']]["product_categories"]:
+        if user_product_category.lower() in ALL_CATEGORIES or user_product_category.lower() in ALL_SUBCATEGORIES:
+            # Set the appropriate translation based on the user's language
+            if language == '🇫🇮 Suomi':
+                context.user_data['product_category'] = 'Kaikki tuoteluokat'
+            elif language == '🇬🇧 English':
+                context.user_data['product_category'] = 'All product categories'
+            elif language == '🇺🇦 Українська':
+                context.user_data['product_category'] = 'Всі категорії товарів'
+            elif language == '🇷🇺 Русский':
+                context.user_data['product_category'] = 'Все категорії товаров'
+        elif user_product_category.lower() not in ALL_CATEGORIES and user_product_category.lower() not in ALL_SUBCATEGORIES and user_product_category not in categories_data[context.user_data['category']]["subcategories"][context.user_data['subcategory']]["product_categories"]:
             update.message.reply_text("Please select a valid product category!")
             return select_product_category(update, context)
-        if user_product_category.lower() == "kaikki kategoriat" or user_product_category.lower() == "kaikki alaluokat":
-            context.user_data['product_category'] = 'Kaikki tuoteluokat'
         else:
             context.user_data['product_category'] = update.message.text
     
@@ -145,6 +220,9 @@ def select_area(update: Update, context: CallbackContext) -> int:
     return CONFIRMATION
 
 def save_data(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', 'english')
+    categories_data = load_categories(language)
+    
     if 'area' not in context.user_data:
         user_area = update.message.text
         if user_area.lower() != "koko suomi" and user_area not in locations_data[context.user_data['region']]["cities"][context.user_data['city']]["areas"]:
@@ -173,9 +251,9 @@ def save_data(update: Update, context: CallbackContext) -> int:
         session = Session()
 
         tori_link = f"https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}"
-        if category.lower() != 'kaikki kategoriat':
-            if subcategory.lower() != 'kaikki alaluokat':
-                if product_category.lower()!= 'kaikki tuoteluokat':
+        if category.lower() not in ALL_CATEGORIES:
+            if subcategory.lower() not in ALL_SUBCATEGORIES:
+                if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
                     product_category_code = categories_data[category]["subcategories"][subcategory]["product_categories"][product_category]
                     tori_link += f"&product_category={product_category_code}"
                 else:
@@ -225,7 +303,7 @@ def add_or_show_items(update: Update, context: CallbackContext) -> int:
     
     if choice == 'Add a new item':
         update.message.reply_text("Let's add a new item.")
-        return start(update, context) 
+        return language_selection(update, context) 
     elif choice == 'Items':
         return show_items(update, context)
 
@@ -341,6 +419,7 @@ def main():
     conv_handler = ConversationHandler(
         entry_points=[MessageHandler(Filters.text & ~Filters.command, start)],
         states={
+            LANGUAGE_SELECTION: [MessageHandler(Filters.text & ~Filters.command, language_selection)],
             CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_category)],
             SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_subcategory)],
             PRODUCT_CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_product_category)],
