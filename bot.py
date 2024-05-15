@@ -34,14 +34,20 @@ LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA,
 ALL_CATEGORIES = ["kaikki kategoriat", "all categories", "все категории", "всі категорії"]
 ALL_SUBCATEGORIES = ["kaikki alaluokat", "all subcategories", "все подкатегории", "всі підкатегорії"]
 ALL_PRODUCT_CATEGORIES = ["kaikki tuoteluokat", "all product categories", "все категории товаров", "всі категорії товарів"]
+WHOLE_FINLAND = ["koko suomi", "whole finland", "вся финляндия", "вся фінляндія"]
+ALL_CITIES = ["kaikki kaupungit", "all cities", "все города", "всі міста"]
+ALL_AREAS = ["kaikki alueet", "all areas", "все области", "всі області"]
 
 def load_categories(language: str) -> dict:
     with open(f'jsons/categories/{language}.json', encoding="utf-8") as f:
         categories_data = json.load(f)
     return categories_data
 
-with open('jsons/locations.json', encoding="utf-8") as f:
-    locations_data = json.load(f)
+def load_locations(language: str) -> dict:
+    with open(f'jsons/locations/{language}.json', encoding="utf-8") as f:
+        locations_data = json.load(f)
+    return locations_data
+
 
 def start(update: Update, context: CallbackContext) -> int:
     update.message.reply_text("Hi! Welcome to ToriFind! Please select your preferrable language:", reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
@@ -68,7 +74,7 @@ def language_selection(update: Update, context: CallbackContext) -> int:
     return CATEGORY
 
 def select_category(update: Update, context: CallbackContext) -> int:
-    language = context.user_data.get('language', 'english')
+    language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
 
     if 'item' not in context.user_data:
@@ -83,7 +89,7 @@ def select_category(update: Update, context: CallbackContext) -> int:
     return SUBCATEGORY
 
 def select_subcategory(update: Update, context: CallbackContext) -> int:
-    language = context.user_data.get('language', 'english')
+    language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
 
     if 'category' not in context.user_data:
@@ -92,7 +98,6 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
             update.message.reply_text("Please select a valid category!")
             return select_category(update, context)
         elif user_category.lower() in ALL_CATEGORIES:
-            # Set the appropriate translation based on the user's language
             if language == '🇫🇮 Suomi':
                 context.user_data['category'] = 'Kaikki kategoriat'
                 context.user_data['subcategory'] = 'Kaikki alaluokat'
@@ -116,7 +121,7 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
     return PRODUCT_CATEGORY
 
 def select_product_category(update: Update, context: CallbackContext) -> int:
-    language = context.user_data.get('language', 'english')
+    language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
 
     if 'subcategory' not in context.user_data:
@@ -155,13 +160,13 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
     return REGION
 
 def select_region(update: Update, context: CallbackContext) -> int:
-    language = context.user_data.get('language', 'english')
+    language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
+    locations_data = load_locations(language)
 
     if 'product_category' not in context.user_data:
         user_product_category = update.message.text
         if user_product_category.lower() in ALL_CATEGORIES or user_product_category.lower() in ALL_SUBCATEGORIES:
-            # Set the appropriate translation based on the user's language
             if language == '🇫🇮 Suomi':
                 context.user_data['product_category'] = 'Kaikki tuoteluokat'
             elif language == '🇬🇧 English':
@@ -182,16 +187,28 @@ def select_region(update: Update, context: CallbackContext) -> int:
     return CITY
 
 def select_city(update: Update, context: CallbackContext) -> int:
-    
+    language = context.user_data.get('language', '🇬🇧 English')
+    locations_data = load_locations(language)
+
     if 'region' not in context.user_data:
         user_region = update.message.text
         if user_region not in locations_data:
             update.message.reply_text("Please select a valid region!")
             return select_region(update, context)
-        if user_region.lower() == "koko suomi":
+        if user_region.lower() in WHOLE_FINLAND:
             context.user_data['region'] = update.message.text
-            context.user_data['city'] = 'Kaikki kaupungit'
-            context.user_data['area'] = 'Kaikki alueet'
+            if language == '🇫🇮 Suomi':
+                context.user_data['city'] = 'Kaikki kaupungit'
+                context.user_data['area'] = 'Kaikki alueet'
+            elif language == '🇬🇧 English':
+                context.user_data['city'] = 'All cities'
+                context.user_data['area'] = 'All areas'
+            elif language == '🇺🇦 Українська':
+                context.user_data['city'] = 'Всі міста'
+                context.user_data['area'] = 'Всі області'
+            elif language == '🇷🇺 Русский':
+                context.user_data['city'] = 'Все города'
+                context.user_data['area'] = 'Все области'
             return save_data(update, context)
         else:
             context.user_data['region'] = update.message.text
@@ -203,9 +220,12 @@ def select_city(update: Update, context: CallbackContext) -> int:
     return AREA
 
 def select_area(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', '🇬🇧 English')
+    locations_data = load_locations(language)
+    
     if 'city' not in context.user_data:
         user_city = update.message.text
-        if user_city.lower() != "koko suomi" and user_city not in locations_data[context.user_data['region']]["cities"]:
+        if user_city.lower() not in WHOLE_FINLAND and user_city not in locations_data[context.user_data['region']]["cities"]:
             update.message.reply_text("Please select a valid city!")
             return select_city(update, context)
         else:
@@ -220,12 +240,13 @@ def select_area(update: Update, context: CallbackContext) -> int:
     return CONFIRMATION
 
 def save_data(update: Update, context: CallbackContext) -> int:
-    language = context.user_data.get('language', 'english')
+    language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
+    locations_data = load_locations(language)
     
     if 'area' not in context.user_data:
         user_area = update.message.text
-        if user_area.lower() != "koko suomi" and user_area not in locations_data[context.user_data['region']]["cities"][context.user_data['city']]["areas"]:
+        if user_area.lower() not in WHOLE_FINLAND and user_area not in locations_data[context.user_data['region']]["cities"][context.user_data['city']]["areas"]:
             update.message.reply_text("Please select a valid area!")
             return select_area(update, context)
         else:
@@ -262,9 +283,9 @@ def save_data(update: Update, context: CallbackContext) -> int:
             else:
                 category_code = categories_data[category]["category_code"]
                 tori_link += f"&category={category_code}"
-        if region.lower() != 'koko suomi':
-            if city.lower() != 'kaikki kaupungit':
-                if area.lower() != 'kaikki alueet':
+        if region.lower() not in WHOLE_FINLAND:
+            if city.lower() not in ALL_CITIES:
+                if area.lower() not in ALL_AREAS:
                     area_code = locations_data[region]["cities"][city]["areas"][area]
                     tori_link += f"&location={area_code}"
                 else:
@@ -281,14 +302,14 @@ def save_data(update: Update, context: CallbackContext) -> int:
         session.commit()
 
         message = f"A new item was added!\nItem: {item}\nCategory: {category}\n"
-        if subcategory.lower() != 'kaikki alaluokat':
+        if subcategory.lower() not in ALL_SUBCATEGORIES:
             message += f"Subcategory: {subcategory}\n"
-        if product_category.lower() != 'kaikki tuoteluokat':
+        if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
             message += f"Product type: {product_category}\n"
         message += f"Region: {region}\n"
-        if city.lower() != 'kaikki kaupungit':
+        if city.lower() not in ALL_CITIES:
             message += f"City: {city}\n"
-        if area.lower() != 'kaikki alueet':
+        if area.lower() not in ALL_AREAS:
             message += f"Area: {area}\n"
         message += f"Added Time: {new_item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
 
