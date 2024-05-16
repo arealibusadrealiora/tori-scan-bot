@@ -1,0 +1,10 @@
+{
+"enter_item": "Please enter the item you're looking for:",
+"select_category": "Please choose a category:",
+"select_subcategory": "Please choose a subcategory:",
+"select_product_category": "Please choose a product category:",
+"select_region": "Please choose a region:",
+"select_city": "Please choose a city:",
+"select_area": "Please choose an area:",
+"missing_data": "The following data is missing: {missing_data}. Please start over."
+}

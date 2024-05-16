@@ -1,0 +1,10 @@
+{
+    "enter_item": "Ole hyvä ja kirjoita etsimäsi tuotteen nimi:",
+    "select_category": "Valitse kategoria:",
+    "select_subcategory": "Valitse alakategoria:",
+    "select_product_category": "Valitse tuotekategoria:",
+    "select_region": "Valitse alue:",
+    "select_city": "Valitse kaupunki:",
+    "select_area": "Valitse alue:",
+    "missing_data": "Puuttuvat tiedot: {missing_data}. Aloita alusta."
+  }
