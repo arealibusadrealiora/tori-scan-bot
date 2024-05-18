@@ -48,6 +48,10 @@ def load_locations(language: str) -> dict:
         locations_data = json.load(f)
     return locations_data
 
+def load_messages(language: str) -> dict:
+    with open(f'jsons/messages/{language}.json', encoding="utf-8") as f:
+        messages_data = json.load(f)
+    return messages_data
 
 def start(update: Update, context: CallbackContext) -> int:
     update.message.reply_text("Hi! Welcome to ToriFind! Please select your preferrable language:", reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
@@ -69,33 +73,38 @@ def language_selection(update: Update, context: CallbackContext) -> int:
         else:
             update.message.reply_text("Please select a valid language.")
             return start(update, context)
-                
-    update.message.reply_text("Please enter the item you're looking for:")
+    
+    language = context.user_data.get('language', '🇬🇧 English')
+    messages = load_messages(language)
+    update.message.reply_text(messages["enter_item"], parse_mode="HTML")
+
     return CATEGORY
 
 def select_category(update: Update, context: CallbackContext) -> int:
     language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
+    messages = load_messages(language)
 
     if 'item' not in context.user_data:
         if not (3 <= len(update.message.text) <= 64):
-            update.message.reply_text("Please enter an item name between 3 and 64 characters.")
+            update.message.reply_text(messages["invalid_item"])
             return language_selection(update, context)   
         context.user_data['item'] = update.message.text
 
     keyboard = [[category] for category in categories_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text('Please choose a category:', reply_markup=reply_markup)
+    update.message.reply_text(messages["select_category"], reply_markup=reply_markup)
     return SUBCATEGORY
 
 def select_subcategory(update: Update, context: CallbackContext) -> int:
     language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
+    messages = load_messages(language)
 
     if 'category' not in context.user_data:
         user_category = update.message.text
         if user_category not in categories_data:
-            update.message.reply_text("Please select a valid category!")
+            update.message.reply_text(messages["invalid_category"])
             return select_category(update, context)
         elif user_category.lower() in ALL_CATEGORIES:
             if language == '🇫🇮 Suomi':
@@ -117,12 +126,13 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
     subcategories = categories_data[context.user_data['category']]["subcategories"]
     keyboard = [[subcategory] for subcategory in subcategories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text('Please choose a subcategory:', reply_markup=reply_markup)
+    update.message.reply_text(messages["select_subcategory"], reply_markup=reply_markup)
     return PRODUCT_CATEGORY
 
 def select_product_category(update: Update, context: CallbackContext) -> int:
     language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
+    messages = load_messages(language)
 
     if 'subcategory' not in context.user_data:
         user_subcategory = update.message.text
@@ -137,7 +147,7 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
                 context.user_data['subcategory'] = 'Все подкатегории'
             return select_region(update, context)
         elif user_subcategory not in categories_data[context.user_data['category']]["subcategories"]:
-            update.message.reply_text("Please select a valid subcategory!")
+            update.message.reply_text(messages["invalid_subcategory"])
             return select_subcategory(update, context)
         else:
             context.user_data['subcategory'] = update.message.text
@@ -156,13 +166,14 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
     
     keyboard = [[product_category] for product_category in product_categories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text('Please choose a product type:', reply_markup=reply_markup)
+    update.message.reply_text(messages["select_product_category"], reply_markup=reply_markup)
     return REGION
 
 def select_region(update: Update, context: CallbackContext) -> int:
     language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
     locations_data = load_locations(language)
+    messages = load_messages(language)
 
     if 'product_category' not in context.user_data:
         user_product_category = update.message.text
@@ -176,24 +187,25 @@ def select_region(update: Update, context: CallbackContext) -> int:
             elif language == '🇷🇺 Русский':
                 context.user_data['product_category'] = 'Все категорії товаров'
         elif user_product_category.lower() not in ALL_CATEGORIES and user_product_category.lower() not in ALL_SUBCATEGORIES and user_product_category not in categories_data[context.user_data['category']]["subcategories"][context.user_data['subcategory']]["product_categories"]:
-            update.message.reply_text("Please select a valid product category!")
+            update.message.reply_text(messages["invalid_product_category"])
             return select_product_category(update, context)
         else:
             context.user_data['product_category'] = update.message.text
     
     keyboard = [[region] for region in locations_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text('Please choose a region:', reply_markup=reply_markup)
+    update.message.reply_text(messages["select_region"], reply_markup=reply_markup)
     return CITY
 
 def select_city(update: Update, context: CallbackContext) -> int:
     language = context.user_data.get('language', '🇬🇧 English')
     locations_data = load_locations(language)
+    messages = load_messages(language)
 
     if 'region' not in context.user_data:
         user_region = update.message.text
         if user_region not in locations_data:
-            update.message.reply_text("Please select a valid region!")
+            update.message.reply_text(messages["invalid_region"])
             return select_region(update, context)
         if user_region.lower() in WHOLE_FINLAND:
             context.user_data['region'] = update.message.text
@@ -216,17 +228,18 @@ def select_city(update: Update, context: CallbackContext) -> int:
     cities = locations_data[context.user_data['region']]["cities"]
     keyboard = [[city] for city in cities]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text('Please choose an city:', reply_markup=reply_markup)
+    update.message.reply_text(messages["select_city"], reply_markup=reply_markup)
     return AREA
 
 def select_area(update: Update, context: CallbackContext) -> int:
     language = context.user_data.get('language', '🇬🇧 English')
     locations_data = load_locations(language)
+    messages = load_messages(language)
     
     if 'city' not in context.user_data:
         user_city = update.message.text
         if user_city.lower() not in WHOLE_FINLAND and user_city not in locations_data[context.user_data['region']]["cities"]:
-            update.message.reply_text("Please select a valid city!")
+            update.message.reply_text(messages["invalid_city"])
             return select_city(update, context)
         else:
             context.user_data['city'] = update.message.text
@@ -236,18 +249,19 @@ def select_area(update: Update, context: CallbackContext) -> int:
         return save_data(update, context)
     keyboard = [[area] for area in areas]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text('Please choose an area:', reply_markup=reply_markup)
+    update.message.reply_text(messages["select_area"], reply_markup=reply_markup)
     return CONFIRMATION
 
 def save_data(update: Update, context: CallbackContext) -> int:
     language = context.user_data.get('language', '🇬🇧 English')
     categories_data = load_categories(language)
     locations_data = load_locations(language)
+    messages = load_messages(language)
     
     if 'area' not in context.user_data:
         user_area = update.message.text
         if user_area.lower() not in WHOLE_FINLAND and user_area not in locations_data[context.user_data['region']]["cities"][context.user_data['city']]["areas"]:
-            update.message.reply_text("Please select a valid area!")
+            update.message.reply_text(messages["invalid_area"])
             return select_area(update, context)
         else:
             context.user_data['area'] = update.message.text
@@ -256,7 +270,7 @@ def save_data(update: Update, context: CallbackContext) -> int:
     missing_data = [key for key in required_data if key not in context.user_data]
 
     if missing_data:
-        update.message.reply_text(f"The following data is missing: {', '.join(missing_data)}. Please start over.")
+        update.message.reply_text(messages["missing_data"].format(missing=', '.join(missing_data)))
         return ConversationHandler.END
     else:
         item = context.user_data['item']
@@ -301,35 +315,41 @@ def save_data(update: Update, context: CallbackContext) -> int:
         session.add(new_item)
         session.commit()
 
-        message = f"A new item was added!\nItem: {item}\nCategory: {category}\n"
+        message = messages["item_added"]
+        message += messages["item"].format(item=item)
+        message += messages["category"].format(category=category)
         if subcategory.lower() not in ALL_SUBCATEGORIES:
-            message += f"Subcategory: {subcategory}\n"
+            message += messages["subcategory"].format(subcategory=subcategory)
         if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
-            message += f"Product type: {product_category}\n"
-        message += f"Region: {region}\n"
+            message += messages["product_type"].format(product_category=product_category)
+        message += messages["region"].format(region=region)
         if city.lower() not in ALL_CITIES:
-            message += f"City: {city}\n"
+            message += messages["city"].format(city=city)
         if area.lower() not in ALL_AREAS:
-            message += f"Area: {area}\n"
-        message += f"Added Time: {new_item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
+            message += messages["area"].format(area=area)
+        message += messages["added_time"].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
 
-        update.message.reply_text(message + f"The search link for the item: {tori_link}", reply_markup=ReplyKeyboardMarkup([['Add a new item', 'Items']], one_time_keyboard=True))
+        update.message.reply_text(message + f"Debug: The search link for the item: {tori_link}", parse_mode="HTML", reply_markup=ReplyKeyboardMarkup([[messages["add_item"], messages["items"]]], one_time_keyboard=True))
         
         session.close()
         
         return ADD_OR_SHOW_ITEMS
 
 def add_or_show_items(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', '🇬🇧 English')
+    messages = load_messages(language)
     choice = update.message.text
-    
-    if choice == 'Add a new item':
-        update.message.reply_text("Let's add a new item.")
+
+    if choice == messages["add_item"]:
+        update.message.reply_text(messages["lets_add"])
         return language_selection(update, context) 
-    elif choice == 'Items':
+    elif choice == messages["items"]:
         return show_items(update, context)
 
 
 def show_items(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', '🇬🇧 English')
+    messages = load_messages(language)
     telegram_id = update.message.from_user.id
     
     Session = sessionmaker(bind=engine)
@@ -337,30 +357,37 @@ def show_items(update: Update, context: CallbackContext) -> int:
     user_items = session.query(ToriItem).filter_by(telegram_id=telegram_id).all()
     
     if user_items:
-        update.message.reply_text("Here are the items you're currently looking for:")
+        update.message.reply_text(messages["items_list"])
         items_message = ""
         for item in user_items:
-            item_info = f"Item: {item.item}\nCategory: {item.category}\n"
+            item_info = messages["item"].format(item=item.item)
+            item_info += messages["category"].format(category=item.category)
             if item.subcategory != 'null':
-                item_info += f"Subcategory: {item.subcategory}\n"
-            item_info += f"Region: {item.region}\n"
+                item_info += messages["subcategory"].format(subcategory=item.subcategory)
+            if item.product_category != 'null':
+                item_info += messages["product_type"].format(product_category=item.product_category)
+            item_info += messages["region"].format(region=item.region)
             if item.city != 'null':
-                item_info += f"City: {item.city}\n"
-            item_info += f"Added Time: {item.added_time.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+                item_info += messages["city"].format(city=item.city)
+            if item.area != 'null':
+                item_info += messages["area"].format(area=item.area)
+            item_info += messages["added_time"].format(time=item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
 
-            remove_button = InlineKeyboardButton("Remove item", callback_data=str(item.id))
+            remove_button = InlineKeyboardButton(messages["remove_item"], callback_data=str(item.id))
             keyboard = [[remove_button]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             items_message += item_info
-            update.message.reply_text(items_message, reply_markup=reply_markup)
+            update.message.reply_text(items_message, parse_mode="HTML", reply_markup=reply_markup)
             items_message = ""
     else:
-        update.message.reply_text("You haven't added any items yet.")
+        update.message.reply_text(messages["no_items"])
     session.close()
     
     return ADD_OR_SHOW_ITEMS
 
 def remove_item(update: Update, context: CallbackContext) -> None:
+    language = context.user_data.get('language', '🇬🇧 English')
+    messages = load_messages(language)
     query = update.callback_query
     item_id = int(query.data)
     
@@ -371,9 +398,9 @@ def remove_item(update: Update, context: CallbackContext) -> None:
     if item:
         session.query(ToriItem).filter_by(id=item_id).delete()
         session.commit()
-        query.message.reply_text(f"{item.item} was successfully removed!")
+        query.message.reply_text(messages["item_removed"].format(itemname=item.item))
     else:
-        query.message.reply_text("Item not found!")
+        query.message.reply_text(messages["item_not_found"])
     session.close()
 
 def cancel(update: Update, context: CallbackContext) -> int:
@@ -381,6 +408,8 @@ def cancel(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 def check_for_new_items(context: CallbackContext):
+    language = context.user_data.get('language', '🇬🇧 English')
+    messages = load_messages(language)
     Session = sessionmaker(bind=engine)
     session = Session()
 
@@ -409,11 +438,12 @@ def check_for_new_items(context: CallbackContext):
             if item_time <= latest_time:
                 continue
 
+            itemname = ad.get('heading')
             region = ad.get('location')
             canonical_url = ad.get('canonical_url')
             price = ad.get('price', {}).get('amount')
             trade_type = ad.get('trade_type')
-            message = f"New item found: {ad.get('heading')}\nRegion: {region}\nPrice: {price} EUR\nTrade Type: {trade_type}\nLink: {canonical_url}"
+            message = messages["new_item"].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
 
             context.bot.send_message(item.telegram_id, message)
 
