@@ -30,6 +30,7 @@
     "new_item": "🎉 <b>Uusi kohde ilmestyi!</b>\n\n🔍 <b>Kohde:</b> {itemname}\n📍 <b>Sijainti:</b> {region}\n💰 <b>Hinta:</b> {price} EUR\n<b>Linkki:</b> {canonical_url}",
     "remove_item": "❌ Poista kohde",
     "add_item": "❇️ Lisää uusi kohde",
+    "more_10": "⛔️ Valitettavasti et voi etsiä enempää kuin 10 tuotetta samanaikaisesti. Poista ensin yksi tai useampi kohde.",
     "lets_add": "Lisätään uusi kohde.",
     "items": "📦 Kohteet"
 }

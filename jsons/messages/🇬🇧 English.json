@@ -30,6 +30,7 @@
     "new_item": "🎉 <b>New item appeared!</b>\n\n🔍 <b>Item:</b> {itemname}\n📍 <b>Location:</b> {region}\n💰 <b>Price:</b> {price} EUR\n<b>Link:</b> {canonical_url}",
     "remove_item": "❌ Remove item",
     "add_item": "❇️ Add a new item",
+    "more_10": "⛔️ Sorry, you can't search for more than 10 items simultaneously. Please remove one or more items first.",
     "lets_add": "Let's add a new item.",
     "items": "📦 Items"
 }
