@@ -36,7 +36,7 @@ class ToriItem(Base):
 
 Base.metadata.create_all(engine)
 
-LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS = range(9)
+LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS, SETTINGS_MENU = range(10)
 
 ALL_CATEGORIES = ["kaikki kategoriat", "all categories", "все категории", "всі категорії"]
 ALL_SUBCATEGORIES = ["kaikki alaluokat", "all subcategories", "все подкатегории", "всі підкатегорії"]
@@ -61,7 +61,7 @@ def load_messages(language: str) -> dict:
     return messages_data
 
 def start(update: Update, context: CallbackContext) -> int:
-    update.message.reply_text("Hi! Welcome to ToriFind!")
+    update.message.reply_text("Hi! Welcome to ToriScan!\n\nToriScan is an unofficial Telegram bot that notifies users when the new item is showing up on tori.fi.\nToriScan is not legally related to tori.fi or Schibsted Media Group.\n\nDeveloper: @arealibusadrealiora")
     
     telegram_id = update.message.from_user.id
     Session = sessionmaker(bind=engine)
@@ -74,7 +74,7 @@ def start(update: Update, context: CallbackContext) -> int:
         update.message.reply_text("Please select your preferrable language:", reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
         return LANGUAGE_SELECTION
 
-    return ADD_OR_SHOW_ITEMS
+    return add_or_show_items(update, context)
 
 def language_selection(update: Update, context: CallbackContext) -> int:
     context.user_data.pop('item', None)
@@ -110,7 +110,7 @@ def language_selection(update: Update, context: CallbackContext) -> int:
     
     if user_item_count >= 10:
         update.message.reply_text(messages["more_10"])
-        return ADD_OR_SHOW_ITEMS
+        return add_or_show_items(update, context)
 
     update.message.reply_text(messages["enter_item"], parse_mode="HTML")
     return CATEGORY
@@ -129,7 +129,7 @@ def select_category(update: Update, context: CallbackContext) -> int:
 
     if 'item' not in context.user_data:
         if not (3 <= len(update.message.text) <= 64):
-            update.message.reply_text(messages["invalid_item"])
+            update.message.reply_text(messages["invalid_item"], parse_mode="HTML")
             return language_selection(update, context)   
         context.user_data['item'] = update.message.text
 
@@ -410,13 +410,27 @@ def save_data(update: Update, context: CallbackContext) -> int:
             message += messages["area"].format(area=area)
         message += messages["added_time"].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
 
-        update.message.reply_text(message + f"Debug: The search link for the item: {tori_link}", parse_mode="HTML", reply_markup=ReplyKeyboardMarkup([[messages["add_item"], messages["items"]]], one_time_keyboard=True))
+        update.message.reply_text(message + f"Debug: The search link for the item: {tori_link}", parse_mode="HTML")
         
         session.close()
         
-        return ADD_OR_SHOW_ITEMS
+        return add_or_show_items(update, context)
 
 def add_or_show_items(update: Update, context: CallbackContext) -> int:
+    telegram_id = update.message.from_user.id
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
+    if user_preferences:
+        language = user_preferences.language
+    else:
+        language = '🇬🇧 English'
+    messages = load_messages(language)
+
+    update.message.reply_text(messages["menu"], reply_markup=ReplyKeyboardMarkup([[messages["add_item"], messages["items"], messages["settings"]]], one_time_keyboard=False))
+    return ADD_OR_SHOW_ITEMS
+
+def add_or_show_items_choice(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -433,7 +447,43 @@ def add_or_show_items(update: Update, context: CallbackContext) -> int:
         return language_selection(update, context) 
     elif choice == messages["items"]:
         return show_items(update, context)
+    elif choice == messages["settings"]:
+        return show_settings_menu(update, context) 
+    
+def show_settings_menu(update: Update, context: CallbackContext) -> int:
+    telegram_id = update.message.from_user.id
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
+    if user_preferences:
+        language = user_preferences.language
+    else:
+        language = '🇬🇧 English'
+    messages = load_messages(language)
+    keyboard = [
+        [messages["change_language"]],
+        [messages["contact_developer"]],
+        [messages["back"]]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=False)
+    message = update.message.reply_text(messages["settings_menu"], reply_markup=reply_markup)
+    context.user_data['settings_menu_message_id'] = message.message_id
+    return SETTINGS_MENU
 
+def settings_menu_choice(update: Update, context: CallbackContext) -> int:
+    language = context.user_data.get('language', '🇬🇧 English')
+    messages = load_messages(language)
+    choice = update.message.text
+
+    if choice == messages["change_language"]:
+        update.message.reply_text(messages["change_language_prompt"])
+    elif choice == messages["contact_developer"]:
+        update.message.reply_text(messages["contact_developer_prompt"], parse_mode="HTML")
+    elif choice == messages["back"]:
+        return add_or_show_items(update, context)
+    else:
+        update.message.reply_text(messages["invalid_choice"])
+        return show_settings_menu(update, context)
 
 def show_items(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
@@ -479,7 +529,8 @@ def show_items(update: Update, context: CallbackContext) -> int:
     return ADD_OR_SHOW_ITEMS
 
 def remove_item(update: Update, context: CallbackContext) -> None:
-    telegram_id = update.message.from_user.id
+    query = update.callback_query
+    telegram_id = query.from_user.id
     Session = sessionmaker(bind=engine)
     session = Session()
     user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
@@ -572,6 +623,7 @@ def main():
     conv_handler = ConversationHandler(
         entry_points=[MessageHandler(Filters.text & ~Filters.command, start)],
         states={
+            SETTINGS_MENU: [MessageHandler(Filters.text & ~Filters.command, settings_menu_choice)],
             LANGUAGE_SELECTION: [MessageHandler(Filters.text & ~Filters.command, language_selection)],
             CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_category)],
             SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_subcategory)],
@@ -580,7 +632,7 @@ def main():
             CITY: [MessageHandler(Filters.text & ~Filters.command, select_city)],
             AREA: [MessageHandler(Filters.text & ~Filters.command, select_area)],
             CONFIRMATION: [MessageHandler(Filters.text & ~Filters.command, save_data)],
-            ADD_OR_SHOW_ITEMS: [MessageHandler(Filters.text & ~Filters.command, add_or_show_items)],
+            ADD_OR_SHOW_ITEMS: [MessageHandler(Filters.text & ~Filters.command, add_or_show_items_choice)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
     )
