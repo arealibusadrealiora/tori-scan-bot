@@ -1,12 +1,16 @@
 import logging
 import json
+import requests
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext, CallbackQueryHandler
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-import requests
+
+def get_session():
+    Session = sessionmaker(bind=engine)
+    return Session()
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -74,8 +78,7 @@ def start(update: Update, context: CallbackContext) -> int:
 
 def language_menu(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
     user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
 
     if user_preferences:
@@ -89,8 +92,7 @@ def language_menu(update: Update, context: CallbackContext) -> int:
 
 def language_selection(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
     user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
 
     if user_preferences:
@@ -121,8 +123,7 @@ def new_item(update: Update, context: CallbackContext) -> int:
     language = get_language(telegram_id)
     messages = load_messages(language)
     
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
     user_item_count = session.query(ToriItem).filter_by(telegram_id=telegram_id).count()
     session.close()
 
@@ -332,8 +333,7 @@ def save_data(update: Update, context: CallbackContext) -> int:
     locations_data = load_locations(language)
     messages = load_messages(language)
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
     
     if 'area' not in context.user_data:
         user_area = update.message.text
@@ -463,8 +463,7 @@ def settings_menu_choice(update: Update, context: CallbackContext) -> int:
 
     if choice == messages["change_language"]:
         update.message.reply_text(messages["change_language_prompt"])
-        Session = sessionmaker(bind=engine)
-        session = Session()
+        session = get_session()
         session.query(UserPreferences).filter_by(telegram_id=telegram_id).delete()
         session.commit()
         session.close()
@@ -483,8 +482,7 @@ def show_items(update: Update, context: CallbackContext) -> int:
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
     
     user_items = session.query(ToriItem).filter_by(telegram_id=telegram_id).all()
     
@@ -524,8 +522,7 @@ def remove_item(update: Update, context: CallbackContext) -> None:
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
     
     item_id = int(query.data)
     item = session.query(ToriItem).filter_by(id=item_id).first()
@@ -545,8 +542,7 @@ def cancel(update: Update, context: CallbackContext) -> int:
 
 
 def get_language(telegram_id):
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
     try:
         user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
         if user_preferences:
@@ -559,8 +555,7 @@ def get_language(telegram_id):
 
 
 def check_for_new_items(context: CallbackContext):
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    session = get_session()
 
     items = session.query(ToriItem).all()
 
