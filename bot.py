@@ -543,15 +543,9 @@ def cancel(update: Update, context: CallbackContext) -> int:
 
 def get_language(telegram_id):
     session = get_session()
-    try:
-        user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
-        if user_preferences:
-            language = user_preferences.language
-        else:
-            language = '🇬🇧 English'
-        return language
-    finally:
-        session.close()
+    user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
+    session.close()
+    return user_preferences.language if user_preferences else '🇬🇧 English'
 
 
 def check_for_new_items(context: CallbackContext):
