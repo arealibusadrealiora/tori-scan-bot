@@ -43,7 +43,7 @@ class ToriItem(Base):
 
 Base.metadata.create_all(engine)
 
-LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, ADD_OR_SHOW_ITEMS, SETTINGS_MENU = range(10)
+LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU = range(10)
 
 ALL_CATEGORIES = ["kaikki kategoriat", "all categories", "все категории", "всі категорії"]
 ALL_SUBCATEGORIES = ["kaikki alaluokat", "all subcategories", "все подкатегории", "всі підкатегорії"]
@@ -87,7 +87,7 @@ def language_menu(update: Update, context: CallbackContext) -> int:
         update.message.reply_text("💬 Please select your preferrable language:", reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
         return LANGUAGE_SELECTION
 
-    return add_or_show_items(update, context)
+    return main_menu(update, context)
 
 
 def language_selection(update: Update, context: CallbackContext) -> int:
@@ -105,9 +105,9 @@ def language_selection(update: Update, context: CallbackContext) -> int:
             session.commit()
         else:
             update.message.reply_text("❗ Please select a valid language.")
-            return start(update, context)
+            return language_menu(update, context)
         
-    return add_or_show_items(update, context)
+    return main_menu(update, context)
 
 
 def new_item(update: Update, context: CallbackContext) -> int:
@@ -129,7 +129,7 @@ def new_item(update: Update, context: CallbackContext) -> int:
 
     if user_item_count >= 10:
         update.message.reply_text(messages["more_10"])
-        return add_or_show_items(update, context)
+        return main_menu(update, context)
 
     update.message.reply_text(messages["enter_item"], parse_mode="HTML")
 
@@ -408,19 +408,19 @@ def save_data(update: Update, context: CallbackContext) -> int:
         
         session.close()
         
-        return add_or_show_items(update, context)
+        return main_menu(update, context)
 
 
-def add_or_show_items(update: Update, context: CallbackContext) -> int:
+def main_menu(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
 
     update.message.reply_text(messages["menu"], reply_markup=ReplyKeyboardMarkup([[messages["add_item"], messages["items"], messages["settings"]]], one_time_keyboard=False))
-    return ADD_OR_SHOW_ITEMS
+    return MAIN_MENU
 
 
-def add_or_show_items_choice(update: Update, context: CallbackContext) -> int:
+def main_menu_choice(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -471,7 +471,7 @@ def settings_menu_choice(update: Update, context: CallbackContext) -> int:
     elif choice == messages["contact_developer"]:
         update.message.reply_text(messages["contact_developer_prompt"], parse_mode="HTML")
     elif choice == messages["back"]:
-        return add_or_show_items(update, context)
+        return main_menu(update, context)
     else:
         update.message.reply_text(messages["invalid_choice"])
         return show_settings_menu(update, context)
@@ -513,7 +513,7 @@ def show_items(update: Update, context: CallbackContext) -> int:
         update.message.reply_text(messages["no_items"])
     session.close()
     
-    return ADD_OR_SHOW_ITEMS
+    return MAIN_MENU
 
 
 def remove_item(update: Update, context: CallbackContext) -> None:
@@ -619,7 +619,7 @@ def main():
             CITY: [MessageHandler(Filters.text & ~Filters.command, select_city)],
             AREA: [MessageHandler(Filters.text & ~Filters.command, select_area)],
             CONFIRMATION: [MessageHandler(Filters.text & ~Filters.command, save_data)],
-            ADD_OR_SHOW_ITEMS: [MessageHandler(Filters.text & ~Filters.command, add_or_show_items_choice)],
+            MAIN_MENU: [MessageHandler(Filters.text & ~Filters.command, main_menu_choice)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
     )
