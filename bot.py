@@ -9,16 +9,30 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
 def get_session():
+    '''
+    Create and return a new SQLAlchemy session.
+    Returns:
+        Session: A new SQLAlchemy session.
+    '''
     Session = sessionmaker(bind=engine)
     return Session()
 
+# Configure logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Create the database engine and base class for SQLAlchemy models
 engine = create_engine('sqlite:///tori_data.db')
 Base = declarative_base()
 
 class UserPreferences(Base):
+    '''
+    SQLAlchemy model for user preferences.
+    Attributes:
+        id (int): Primary key.
+        telegram_id (int): The user's Telegram ID.
+        language (str): Preferred language of the user.
+    '''
     __tablename__ = 'user_preferences'
 
     id = Column(Integer, primary_key=True)
@@ -26,6 +40,22 @@ class UserPreferences(Base):
     language = Column(String)
 
 class ToriItem(Base):
+    '''
+    SQLAlchemy model for items tracked on Tori.fi.
+    Attributes:
+        id (int): Primary key.
+        item (str): Name of the item.
+        category (int): Category ID.
+        subcategory (int): Subcategory ID.
+        product_category (int): Product category ID.
+        region (int): Region ID.
+        city (int): City ID.
+        area (int): Area ID.
+        telegram_id (int): The user's Telegram ID.
+        added_time (datetime): Time when the item was added.
+        link (str): URL link to the item on Tori.fi.
+        latest_time (datetime): Latest time the item was checked.
+    '''
     __tablename__ = 'tori_items'
 
     id = Column(Integer, primary_key=True)
@@ -41,10 +71,13 @@ class ToriItem(Base):
     link = Column(String)
     latest_time = Column(DateTime)
 
+# Create the database tables
 Base.metadata.create_all(engine)
 
+# Conversation handler states
 LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU = range(10)
 
+# Constants for categories and locations
 ALL_CATEGORIES = ['kaikki kategoriat', 'all categories', 'все категории', 'всі категорії']
 ALL_SUBCATEGORIES = ['kaikki alaluokat', 'all subcategories', 'все подкатегории', 'всі підкатегорії']
 ALL_PRODUCT_CATEGORIES = ['kaikki tuoteluokat', 'all product categories', 'все категории товаров', 'всі категорії товарів']
@@ -54,29 +87,68 @@ ALL_AREAS = ['kaikki alueet', 'all areas', 'все области', 'всі об
 
 
 def load_categories(language: str) -> dict:
+    '''
+    Load category data from a JSON file based on the specified language.
+    Args:
+        language (str): Language code.
+    Returns:
+        dict: Category data.
+    '''
     with open(f'jsons/categories/{language}.json', encoding='utf-8') as f:
         categories_data = json.load(f)
     return categories_data
 
 
 def load_locations(language: str) -> dict:
+    '''
+    Load location data from a JSON file based on the specified language.
+    Args:
+        language (str): Language code.
+    Returns:
+        dict: Location data.
+    '''
+        
     with open(f'jsons/locations/{language}.json', encoding='utf-8') as f:
         locations_data = json.load(f)
     return locations_data
 
 
-def load_messages(language: str) -> dict: 
+def load_messages(language: str) -> dict:
+    '''
+    Load message templates from a JSON file based on the specified language.
+    Args:
+        language (str): Language code.
+    Returns:
+        dict: Message templates.
+    '''
+        
     with open(f'jsons/messages/{language}.json', encoding='utf-8') as f:
         messages_data = json.load(f)
     return messages_data
 
 
 def start(update: Update, context: CallbackContext) -> int:
+    '''
+    Start the conversation and display a welcome message.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (language_menu).
+    '''
     update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when the new item is showing up on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
     return language_menu(update, context)
     
 
 def language_menu(update: Update, context: CallbackContext) -> int:
+    '''
+    Display the language selection menu or proceed to the main menu if language is already set.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (main_menu).
+    '''
     telegram_id = update.message.from_user.id
     session = get_session()
     user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
@@ -91,6 +163,14 @@ def language_menu(update: Update, context: CallbackContext) -> int:
 
 
 def language_selection(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's language selection and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (main_menu).
+    '''
     telegram_id = update.message.from_user.id
     session = get_session()
     user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
@@ -111,6 +191,14 @@ def language_selection(update: Update, context: CallbackContext) -> int:
 
 
 def new_item(update: Update, context: CallbackContext) -> int:
+    '''
+    Initiate the process of adding a new item to track.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (CATEGORY).
+    '''
     context.user_data.pop('item', None)
     context.user_data.pop('category', None)
     context.user_data.pop('subcategory', None)
@@ -137,6 +225,14 @@ def new_item(update: Update, context: CallbackContext) -> int:
 
 
 def select_category(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's item input and prompt for category selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (SUBCATEGORY).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -156,6 +252,14 @@ def select_category(update: Update, context: CallbackContext) -> int:
 
 
 def select_subcategory(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's category selection and prompt for subcategory selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (PRODUCT_CATEGORY).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -192,6 +296,14 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
 
 
 def select_product_category(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's subcategory selection and prompt for product category selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (REGION).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -235,6 +347,14 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
 
 
 def select_region(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's product category selection and prompt for region selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (CITY).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -266,6 +386,14 @@ def select_region(update: Update, context: CallbackContext) -> int:
 
 
 def select_city(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's region selection and prompt for city selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (AREA).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
@@ -303,6 +431,14 @@ def select_city(update: Update, context: CallbackContext) -> int:
 
 
 def select_area(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's city selection and prompt for area selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (CONFIRMATION).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
@@ -327,6 +463,14 @@ def select_area(update: Update, context: CallbackContext) -> int:
 
 
 def save_data(update: Update, context: CallbackContext) -> int:
+    '''
+    Save the user data and generate the search link.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: The next state in the conversation (main_menu).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -412,6 +556,14 @@ def save_data(update: Update, context: CallbackContext) -> int:
 
 
 def main_menu(update: Update, context: CallbackContext) -> int:
+    '''
+    Display the main menu with options to add an item, view items, or access settings.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: The next state in the conversation (MAIN_MENU).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -421,12 +573,22 @@ def main_menu(update: Update, context: CallbackContext) -> int:
 
 
 def main_menu_choice(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's choice from the main menu.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: The next state in the conversation based on user choice:
+            'add_item': new_item;
+            'items': show_items;
+            'settings': show_settings_menu.
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
 
     choice = update.message.text
-
     if choice == messages['add_item']:
         update.message.reply_text(messages['lets_add'])
         return new_item(update, context) 
@@ -437,6 +599,14 @@ def main_menu_choice(update: Update, context: CallbackContext) -> int:
     
 
 def show_settings_menu(update: Update, context: CallbackContext) -> int:
+    '''
+    Display the settings menu with options to change language or contact developer.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: The next state in the conversation (SETTINGS_MENU).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -455,6 +625,18 @@ def show_settings_menu(update: Update, context: CallbackContext) -> int:
 
 
 def settings_menu_choice(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's choice from the settings menu.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: The next state in the conversation based on user choice:
+            'change_language': language_menu;
+            'contact_developer': messages a prompt 'contact_developer_prompt';
+            'back': main_menu;
+            'invalid_choice': show_settings_menu.
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -478,6 +660,14 @@ def settings_menu_choice(update: Update, context: CallbackContext) -> int:
 
 
 def show_items(update: Update, context: CallbackContext) -> int:
+    '''
+    Display the list of items added by the user with options to remove them.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: The next state in the conversation (MAIN_MENU).
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -517,6 +707,12 @@ def show_items(update: Update, context: CallbackContext) -> int:
 
 
 def remove_item(update: Update, context: CallbackContext) -> None:
+    '''
+    Remove the selected item from the user's list.
+    Args:
+        update (Update): The update object containing the user's callback query.
+        context (CallbackContext): The context object for maintaining conversation state.
+    '''
     query = update.callback_query
     telegram_id = query.from_user.id
     language = get_language(telegram_id)
@@ -537,11 +733,26 @@ def remove_item(update: Update, context: CallbackContext) -> None:
 
 
 def cancel(update: Update, context: CallbackContext) -> int:
+    '''
+    Cancel the conversation.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: The end state of the conversation.
+    '''
     update.message.reply_text('Conversation cancelled.')
     return ConversationHandler.END
 
 
 def get_language(telegram_id):
+    '''
+    Get the user's preferred language.
+    Args:
+        telegram_id (int): The user's Telegram ID.
+    Returns:
+        str: The user's preferred language or the default language ('🇬🇧 English').
+    '''
     session = get_session()
     user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
     session.close()
@@ -549,10 +760,13 @@ def get_language(telegram_id):
 
 
 def check_for_new_items(context: CallbackContext):
+    '''
+    Check for new items on the external API and notify the user if there are any.
+    Args:
+        context (CallbackContext): The context object for accessing bot and job queue.
+    '''
     session = get_session()
-
     items = session.query(ToriItem).all()
-
     for item in items:
         telegram_id = item.telegram_id
         language = get_language(telegram_id)
@@ -601,6 +815,9 @@ def check_for_new_items(context: CallbackContext):
 
 
 def main():
+    '''
+    The main function that sets up the bot and handles the conversation.
+    '''
     with open('token.txt', encoding='utf-8') as file:
         token = file.read().strip()
     updater = Updater(token, use_context=True)
