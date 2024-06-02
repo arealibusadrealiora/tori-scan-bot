@@ -75,7 +75,7 @@ class ToriItem(Base):
 Base.metadata.create_all(engine)
 
 # Conversation handler states
-LANGUAGE_SELECTION, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU = range(10)
+LANGUAGE, ITEM, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU = range(11)
 
 # Constants for categories and locations
 ALL_CATEGORIES = ['kaikki kategoriat', 'all categories', 'все категории', 'всі категорії']
@@ -83,7 +83,7 @@ ALL_SUBCATEGORIES = ['kaikki alaluokat', 'all subcategories', 'все подка
 ALL_PRODUCT_CATEGORIES = ['kaikki tuoteluokat', 'all product categories', 'все категории товаров', 'всі категорії товарів']
 WHOLE_FINLAND = ['koko suomi', 'whole finland', 'вся финляндия', 'вся фінляндія']
 ALL_CITIES = ['kaikki kaupungit', 'all cities', 'все города', 'всі міста']
-ALL_AREAS = ['kaikki alueet', 'all areas', 'все области', 'всі області']
+ALL_AREAS = ['kaikki alueet', 'all areas', 'все области', 'всі райони']
 
 
 def load_categories(language: str) -> dict:
@@ -107,7 +107,6 @@ def load_locations(language: str) -> dict:
     Returns:
         dict: Location data.
     '''
-        
     with open(f'jsons/locations/{language}.json', encoding='utf-8') as f:
         locations_data = json.load(f)
     return locations_data
@@ -121,7 +120,6 @@ def load_messages(language: str) -> dict:
     Returns:
         dict: Message templates.
     '''
-        
     with open(f'jsons/messages/{language}.json', encoding='utf-8') as f:
         messages_data = json.load(f)
     return messages_data
@@ -157,7 +155,7 @@ def language_menu(update: Update, context: CallbackContext) -> int:
         context.user_data['language'] = user_preferences.language
     else:
         update.message.reply_text('💬 Please select your preferrable language:', reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
-        return LANGUAGE_SELECTION
+        return LANGUAGE
 
     return main_menu(update, context)
 
@@ -221,7 +219,21 @@ def new_item(update: Update, context: CallbackContext) -> int:
 
     update.message.reply_text(messages['enter_item'], parse_mode='HTML')
 
-    return CATEGORY
+    return ITEM
+
+
+def save_item_name(update: Update, context: CallbackContext) -> int:
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    if 'item' not in context.user_data:
+        if not (3 <= len(update.message.text) <= 64):
+            update.message.reply_text(messages['invalid_item'], parse_mode='HTML')
+            return language_selection(update, context)   
+        context.user_data['item'] = update.message.text
+
+    return select_category(update, context)
 
 
 def select_category(update: Update, context: CallbackContext) -> int:
@@ -238,28 +250,14 @@ def select_category(update: Update, context: CallbackContext) -> int:
     categories_data = load_categories(language)
     messages = load_messages(language)
 
-    if 'item' not in context.user_data:
-        if not (3 <= len(update.message.text) <= 64):
-            update.message.reply_text(messages['invalid_item'], parse_mode='HTML')
-            return language_selection(update, context)   
-        context.user_data['item'] = update.message.text
-
     keyboard = [[category] for category in categories_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(messages['select_category'], reply_markup=reply_markup)
 
-    return SUBCATEGORY
+    return CATEGORY
 
 
-def select_subcategory(update: Update, context: CallbackContext) -> int:
-    '''
-    Handle the user's category selection and prompt for subcategory selection.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (PRODUCT_CATEGORY).
-    '''
+def save_category(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -283,27 +281,36 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
             elif language == '🇷🇺 Русский':
                 context.user_data['category'] = 'Все категории'
                 context.user_data['subcategory'] = 'Все подкатегории'
-            return select_region(update, context)
+            return save_product_category(update, context)
         else:
             context.user_data['category'] = update.message.text
+    
+    return select_subcategory(update, context)
+
+
+def select_subcategory(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's category selection and prompt for subcategory selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (PRODUCT_CATEGORY).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    categories_data = load_categories(language)
+    messages = load_messages(language)
 
     subcategories = categories_data[context.user_data['category']]['subcategories']
     keyboard = [[subcategory] for subcategory in subcategories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(messages['select_subcategory'], reply_markup=reply_markup)
 
-    return PRODUCT_CATEGORY
+    return SUBCATEGORY
 
 
-def select_product_category(update: Update, context: CallbackContext) -> int:
-    '''
-    Handle the user's subcategory selection and prompt for product category selection.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (REGION).
-    '''
+def save_subcategory(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -320,12 +327,29 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
                 context.user_data['subcategory'] = 'Всі підкатегорії'
             elif language == '🇷🇺 Русский':
                 context.user_data['subcategory'] = 'Все подкатегории'
-            return select_region(update, context)
+            return save_product_category(update, context)
         elif user_subcategory not in categories_data[context.user_data['category']]['subcategories']:
             update.message.reply_text(messages['invalid_subcategory'])
             return select_subcategory(update, context)
         else:
             context.user_data['subcategory'] = update.message.text
+
+    return select_product_category(update, context)
+
+
+def select_product_category(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's subcategory selection and prompt for product category selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (REGION).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    categories_data = load_categories(language)
+    messages = load_messages(language)
 
     product_categories = categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']].get('product_categories')
     if not product_categories:
@@ -343,24 +367,15 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(messages['select_product_category'], reply_markup=reply_markup)
 
-    return REGION
+    return PRODUCT_CATEGORY
 
 
-def select_region(update: Update, context: CallbackContext) -> int:
-    '''
-    Handle the user's product category selection and prompt for region selection.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (CITY).
-    '''
+def save_product_category(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
-    locations_data = load_locations(language)
     messages = load_messages(language)
-
+    
     if 'product_category' not in context.user_data:
         user_product_category = update.message.text
         if user_product_category.lower() in ALL_CATEGORIES or user_product_category.lower() in ALL_SUBCATEGORIES:
@@ -378,22 +393,31 @@ def select_region(update: Update, context: CallbackContext) -> int:
         else:
             context.user_data['product_category'] = update.message.text
     
-    keyboard = [[region] for region in locations_data]
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_region'], reply_markup=reply_markup)
-
-    return CITY
+    return select_region(update, context)
 
 
-def select_city(update: Update, context: CallbackContext) -> int:
+def select_region(update: Update, context: CallbackContext) -> int:
     '''
-    Handle the user's region selection and prompt for city selection.
+    Handle the user's product category selection and prompt for region selection.
     Args:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (AREA).
+        int: Next state for the conversation (CITY).
     '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    locations_data = load_locations(language)
+    messages = load_messages(language)
+    
+    keyboard = [[region] for region in locations_data]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    update.message.reply_text(messages['select_region'], reply_markup=reply_markup)
+
+    return REGION
+
+
+def save_region(update: Update, context: CallbackContext) -> int:
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
@@ -418,16 +442,61 @@ def select_city(update: Update, context: CallbackContext) -> int:
             elif language == '🇷🇺 Русский':
                 context.user_data['city'] = 'Все города'
                 context.user_data['area'] = 'Все области'
-            return save_data(update, context)
+            return save_area(update, context)
         else:
             context.user_data['region'] = update.message.text
+
+    return select_city(update, context)
+
+
+def select_city(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's region selection and prompt for city selection.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (AREA).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    locations_data = load_locations(language)
+    messages = load_messages(language)
 
     cities = locations_data[context.user_data['region']]['cities']
     keyboard = [[city] for city in cities]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(messages['select_city'], reply_markup=reply_markup)
 
-    return AREA
+    return CITY
+
+
+def save_city(update: Update, context: CallbackContext) -> int:
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    locations_data = load_locations(language)
+    messages = load_messages(language)
+
+    if 'city' not in context.user_data:
+        user_city = update.message.text
+        if user_city.lower() not in WHOLE_FINLAND and user_city not in locations_data[context.user_data['region']]['cities']:
+            update.message.reply_text(messages['invalid_city'])
+            return select_city(update, context)
+        if user_city.lower() in ALL_CITIES:
+            context.user_data['city'] = update.message.text
+            if language == '🇫🇮 Suomi':
+                context.user_data['area'] = 'Kaikki alueet'
+            elif language == '🇬🇧 English':
+                context.user_data['area'] = 'All areas'
+            elif language == '🇺🇦 Українська':
+                context.user_data['area'] = 'Всі області'
+            elif language == '🇷🇺 Русский':
+                context.user_data['area'] = 'Все области'
+            return save_area(update, context)
+        else:
+            context.user_data['city'] = update.message.text
+        
+    return select_area(update, context)
 
 
 def select_area(update: Update, context: CallbackContext) -> int:
@@ -443,14 +512,6 @@ def select_area(update: Update, context: CallbackContext) -> int:
     language = get_language(telegram_id)
     locations_data = load_locations(language)
     messages = load_messages(language)
-    
-    if 'city' not in context.user_data:
-        user_city = update.message.text
-        if user_city.lower() not in WHOLE_FINLAND and user_city not in locations_data[context.user_data['region']]['cities']:
-            update.message.reply_text(messages['invalid_city'])
-            return select_city(update, context)
-        else:
-            context.user_data['city'] = update.message.text
 
     areas = locations_data[context.user_data['region']]['cities'][context.user_data['city']].get('areas', {})
     if not areas:
@@ -459,7 +520,33 @@ def select_area(update: Update, context: CallbackContext) -> int:
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(messages['select_area'], reply_markup=reply_markup)
 
-    return CONFIRMATION
+    return AREA
+
+
+def save_area(update: Update, context: CallbackContext) -> int:
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    locations_data = load_locations(language)
+    messages = load_messages(language)
+
+    if 'area' not in context.user_data:
+        user_area = update.message.text
+        if user_area.lower() in WHOLE_FINLAND or user_area.lower() in ALL_CITIES :
+            if language == '🇫🇮 Suomi':
+                context.user_data['product_category'] = 'Kaikki alueet'
+            elif language == '🇬🇧 English':
+                context.user_data['product_category'] = 'All areas'
+            elif language == '🇺🇦 Українська':
+                context.user_data['product_category'] = 'Всі категорії товарів'
+            elif language == '🇷🇺 Русский':
+                context.user_data['product_category'] = 'Всі райони'
+        if user_area.lower() not in WHOLE_FINLAND and user_area not in locations_data[context.user_data['region']]['cities'][context.user_data['city']]['areas']:
+            update.message.reply_text(messages['invalid_area'])
+            return select_area(update, context)
+        else:
+            context.user_data['area'] = update.message.text
+
+    return save_data(update, context)
 
 
 def save_data(update: Update, context: CallbackContext) -> int:
@@ -478,14 +565,6 @@ def save_data(update: Update, context: CallbackContext) -> int:
     messages = load_messages(language)
 
     session = get_session()
-    
-    if 'area' not in context.user_data:
-        user_area = update.message.text
-        if user_area.lower() not in WHOLE_FINLAND and user_area not in locations_data[context.user_data['region']]['cities'][context.user_data['city']]['areas']:
-            update.message.reply_text(messages['invalid_area'])
-            return select_area(update, context)
-        else:
-            context.user_data['area'] = update.message.text
 
     required_data = ['item', 'category', 'subcategory', 'product_category', 'region', 'city', 'area']
     missing_data = [key for key in required_data if key not in context.user_data]
@@ -827,13 +906,14 @@ def main():
         entry_points=[MessageHandler(Filters.text & ~Filters.command, start)],
         states={
             SETTINGS_MENU: [MessageHandler(Filters.text & ~Filters.command, settings_menu_choice)],
-            LANGUAGE_SELECTION: [MessageHandler(Filters.text & ~Filters.command, language_selection)],
-            CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_category)],
-            SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_subcategory)],
-            PRODUCT_CATEGORY: [MessageHandler(Filters.text & ~Filters.command, select_product_category)],
-            REGION: [MessageHandler(Filters.text & ~Filters.command, select_region)],
-            CITY: [MessageHandler(Filters.text & ~Filters.command, select_city)],
-            AREA: [MessageHandler(Filters.text & ~Filters.command, select_area)],
+            LANGUAGE: [MessageHandler(Filters.text & ~Filters.command, language_selection)],
+            ITEM: [MessageHandler(Filters.text & ~Filters.command, save_item_name)],
+            CATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_category)],
+            SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_subcategory)],
+            PRODUCT_CATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_product_category)],
+            REGION: [MessageHandler(Filters.text & ~Filters.command, save_region)],
+            CITY: [MessageHandler(Filters.text & ~Filters.command, save_city)],
+            AREA: [MessageHandler(Filters.text & ~Filters.command, save_area)],
             CONFIRMATION: [MessageHandler(Filters.text & ~Filters.command, save_data)],
             MAIN_MENU: [MessageHandler(Filters.text & ~Filters.command, main_menu_choice)],
         },
