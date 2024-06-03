@@ -230,7 +230,7 @@ def save_item_name(update: Update, context: CallbackContext) -> int:
     if 'item' not in context.user_data:
         if not (3 <= len(update.message.text) <= 64):
             update.message.reply_text(messages['invalid_item'], parse_mode='HTML')
-            return language_selection(update, context)   
+            return new_item(update, context)   
         context.user_data['item'] = update.message.text
 
     return select_category(update, context)
