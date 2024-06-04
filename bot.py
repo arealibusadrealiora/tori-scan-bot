@@ -167,7 +167,9 @@ def language_selection(update: Update, context: CallbackContext) -> int:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (main_menu).
+        int: Next state for the conversation:
+            Default: main_menu;
+            If the language is invalid: language_menu.
     '''
     telegram_id = update.message.from_user.id
     session = get_session()
@@ -195,7 +197,9 @@ def new_item(update: Update, context: CallbackContext) -> int:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (CATEGORY).
+        int: Next state for the conversation:
+            Default: ITEM;
+            If there's more than 10 items on the list: main_menu.
     '''
     context.user_data.pop('item', None)
     context.user_data.pop('category', None)
@@ -223,6 +227,16 @@ def new_item(update: Update, context: CallbackContext) -> int:
 
 
 def save_item_name(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's item input and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: select_category;
+            if not (3 <= len <= 64): new_item.
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -238,12 +252,12 @@ def save_item_name(update: Update, context: CallbackContext) -> int:
 
 def select_category(update: Update, context: CallbackContext) -> int:
     '''
-    Handle the user's item input and prompt for category selection.
+    Display the category selection menu.
     Args:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (SUBCATEGORY).
+        int: Next state for the conversation (CATEGORY).
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -258,6 +272,17 @@ def select_category(update: Update, context: CallbackContext) -> int:
 
 
 def save_category(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's category input and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: select_subcategory;
+            Invalid: select_category;
+            If the choice is in ALL_CATEGORIES: save_product_category.
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -290,12 +315,12 @@ def save_category(update: Update, context: CallbackContext) -> int:
 
 def select_subcategory(update: Update, context: CallbackContext) -> int:
     '''
-    Handle the user's category selection and prompt for subcategory selection.
+    Display the subcategory selection menu.
     Args:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (PRODUCT_CATEGORY).
+        int: Next state for the conversation (SUBCATEGORY).
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -311,6 +336,17 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
 
 
 def save_subcategory(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's subcategory input and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: select_product_category;
+            Invalid: select_subcategory;
+            If the choice is in ALL_SUBCATEGORIES: save_product_category.
+    ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -339,12 +375,14 @@ def save_subcategory(update: Update, context: CallbackContext) -> int:
 
 def select_product_category(update: Update, context: CallbackContext) -> int:
     '''
-    Handle the user's subcategory selection and prompt for product category selection.
+    Display the product category selection menu.
     Args:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (REGION).
+        int: 
+            Default: Next state for the conversation (PRODUCT_CATEGORY).
+            If there is no product categories for that subcategory: select_region
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -371,6 +409,16 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
 
 
 def save_product_category(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's product category input and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: select_region;
+            Invalid: select_product_category.
+    ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -398,12 +446,12 @@ def save_product_category(update: Update, context: CallbackContext) -> int:
 
 def select_region(update: Update, context: CallbackContext) -> int:
     '''
-    Handle the user's product category selection and prompt for region selection.
+    Display the region selection menu.
     Args:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (CITY).
+        int: Next state for the conversation (REGION).
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -418,6 +466,17 @@ def select_region(update: Update, context: CallbackContext) -> int:
 
 
 def save_region(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's region input and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: select_city;
+            Invalid: select_region;
+            If the choice is in WHOLE_FINLAND: save_area.
+    ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
@@ -451,12 +510,12 @@ def save_region(update: Update, context: CallbackContext) -> int:
 
 def select_city(update: Update, context: CallbackContext) -> int:
     '''
-    Handle the user's region selection and prompt for city selection.
+    Display the city selection menu.
     Args:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (AREA).
+        int: Next state for the conversation (CITY).
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -472,6 +531,17 @@ def select_city(update: Update, context: CallbackContext) -> int:
 
 
 def save_city(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's city input and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: select_area;
+            Invalid: select_city;
+            If the choice is in ALL_CITIES: save_area.
+    ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
@@ -501,12 +571,12 @@ def save_city(update: Update, context: CallbackContext) -> int:
 
 def select_area(update: Update, context: CallbackContext) -> int:
     '''
-    Handle the user's city selection and prompt for area selection.
+    Display the area selection menu.
     Args:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (CONFIRMATION).
+        int: Next state for the conversation (AREA).
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -524,6 +594,16 @@ def select_area(update: Update, context: CallbackContext) -> int:
 
 
 def save_area(update: Update, context: CallbackContext) -> int:
+    '''
+    Handle the user's area input and save it to the database.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: save_data;
+            Invalid: select_area;
+    ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
