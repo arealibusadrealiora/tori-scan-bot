@@ -190,7 +190,7 @@ def language_selection(update: Update, context: CallbackContext) -> int:
     return main_menu(update, context)
 
 
-def new_item(update: Update, context: CallbackContext) -> int:
+def add_new_item(update: Update, context: CallbackContext) -> int:
     '''
     Initiate the process of adding a new item to track.
     Args:
@@ -235,7 +235,7 @@ def save_item_name(update: Update, context: CallbackContext) -> int:
     Returns:
         int: Next state for the conversation:
             Default: select_category;
-            if not (3 <= len <= 64): new_item.
+            if not (3 <= len <= 64): add_new_item.
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -244,7 +244,7 @@ def save_item_name(update: Update, context: CallbackContext) -> int:
     if 'item' not in context.user_data:
         if not (3 <= len(update.message.text) <= 64):
             update.message.reply_text(messages['invalid_item'], parse_mode='HTML')
-            return new_item(update, context)   
+            return add_new_item(update, context)   
         context.user_data['item'] = update.message.text
 
     return select_category(update, context)
@@ -739,7 +739,7 @@ def main_menu_choice(update: Update, context: CallbackContext) -> int:
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
         int: The next state in the conversation based on user choice:
-            'add_item': new_item;
+            'add_item': add_new_item;
             'items': show_items;
             'settings': show_settings_menu.
     '''
@@ -750,7 +750,7 @@ def main_menu_choice(update: Update, context: CallbackContext) -> int:
     choice = update.message.text
     if choice == messages['add_item']:
         update.message.reply_text(messages['lets_add'])
-        return new_item(update, context) 
+        return add_new_item(update, context) 
     elif choice == messages['items']:
         return show_items(update, context)
     elif choice == messages['settings']:
