@@ -7,7 +7,6 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from functools import wraps
 
 def get_session():
     '''
@@ -918,15 +917,6 @@ def get_language(telegram_id):
     session.close()
     return user_preferences.language if user_preferences else '🇬🇧 English'
 
-
-def with_language(func):
-    @wraps(func)
-    def wrapper(update: Update, context: CallbackContext, *args, **kwargs):
-        telegram_id = update.message.from_user.id if update.message else update.callback_query.from_user.id
-        language = get_language(telegram_id)
-        messages = load_messages(language)
-        return func(update, context, messages, *args, **kwargs)
-    return wrapper
 
 def check_for_new_items(context: CallbackContext):
     '''
