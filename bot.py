@@ -434,7 +434,7 @@ def save_product_category(update: Update, context: CallbackContext) -> int:
             elif language == '🇺🇦 Українська':
                 context.user_data['product_category'] = 'Всі категорії товарів'
             elif language == '🇷🇺 Русский':
-                context.user_data['product_category'] = 'Все категорії товаров'
+                context.user_data['product_category'] = 'Все категории товаров'
         elif user_product_category.lower() not in ALL_CATEGORIES and user_product_category.lower() not in ALL_SUBCATEGORIES and user_product_category not in categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']]['product_categories']:
             update.message.reply_text(messages['invalid_product_category'])
             return select_product_category(update, context)
@@ -617,9 +617,9 @@ def save_area(update: Update, context: CallbackContext) -> int:
             elif language == '🇬🇧 English':
                 context.user_data['product_category'] = 'All areas'
             elif language == '🇺🇦 Українська':
-                context.user_data['product_category'] = 'Всі категорії товарів'
-            elif language == '🇷🇺 Русский':
                 context.user_data['product_category'] = 'Всі райони'
+            elif language == '🇷🇺 Русский':
+                context.user_data['product_category'] = 'Все районы'
         if user_area.lower() not in WHOLE_FINLAND and user_area not in locations_data[context.user_data['region']]['cities'][context.user_data['city']]['areas']:
             update.message.reply_text(messages['invalid_area'])
             return select_area(update, context)
