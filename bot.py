@@ -6,6 +6,7 @@ from datetime import datetime
 from models import UserPreferences, ToriItem
 from database import get_session
 from loaders import load_categories, load_locations, load_messages
+from selects import select_language, select_category, select_subcategory, select_product_category, select_region, select_city, select_area
 
 # Configure logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -30,32 +31,11 @@ def start(update: Update, context: CallbackContext) -> int:
         update (Update): The update object containing the user's message.
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (language_menu).
+        int: Next state for the conversation (select_language).
     '''
     update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when the new item is showing up on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
-    return language_menu(update, context)
+    return select_language(update, context)
     
-
-def language_menu(update: Update, context: CallbackContext) -> int:
-    '''
-    Display the language selection menu or proceed to the main menu if language is already set.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (main_menu).
-    '''
-    telegram_id = update.message.from_user.id
-    session = get_session()
-    user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
-
-    if user_preferences:
-        context.user_data['language'] = user_preferences.language
-    else:
-        update.message.reply_text('💬 Please select your preferrable language:', reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
-        return LANGUAGE
-
-    return main_menu(update, context)
 
 
 def language_selection(update: Update, context: CallbackContext) -> int:
@@ -67,7 +47,7 @@ def language_selection(update: Update, context: CallbackContext) -> int:
     Returns:
         int: Next state for the conversation:
             Default: main_menu;
-            If the language is invalid: language_menu.
+            If the language is invalid: select_language.
     '''
     telegram_id = update.message.from_user.id
     session = get_session()
@@ -83,7 +63,7 @@ def language_selection(update: Update, context: CallbackContext) -> int:
             session.commit()
         else:
             update.message.reply_text('❗ Please select a valid language.')
-            return language_menu(update, context)
+            return select_language(update, context)
         
     return main_menu(update, context)
 
@@ -148,27 +128,6 @@ def save_item_name(update: Update, context: CallbackContext) -> int:
     return select_category(update, context)
 
 
-def select_category(update: Update, context: CallbackContext) -> int:
-    '''
-    Display the category selection menu.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (CATEGORY).
-    '''
-    telegram_id = update.message.from_user.id
-    language = get_language(telegram_id)
-    categories_data = load_categories(language)
-    messages = load_messages(language)
-
-    keyboard = [[category] for category in categories_data]
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_category'], reply_markup=reply_markup)
-
-    return CATEGORY
-
-
 def save_category(update: Update, context: CallbackContext) -> int:
     '''
     Handle the user's category input and save it to the database.
@@ -211,28 +170,6 @@ def save_category(update: Update, context: CallbackContext) -> int:
     return select_subcategory(update, context)
 
 
-def select_subcategory(update: Update, context: CallbackContext) -> int:
-    '''
-    Display the subcategory selection menu.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (SUBCATEGORY).
-    '''
-    telegram_id = update.message.from_user.id
-    language = get_language(telegram_id)
-    categories_data = load_categories(language)
-    messages = load_messages(language)
-
-    subcategories = categories_data[context.user_data['category']]['subcategories']
-    keyboard = [[subcategory] for subcategory in subcategories]
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_subcategory'], reply_markup=reply_markup)
-
-    return SUBCATEGORY
-
-
 def save_subcategory(update: Update, context: CallbackContext) -> int:
     '''
     Handle the user's subcategory input and save it to the database.
@@ -271,41 +208,6 @@ def save_subcategory(update: Update, context: CallbackContext) -> int:
     return select_product_category(update, context)
 
 
-def select_product_category(update: Update, context: CallbackContext) -> int:
-    '''
-    Display the product category selection menu.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: 
-            Default: Next state for the conversation (PRODUCT_CATEGORY).
-            If there is no product categories for that subcategory: select_region
-    '''
-    telegram_id = update.message.from_user.id
-    language = get_language(telegram_id)
-    categories_data = load_categories(language)
-    messages = load_messages(language)
-
-    product_categories = categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']].get('product_categories')
-    if not product_categories:
-        if language == '🇫🇮 Suomi':
-            context.user_data['product_category'] = 'Kaikki tuoteluokat'
-        elif language == '🇬🇧 English':
-            context.user_data['product_category'] = 'All product categories'
-        elif language == '🇺🇦 Українська':
-            context.user_data['product_category'] = 'Всі категорії товарів'
-        elif language == '🇷🇺 Русский':
-            context.user_data['product_category'] = 'Все категории товаров'
-        return select_region(update, context)
-    
-    keyboard = [[product_category] for product_category in product_categories]
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_product_category'], reply_markup=reply_markup)
-
-    return PRODUCT_CATEGORY
-
-
 def save_product_category(update: Update, context: CallbackContext) -> int:
     '''
     Handle the user's product category input and save it to the database.
@@ -340,27 +242,6 @@ def save_product_category(update: Update, context: CallbackContext) -> int:
             context.user_data['product_category'] = update.message.text
     
     return select_region(update, context)
-
-
-def select_region(update: Update, context: CallbackContext) -> int:
-    '''
-    Display the region selection menu.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (REGION).
-    '''
-    telegram_id = update.message.from_user.id
-    language = get_language(telegram_id)
-    locations_data = load_locations(language)
-    messages = load_messages(language)
-    
-    keyboard = [[region] for region in locations_data]
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_region'], reply_markup=reply_markup)
-
-    return REGION
 
 
 def save_region(update: Update, context: CallbackContext) -> int:
@@ -406,28 +287,6 @@ def save_region(update: Update, context: CallbackContext) -> int:
     return select_city(update, context)
 
 
-def select_city(update: Update, context: CallbackContext) -> int:
-    '''
-    Display the city selection menu.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (CITY).
-    '''
-    telegram_id = update.message.from_user.id
-    language = get_language(telegram_id)
-    locations_data = load_locations(language)
-    messages = load_messages(language)
-
-    cities = locations_data[context.user_data['region']]['cities']
-    keyboard = [[city] for city in cities]
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_city'], reply_markup=reply_markup)
-
-    return CITY
-
-
 def save_city(update: Update, context: CallbackContext) -> int:
     '''
     Handle the user's city input and save it to the database.
@@ -465,30 +324,6 @@ def save_city(update: Update, context: CallbackContext) -> int:
             context.user_data['city'] = update.message.text
         
     return select_area(update, context)
-
-
-def select_area(update: Update, context: CallbackContext) -> int:
-    '''
-    Display the area selection menu.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (AREA).
-    '''
-    telegram_id = update.message.from_user.id
-    language = get_language(telegram_id)
-    locations_data = load_locations(language)
-    messages = load_messages(language)
-
-    areas = locations_data[context.user_data['region']]['cities'][context.user_data['city']].get('areas', {})
-    if not areas:
-        return save_data(update, context)
-    keyboard = [[area] for area in areas]
-    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_area'], reply_markup=reply_markup)
-
-    return AREA
 
 
 def save_area(update: Update, context: CallbackContext) -> int:
@@ -689,7 +524,7 @@ def settings_menu_choice(update: Update, context: CallbackContext) -> int:
         context (CallbackContext): The context object for maintaining conversation state.
     Returns:
         int: The next state in the conversation based on user choice:
-            'change_language': language_menu;
+            'change_language': select_language;
             'contact_developer': messages a prompt 'contact_developer_prompt';
             'back': main_menu;
             'invalid_choice': show_settings_menu.
@@ -706,7 +541,7 @@ def settings_menu_choice(update: Update, context: CallbackContext) -> int:
         session.query(UserPreferences).filter_by(telegram_id=telegram_id).delete()
         session.commit()
         session.close()
-        return language_menu(update, context)
+        return select_language(update, context)
     elif choice == messages['contact_developer']:
         update.message.reply_text(messages['contact_developer_prompt'], parse_mode='HTML')
     elif choice == messages['back']:
