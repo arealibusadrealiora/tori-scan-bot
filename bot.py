@@ -38,7 +38,7 @@ def start(update: Update, context: CallbackContext) -> int:
     
 
 
-def language_selection(update: Update, context: CallbackContext) -> int:
+def save_language(update: Update, context: CallbackContext) -> int:
     '''
     Handle the user's language selection and save it to the database.
     Args:
@@ -719,7 +719,7 @@ def main():
         entry_points=[MessageHandler(Filters.text & ~Filters.command, start)],
         states={
             SETTINGS_MENU: [MessageHandler(Filters.text & ~Filters.command, settings_menu_choice)],
-            LANGUAGE: [MessageHandler(Filters.text & ~Filters.command, language_selection)],
+            LANGUAGE: [MessageHandler(Filters.text & ~Filters.command, save_language)],
             ITEM: [MessageHandler(Filters.text & ~Filters.command, save_item_name)],
             CATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_category)],
             SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_subcategory)],
