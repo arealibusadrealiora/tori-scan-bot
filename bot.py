@@ -6,7 +6,7 @@ from datetime import datetime
 from models import UserPreferences, ToriItem
 from database import get_session
 from loaders import load_categories, load_locations, load_messages
-from selects import select_language, select_category, select_subcategory, select_product_category, select_region, select_city, select_area
+from selects import select_language
 from savers import save_item_name, save_language, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
 
 # Configure logging
