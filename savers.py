@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import CallbackContext
-from models import UserPreferences, ToriItem
-from bot import get_session, get_language, main_menu, ITEM, ALL_CATEGORIES, ALL_SUBCATEGORIES, ALL_PRODUCT_CATEGORIES, WHOLE_FINLAND, ALL_CITIES, ALL_AREAS
+from models import UserPreferences
+from bot import get_session, get_language, main_menu, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES, add_new_item, save_data
 from loaders import load_messages, load_categories, load_locations
 from selects import select_language, select_category, select_subcategory, select_product_category, select_region, select_city, select_area
 
