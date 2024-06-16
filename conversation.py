@@ -1,8 +1,55 @@
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
-from bot import LANGUAGE, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, get_language, main_menu, get_session, save_data
+from bot import ITEM, LANGUAGE, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, get_language, main_menu, get_session, save_data
 from loaders import load_categories, load_locations, load_messages
-from models import UserPreferences
+from models import UserPreferences, ToriItem
+
+def start(update: Update, context: CallbackContext) -> int:
+    '''
+    Start the conversation and display a welcome message.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (select_language).
+    '''
+    update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when the new item is showing up on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
+    return select_language(update, context)
+
+def add_new_item(update: Update, context: CallbackContext) -> int:
+    '''
+    Initiate the process of adding a new item to track.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (CallbackContext): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: ITEM;
+            If there's more than 10 items on the list: main_menu.
+    '''
+    context.user_data.pop('item', None)
+    context.user_data.pop('category', None)
+    context.user_data.pop('subcategory', None)
+    context.user_data.pop('product_category', None)
+    context.user_data.pop('region', None)
+    context.user_data.pop('city', None)
+    context.user_data.pop('area', None)
+
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+    
+    session = get_session()
+    user_item_count = session.query(ToriItem).filter_by(telegram_id=telegram_id).count()
+    session.close()
+
+    if user_item_count >= 10:
+        update.message.reply_text(messages['more_10'])
+        return main_menu(update, context)
+
+    update.message.reply_text(messages['enter_item'], parse_mode='HTML')
+
+    return ITEM
 
 def select_language(update: Update, context: CallbackContext) -> int:
     '''
