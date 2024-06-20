@@ -2,12 +2,12 @@ import logging
 import requests
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext, CallbackQueryHandler
+from conversation import select_language, add_new_item
 from datetime import datetime
 from models import UserPreferences, ToriItem
 from database import get_session
-from loaders import load_categories, load_locations, load_messages
-from selects import select_language
-from savers import save_item_name, save_language, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
+from load import load_categories, load_locations, load_messages
+from save import save_item_name, save_language, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
 
 # Configure logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -24,53 +24,6 @@ WHOLE_FINLAND = ['koko suomi', 'whole finland', 'вся финляндия', 'в
 ALL_CITIES = ['kaikki kaupungit', 'all cities', 'все города', 'всі міста']
 ALL_AREAS = ['kaikki alueet', 'all areas', 'все области', 'всі райони']
 
-
-def start(update: Update, context: CallbackContext) -> int:
-    '''
-    Start the conversation and display a welcome message.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation (select_language).
-    '''
-    update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when the new item is showing up on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
-    return select_language(update, context)
-
-def add_new_item(update: Update, context: CallbackContext) -> int:
-    '''
-    Initiate the process of adding a new item to track.
-    Args:
-        update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
-    Returns:
-        int: Next state for the conversation:
-            Default: ITEM;
-            If there's more than 10 items on the list: main_menu.
-    '''
-    context.user_data.pop('item', None)
-    context.user_data.pop('category', None)
-    context.user_data.pop('subcategory', None)
-    context.user_data.pop('product_category', None)
-    context.user_data.pop('region', None)
-    context.user_data.pop('city', None)
-    context.user_data.pop('area', None)
-
-    telegram_id = update.message.from_user.id
-    language = get_language(telegram_id)
-    messages = load_messages(language)
-    
-    session = get_session()
-    user_item_count = session.query(ToriItem).filter_by(telegram_id=telegram_id).count()
-    session.close()
-
-    if user_item_count >= 10:
-        update.message.reply_text(messages['more_10'])
-        return main_menu(update, context)
-
-    update.message.reply_text(messages['enter_item'], parse_mode='HTML')
-
-    return ITEM
 
 def save_data(update: Update, context: CallbackContext) -> int:
     '''
@@ -359,61 +312,6 @@ def get_language(telegram_id):
     user_preferences = session.query(UserPreferences).filter_by(telegram_id=telegram_id).first()
     session.close()
     return user_preferences.language if user_preferences else '🇬🇧 English'
-
-
-def check_for_new_items(context: CallbackContext):
-    '''
-    Check for new items on the external API and notify the user if there are any.
-    Args:
-        context (CallbackContext): The context object for accessing bot and job queue.
-    '''
-    session = get_session()
-    items = session.query(ToriItem).all()
-    for item in items:
-        telegram_id = item.telegram_id
-        language = get_language(telegram_id)
-        messages = load_messages(language)
-
-        response = requests.get(item.link)
-        if response.status_code != 200:
-            continue
-
-        data = response.json()
-        new_items = data.get('docs', [])
-
-        if not new_items:
-            continue
-
-        latest_time = item.latest_time or item.added_time
-        latest_item_time = None
-
-        for ad in new_items:
-            timestamp = ad.get('timestamp')
-            if timestamp is None:
-                continue
-
-            item_time = datetime.fromtimestamp(timestamp / 1000.0)
-            if item_time <= latest_time:
-                continue
-
-            itemname = ad.get('heading')
-            region = ad.get('location')
-            canonical_url = ad.get('canonical_url')
-            price = ad.get('price', {}).get('amount')
-            image_url = ad.get('image', {}).get('url')
-            message = messages['new_item'].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
-            context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
-
-            if latest_item_time is None or item_time > latest_item_time:
-                latest_item_time = item_time
-
-        if latest_item_time:
-            latest_time = latest_item_time
-            item.latest_time = latest_time
-            session.add(item)
-            session.commit()
-
-    session.close()
 
 
 def main():
