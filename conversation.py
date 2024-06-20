@@ -1,7 +1,7 @@
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from bot import ITEM, LANGUAGE, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, get_language, main_menu, get_session, save_data
-from loaders import load_categories, load_locations, load_messages
+from load import load_categories, load_locations, load_messages
 from models import UserPreferences, ToriItem
 
 def start(update: Update, context: CallbackContext) -> int:
