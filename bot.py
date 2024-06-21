@@ -1,8 +1,7 @@
 import logging
-import requests
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext, CallbackQueryHandler
-from conversation import select_language, add_new_item
+from conversation import start, select_language, add_new_item
 from datetime import datetime
 from models import UserPreferences, ToriItem
 from database import get_session
