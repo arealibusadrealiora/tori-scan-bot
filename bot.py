@@ -8,6 +8,7 @@ from models import UserPreferences, ToriItem
 from database import get_session
 from load import load_categories, load_locations, load_messages
 from save import save_item_name, save_language, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
+from jobs import setup_jobs
 
 # Configure logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -345,8 +346,8 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('items', show_items))
     updater.dispatcher.add_handler(CallbackQueryHandler(remove_item)) 
     updater.dispatcher.add_handler(conv_handler)
-    
-    job_queue.run_repeating(check_for_new_items, interval=300, first=0)
+
+    setup_jobs(updater.job_queue)
 
     updater.start_polling()
     updater.idle()
