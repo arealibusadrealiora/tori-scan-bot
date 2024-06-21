@@ -1,7 +1,7 @@
 from telegram.ext import CallbackContext
 from datetime import datetime
 import requests
-from loaders import load_messages, get_language
+from load import load_messages
 from models import ToriItem
 from database import get_session
 
