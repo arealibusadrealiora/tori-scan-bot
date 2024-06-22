@@ -8,6 +8,7 @@ from database import get_session
 from load import load_categories, load_locations, load_messages
 from save import save_item_name, save_language, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
 from jobs import setup_jobs
+from handlers import setup_handlers
 
 # Configure logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -323,29 +324,7 @@ def main():
     updater = Updater(token, use_context=True)
     job_queue = updater.job_queue
 
-    conv_handler = ConversationHandler(
-        entry_points=[MessageHandler(Filters.text & ~Filters.command, start)],
-        states={
-            SETTINGS_MENU: [MessageHandler(Filters.text & ~Filters.command, settings_menu_choice)],
-            LANGUAGE: [MessageHandler(Filters.text & ~Filters.command, save_language)],
-            ITEM: [MessageHandler(Filters.text & ~Filters.command, save_item_name)],
-            CATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_category)],
-            SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_subcategory)],
-            PRODUCT_CATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_product_category)],
-            REGION: [MessageHandler(Filters.text & ~Filters.command, save_region)],
-            CITY: [MessageHandler(Filters.text & ~Filters.command, save_city)],
-            AREA: [MessageHandler(Filters.text & ~Filters.command, save_area)],
-            CONFIRMATION: [MessageHandler(Filters.text & ~Filters.command, save_data)],
-            MAIN_MENU: [MessageHandler(Filters.text & ~Filters.command, main_menu_choice)],
-        },
-        fallbacks=[CommandHandler('cancel', cancel)],
-    )
-
-    updater.dispatcher.add_handler(CommandHandler('start', start))
-    updater.dispatcher.add_handler(CommandHandler('items', show_items))
-    updater.dispatcher.add_handler(CallbackQueryHandler(remove_item)) 
-    updater.dispatcher.add_handler(conv_handler)
-
+    setup_handlers(updater)
     setup_jobs(updater.job_queue)
 
     updater.start_polling()
