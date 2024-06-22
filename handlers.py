@@ -1,6 +1,6 @@
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackQueryHandler
 from conversation import start, save_data, main_menu_choice, settings_menu_choice, show_items, remove_item, cancel
-from load import save_language, save_item_name, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
+from save import save_language, save_item_name, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
 
 def setup_handlers(updater):
     conv_handler = ConversationHandler(
