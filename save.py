@@ -2,8 +2,8 @@ from telegram import Update
 from telegram.ext import CallbackContext
 from models import UserPreferences
 from bot import get_session, get_language, main_menu, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES, add_new_item, save_data
-from loaders import load_messages, load_categories, load_locations
-from selects import select_language, select_category, select_subcategory, select_product_category, select_region, select_city, select_area
+from load import load_messages, load_categories, load_locations
+from conversation import select_language, select_category, select_subcategory, select_product_category, select_region, select_city, select_area
 
 def save_language(update: Update, context: CallbackContext) -> int:
     '''
