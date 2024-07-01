@@ -1,12 +1,5 @@
 import logging
-from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext, CallbackQueryHandler
-from conversation import start, select_language, add_new_item
-from datetime import datetime
-from models import UserPreferences, ToriItem
-from database import get_session
-from load import load_categories, load_locations, load_messages
-from save import save_item_name, save_language, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
+from telegram.ext import Updater
 from jobs import setup_jobs
 from handlers import setup_handlers
 
