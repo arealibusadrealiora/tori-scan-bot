@@ -47,7 +47,10 @@ def check_for_new_items(context: CallbackContext):
             price = ad.get('price', {}).get('amount')
             image_url = ad.get('image', {}).get('url')
             message = messages['new_item'].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
-            context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
+            if image_url:
+                context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
+            else:
+                context.bot.send_message(item.telegram_id, text=message, parse_mode='HTML')
 
             if latest_item_time is None or item_time > latest_item_time:
                 latest_item_time = item_time
