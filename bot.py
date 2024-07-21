@@ -1,7 +1,7 @@
 import logging
 from telegram.ext import Updater
-from jobs import setup_jobs
-from handlers import setup_handlers
+from modules.jobs import setup_jobs
+from modules.handlers import setup_handlers
 
 
 # Configure logging
@@ -10,7 +10,8 @@ logger = logging.getLogger(__name__)
 
 
 # Conversation handler states
-LANGUAGE, ITEM, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU = range(11)
+(LANGUAGE, ITEM, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, 
+ REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU) = range(11)
 
 
 def main():
