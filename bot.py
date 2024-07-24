@@ -19,9 +19,9 @@ def main():
     '''
     The main function that sets up the bot and handles the conversation.
     '''
-    with open('token.txt', encoding='utf-8') as file:
-         token = file.read().strip()
-    #token = os.getenv('TOKEN')
+    #with open('token.txt', encoding='utf-8') as file:
+    #     token = file.read().strip()
+    token = os.getenv('TOKEN')
     if not token:
         raise ValueError("No TOKEN provided in environment variables")
     updater = Updater(token, use_context=True)
