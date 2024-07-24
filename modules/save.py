@@ -1,9 +1,9 @@
 from telegram import Update
 from telegram.ext import CallbackContext
-from models import UserPreferences
-from load import load_messages, load_categories, load_locations
-from database import get_session
-from utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
+from modules.models import UserPreferences
+from modules.load import load_messages, load_categories, load_locations
+from modules.database import get_session
+from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
 
 def save_language(update: Update, context: CallbackContext) -> int:
     '''

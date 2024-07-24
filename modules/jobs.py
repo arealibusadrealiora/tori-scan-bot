@@ -1,10 +1,10 @@
 import requests
 from telegram.ext import CallbackContext
 from datetime import datetime
-from load import load_messages
-from models import ToriItem
-from database import get_session
-from utils import get_language
+from modules.load import load_messages
+from modules.models import ToriItem
+from modules.database import get_session
+from modules.utils import get_language
 
 def check_for_new_items(context: CallbackContext):
     '''

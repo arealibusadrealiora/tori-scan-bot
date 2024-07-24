@@ -1,10 +1,10 @@
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext, ConversationHandler
-from database import get_session
-from utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, ALL_PRODUCT_CATEGORIES, WHOLE_FINLAND, ALL_CITIES, ALL_AREAS
-from load import load_categories, load_locations, load_messages
-from models import UserPreferences, ToriItem
-from handlers import ITEM, LANGUAGE, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, MAIN_MENU, SETTINGS_MENU
+from modules.database import get_session
+from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, ALL_PRODUCT_CATEGORIES, WHOLE_FINLAND, ALL_CITIES, ALL_AREAS
+from modules.load import load_categories, load_locations, load_messages
+from modules.models import UserPreferences, ToriItem
+from modules.handlers import ITEM, LANGUAGE, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, MAIN_MENU, SETTINGS_MENU
 
 def start(update: Update, context: CallbackContext) -> int:
     '''

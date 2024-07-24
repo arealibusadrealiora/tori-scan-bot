@@ -1,8 +1,8 @@
 from telegram import Update
 from telegram.ext import ConversationHandler, CallbackContext
-from models import UserPreferences, ToriItem
-from database import get_session
-from load import load_messages
+from modules.models import UserPreferences, ToriItem
+from modules.database import get_session
+from modules.load import load_messages
 
 
 # Constants for categories and locations
