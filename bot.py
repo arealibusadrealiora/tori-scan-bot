@@ -1,4 +1,5 @@
 import logging
+import os
 from telegram.ext import Updater
 from modules.jobs import setup_jobs
 from modules.handlers import setup_handlers
@@ -18,8 +19,11 @@ def main():
     '''
     The main function that sets up the bot and handles the conversation.
     '''
-    with open('token.txt', encoding='utf-8') as file:
-        token = file.read().strip()
+    #with open('token.txt', encoding='utf-8') as file:
+    #     token = file.read().strip()
+    token = os.getenv('TOKEN')
+    if not token:
+        raise ValueError("No TOKEN provided in environment variables")
     updater = Updater(token, use_context=True)
     job_queue = updater.job_queue
 
