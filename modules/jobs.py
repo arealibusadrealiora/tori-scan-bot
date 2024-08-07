@@ -64,4 +64,5 @@ def check_for_new_items(context: CallbackContext):
     session.close()
 
 def setup_jobs(job_queue):
+    #interval is responsible for how often the search occurs. Please do not put it too low -- it's pointless and looks like DDoS.
     job_queue.run_repeating(check_for_new_items, interval=300, first=0)

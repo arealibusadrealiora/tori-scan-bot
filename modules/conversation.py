@@ -45,7 +45,8 @@ def add_new_item(update: Update, context: CallbackContext) -> int:
     user_item_count = session.query(ToriItem).filter_by(telegram_id=telegram_id).count()
     session.close()
 
-    if user_item_count >= 10:
+    
+    if user_item_count >= 10: #The user cannot add more than 10 items to the search. If you're planning to modify it, please don't be a douchbag and don't spam the tori with 1000000 items in a time.
         update.message.reply_text(messages['more_10'])
         return main_menu(update, context)
 

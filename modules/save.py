@@ -30,6 +30,7 @@ def save_language(update: Update, context: CallbackContext) -> int:
             session.commit()
         else:
             update.message.reply_text('❗ Please select a valid language.')
+            #yeah, this module is filled with lazy imports, needs to be reworked someday
             from modules.conversation import select_language
             return select_language(update, context)
         
