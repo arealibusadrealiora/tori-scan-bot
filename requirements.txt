@@ -1,3 +1,3 @@
-python-telegram-bot==12.8 #yeaaaah, pretty old one, will be updated soon
+python-telegram-bot==20.0 #yeaaaah, pretty old one, will be updated soon
 Requests==2.32.3
 SQLAlchemy==2.0.27
