@@ -11,7 +11,7 @@ Please note: That's a pet non-profit project. ToriScan and/or it's developer is 
 ``` pip install --upgrade -r requirements.txt ```
 2. Obtain the token for your own bot:
 You can do it using https://t.me/BotFather. It will guide you throught the process.
-3. Put you token to bot.py:
+3. Put your token to bot.py:
 [Here](https://github.com/arealibusadrealiora/tori-scan-bot/blob/main/bot.py#L22) you should set up the token you've obtained in the previous step ("token" variable). You have a couple of options on how to do it:
     - Set it as a environment variable. (Default option. For Windows, you can look for instructions [here](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-powershell-1.0/ff730964(v=technet.10)?redirectedfrom=MSDN), for Linux use echo ``` "TOKEN=your_token" > .env ```);
     - Put it as a token.txt in the same folder with the bot.py;
