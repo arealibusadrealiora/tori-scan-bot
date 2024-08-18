@@ -1,16 +1,17 @@
 import requests
-from telegram.ext import CallbackContext
+from telegram import Update
+from telegram.ext import ContextTypes
 from datetime import datetime
 from modules.load import load_messages
 from modules.models import ToriItem
 from modules.database import get_session
 from modules.utils import get_language
 
-def check_for_new_items(context: CallbackContext):
+async def check_for_new_items(context: ContextTypes.DEFAULT_TYPE):
     '''
     Check for new items on the external API and notify the user if there are any.
     Args:
-        context (CallbackContext): The context object for accessing bot and job queue.
+        context (ContextTypes.DEFAULT_TYPE): The context object for accessing bot and job queue.
     '''
     session = get_session()
     items = session.query(ToriItem).all()
@@ -47,10 +48,11 @@ def check_for_new_items(context: CallbackContext):
             price = ad.get('price', {}).get('amount')
             image_url = ad.get('image', {}).get('url')
             message = messages['new_item'].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
+            
             if image_url:
-                context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
+                await context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
             else:
-                context.bot.send_message(item.telegram_id, text=message, parse_mode='HTML')
+                await context.bot.send_message(item.telegram_id, text=message, parse_mode='HTML')
 
             if latest_item_time is None or item_time > latest_item_time:
                 latest_item_time = item_time
@@ -64,5 +66,10 @@ def check_for_new_items(context: CallbackContext):
     session.close()
 
 def setup_jobs(job_queue):
-    #interval is responsible for how often the search occurs. Please do not put it too low -- it's pointless and looks like DDoS.
+    '''
+    Schedules the job to check for new items at regular intervals.
+    Args:
+        job_queue: The job queue to which the job should be added.
+    '''
+    # interval is in seconds; 300 seconds = 5 minutes; please don't put it lower than thst, it's pointless.
     job_queue.run_repeating(check_for_new_items, interval=300, first=0)
