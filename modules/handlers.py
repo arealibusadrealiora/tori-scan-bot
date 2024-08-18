@@ -1,31 +1,41 @@
-from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackQueryHandler
+from telegram.ext import Application, CommandHandler, MessageHandler, ConversationHandler, CallbackQueryHandler, filters
 from modules.utils import remove_item, cancel
-from modules.save import save_language, save_item_name, save_category, save_subcategory, save_product_category, save_region, save_city, save_area
+from modules.save import (
+    save_language,
+    save_item_name,
+    save_category,
+    save_subcategory,
+    save_product_category,
+    save_region,
+    save_city,
+    save_area,
+)
 
 # Conversation handler states
 LANGUAGE, ITEM, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU = range(11)
 
-def setup_handlers(updater):
+def setup_handlers(application: Application):
     from modules.conversation import start, save_data, main_menu_choice, settings_menu_choice, show_items
+
     conv_handler = ConversationHandler(
-        entry_points=[MessageHandler(Filters.text & ~Filters.command, start)],
+        entry_points=[MessageHandler(filters.TEXT & ~filters.COMMAND, start)],
         states={
-            SETTINGS_MENU: [MessageHandler(Filters.text & ~Filters.command, settings_menu_choice)],
-            LANGUAGE: [MessageHandler(Filters.text & ~Filters.command, save_language)],
-            ITEM: [MessageHandler(Filters.text & ~Filters.command, save_item_name)],
-            CATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_category)],
-            SUBCATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_subcategory)],
-            PRODUCT_CATEGORY: [MessageHandler(Filters.text & ~Filters.command, save_product_category)],
-            REGION: [MessageHandler(Filters.text & ~Filters.command, save_region)],
-            CITY: [MessageHandler(Filters.text & ~Filters.command, save_city)],
-            AREA: [MessageHandler(Filters.text & ~Filters.command, save_area)],
-            CONFIRMATION: [MessageHandler(Filters.text & ~Filters.command, save_data)],
-            MAIN_MENU: [MessageHandler(Filters.text & ~Filters.command, main_menu_choice)],
+            SETTINGS_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, settings_menu_choice)],
+            LANGUAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_language)],
+            ITEM: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_item_name)],
+            CATEGORY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_category)],
+            SUBCATEGORY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_subcategory)],
+            PRODUCT_CATEGORY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_product_category)],
+            REGION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_region)],
+            CITY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_city)],
+            AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_area)],
+            CONFIRMATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_data)],
+            MAIN_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, main_menu_choice)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
     )
 
-    updater.dispatcher.add_handler(CommandHandler('start', start))
-    updater.dispatcher.add_handler(CommandHandler('items', show_items))
-    updater.dispatcher.add_handler(CallbackQueryHandler(remove_item))
-    updater.dispatcher.add_handler(conv_handler)
+    application.add_handler(CommandHandler('start', start))
+    application.add_handler(CommandHandler('items', show_items))
+    application.add_handler(CallbackQueryHandler(remove_item))
+    application.add_handler(conv_handler)
