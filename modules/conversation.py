@@ -1,29 +1,29 @@
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CallbackContext, ConversationHandler
+from telegram.ext import ContextTypes, ConversationHandler
 from modules.database import get_session
 from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, ALL_PRODUCT_CATEGORIES, WHOLE_FINLAND, ALL_CITIES, ALL_AREAS
 from modules.load import load_categories, load_locations, load_messages
 from modules.models import UserPreferences, ToriItem
 from modules.handlers import ITEM, LANGUAGE, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, MAIN_MENU, SETTINGS_MENU
 
-def start(update: Update, context: CallbackContext) -> int:
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Start the conversation and display a welcome message.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation (select_language).
     '''
-    update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when the new item is showing up on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
-    return select_language(update, context)
+    await update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when a new item appears on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
+    return await select_language(update, context)
 
-def add_new_item(update: Update, context: CallbackContext) -> int:
+async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Initiate the process of adding a new item to track.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: ITEM;
@@ -45,21 +45,20 @@ def add_new_item(update: Update, context: CallbackContext) -> int:
     user_item_count = session.query(ToriItem).filter_by(telegram_id=telegram_id).count()
     session.close()
 
-    
-    if user_item_count >= 10: #The user cannot add more than 10 items to the search. If you're planning to modify it, please don't be a douchbag and don't spam the tori with 1000000 items in a time.
-        update.message.reply_text(messages['more_10'])
-        return main_menu(update, context)
+    if user_item_count >= 10:  # Limiting user to 10 items to avoid spam
+        await update.message.reply_text(messages['more_10'])
+        return await main_menu(update, context)
 
-    update.message.reply_text(messages['enter_item'], parse_mode='HTML')
+    await update.message.reply_text(messages['enter_item'], parse_mode='HTML')
 
     return ITEM
 
-def select_language(update: Update, context: CallbackContext) -> int:
+async def select_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the language selection menu or proceed to the main menu if language is already set.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation (main_menu).
     '''
@@ -70,17 +69,17 @@ def select_language(update: Update, context: CallbackContext) -> int:
     if user_preferences:
         context.user_data['language'] = user_preferences.language
     else:
-        update.message.reply_text('💬 Please select your preferrable language:', reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
+        await update.message.reply_text('💬 Please select your preferred language:', reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
         return LANGUAGE
 
-    return main_menu(update, context)
+    return await main_menu(update, context)
 
-def select_category(update: Update, context: CallbackContext) -> int:
+async def select_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the category selection menu.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation (CATEGORY).
     '''
@@ -91,17 +90,16 @@ def select_category(update: Update, context: CallbackContext) -> int:
 
     keyboard = [[category] for category in categories_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_category'], reply_markup=reply_markup)
+    await update.message.reply_text(messages['select_category'], reply_markup=reply_markup)
 
     return CATEGORY
 
-
-def select_subcategory(update: Update, context: CallbackContext) -> int:
+async def select_subcategory(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the subcategory selection menu.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation (SUBCATEGORY).
     '''
@@ -113,21 +111,20 @@ def select_subcategory(update: Update, context: CallbackContext) -> int:
     subcategories = categories_data[context.user_data['category']]['subcategories']
     keyboard = [[subcategory] for subcategory in subcategories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_subcategory'], reply_markup=reply_markup)
+    await update.message.reply_text(messages['select_subcategory'], reply_markup=reply_markup)
 
     return SUBCATEGORY
 
-
-def select_product_category(update: Update, context: CallbackContext) -> int:
+async def select_product_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the product category selection menu.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: 
             Default: Next state for the conversation (PRODUCT_CATEGORY).
-            If there is no product categories for that subcategory: select_region
+            If there are no product categories for that subcategory: select_region
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -143,22 +140,21 @@ def select_product_category(update: Update, context: CallbackContext) -> int:
         elif language == '🇺🇦 Українська':
             context.user_data['product_category'] = 'Всі категорії товарів'
         elif language == '🇷🇺 Русский':
-            context.user_data['product_category'] = 'Все категории товаров'
-        return select_region(update, context)
+            context.user_data['product_category'] = 'Все категории товаров' 
+        return await select_region(update, context)
     
     keyboard = [[product_category] for product_category in product_categories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_product_category'], reply_markup=reply_markup)
+    await update.message.reply_text(messages['select_product_category'], reply_markup=reply_markup)
 
     return PRODUCT_CATEGORY
 
-
-def select_region(update: Update, context: CallbackContext) -> int:
+async def select_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the region selection menu.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation (REGION).
     '''
@@ -169,17 +165,16 @@ def select_region(update: Update, context: CallbackContext) -> int:
     
     keyboard = [[region] for region in locations_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_region'], reply_markup=reply_markup)
+    await update.message.reply_text(messages['select_region'], reply_markup=reply_markup)
 
     return REGION
 
-
-def select_city(update: Update, context: CallbackContext) -> int:
+async def select_city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the city selection menu.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation (CITY).
     '''
@@ -191,12 +186,11 @@ def select_city(update: Update, context: CallbackContext) -> int:
     cities = locations_data[context.user_data['region']]['cities']
     keyboard = [[city] for city in cities]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_city'], reply_markup=reply_markup)
+    await update.message.reply_text(messages['select_city'], reply_markup=reply_markup)
 
     return CITY
 
-
-def select_area(update: Update, context: CallbackContext) -> int:
+async def select_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the area selection menu.
     Args:
@@ -205,6 +199,7 @@ def select_area(update: Update, context: CallbackContext) -> int:
     Returns:
         int: Next state for the conversation (AREA).
     '''
+
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
@@ -212,14 +207,15 @@ def select_area(update: Update, context: CallbackContext) -> int:
 
     areas = locations_data[context.user_data['region']]['cities'][context.user_data['city']].get('areas', {})
     if not areas:
-        return save_data(update, context)
+        return await save_data(update, context)
+    
     keyboard = [[area] for area in areas]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(messages['select_area'], reply_markup=reply_markup)
+    await update.message.reply_text(messages['select_area'], reply_markup=reply_markup)
 
     return AREA
 
-def main_menu(update: Update, context: CallbackContext) -> int:
+async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the main menu with options to add an item, view items, or access settings.
     Args:
@@ -228,15 +224,16 @@ def main_menu(update: Update, context: CallbackContext) -> int:
     Returns:
         int: The next state in the conversation (MAIN_MENU).
     '''
+
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    update.message.reply_text(messages['menu'], reply_markup=ReplyKeyboardMarkup([[messages['add_item'], messages['items'], messages['settings']]], one_time_keyboard=False))
+    await update.message.reply_text(messages['menu'], reply_markup=ReplyKeyboardMarkup([[messages['add_item'], messages['items'], messages['settings']]], one_time_keyboard=False))
+
     return MAIN_MENU
 
-
-def main_menu_choice(update: Update, context: CallbackContext) -> int:
+async def main_menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's choice from the main menu.
     Args:
@@ -248,21 +245,21 @@ def main_menu_choice(update: Update, context: CallbackContext) -> int:
             'items': show_items;
             'settings': show_settings_menu.
     '''
+        
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
 
     choice = update.message.text
     if choice == messages['add_item']:
-        update.message.reply_text(messages['lets_add'])
-        return add_new_item(update, context) 
+        await update.message.reply_text(messages['lets_add'])
+        return await add_new_item(update, context)
     elif choice == messages['items']:
-        return show_items(update, context)
+        return await show_items(update, context)
     elif choice == messages['settings']:
-        return show_settings_menu(update, context) 
-    
+        return await show_settings_menu(update, context)
 
-def show_settings_menu(update: Update, context: CallbackContext) -> int:
+async def show_settings_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the settings menu with options to change language or contact developer.
     Args:
@@ -271,6 +268,7 @@ def show_settings_menu(update: Update, context: CallbackContext) -> int:
     Returns:
         int: The next state in the conversation (SETTINGS_MENU).
     '''
+
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -282,13 +280,12 @@ def show_settings_menu(update: Update, context: CallbackContext) -> int:
     ]
 
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=False)
-    message = update.message.reply_text(messages['settings_menu'], reply_markup=reply_markup)
+    message = await update.message.reply_text(messages['settings_menu'], reply_markup=reply_markup)
     context.user_data['settings_menu_message_id'] = message.message_id
 
     return SETTINGS_MENU
 
-
-def settings_menu_choice(update: Update, context: CallbackContext) -> int:
+async def settings_menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's choice from the settings menu.
     Args:
@@ -301,6 +298,7 @@ def settings_menu_choice(update: Update, context: CallbackContext) -> int:
             'back': main_menu;
             'invalid_choice': show_settings_menu.
     '''
+
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -308,22 +306,21 @@ def settings_menu_choice(update: Update, context: CallbackContext) -> int:
     choice = update.message.text
 
     if choice == messages['change_language']:
-        update.message.reply_text(messages['change_language_prompt'])
+        await update.message.reply_text(messages['change_language_prompt'])
         session = get_session()
         session.query(UserPreferences).filter_by(telegram_id=telegram_id).delete()
         session.commit()
         session.close()
-        return select_language(update, context)
+        return await select_language(update, context)
     elif choice == messages['contact_developer']:
-        update.message.reply_text(messages['contact_developer_prompt'], parse_mode='HTML')
+        await update.message.reply_text(messages['contact_developer_prompt'], parse_mode='HTML')
     elif choice == messages['back']:
-        return main_menu(update, context)
+        return await main_menu(update, context)
     else:
-        update.message.reply_text(messages['invalid_choice'])
-        return show_settings_menu(update, context)
+        await update.message.reply_text(messages['invalid_choice'])
+        return await show_settings_menu(update, context)
 
-
-def show_items(update: Update, context: CallbackContext) -> int:
+async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the list of items added by the user with options to remove them.
     Args:
@@ -332,16 +329,16 @@ def show_items(update: Update, context: CallbackContext) -> int:
     Returns:
         int: The next state in the conversation (MAIN_MENU).
     '''
+    
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
 
     session = get_session()
-    
     user_items = session.query(ToriItem).filter_by(telegram_id=telegram_id).all()
-    
+
     if user_items:
-        update.message.reply_text(messages['items_list'])
+        await update.message.reply_text(messages['items_list'])
         items_message = ''
         for item in user_items:
             item_info = messages['item'].format(item=item.item)
@@ -361,16 +358,16 @@ def show_items(update: Update, context: CallbackContext) -> int:
             keyboard = [[remove_button]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             items_message += item_info
-            update.message.reply_text(items_message, parse_mode='HTML', reply_markup=reply_markup)
+            await update.message.reply_text(items_message, parse_mode='HTML', reply_markup=reply_markup)
             items_message = ''
     else:
-        update.message.reply_text(messages['no_items'])
+        await update.message.reply_text(messages['no_items'])
+    
     session.close()
     
     return MAIN_MENU
 
-
-def save_data(update: Update, context: CallbackContext) -> int:
+async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Save the user data and generate the search link.
     Args:
@@ -379,6 +376,7 @@ def save_data(update: Update, context: CallbackContext) -> int:
     Returns:
         int: The next state in the conversation (main_menu).
     '''
+        
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -391,7 +389,7 @@ def save_data(update: Update, context: CallbackContext) -> int:
     missing_data = [key for key in required_data if key not in context.user_data]
 
     if missing_data:
-        update.message.reply_text(messages['missing_data'].format(missing=', '.join(missing_data)))
+        await update.message.reply_text(messages['missing_data'].format(missing=', '.join(missing_data)))
         return ConversationHandler.END
     else:
         item = context.user_data['item']
@@ -428,7 +426,10 @@ def save_data(update: Update, context: CallbackContext) -> int:
                 tori_link += f'&location={region_code}'
         tori_link += '&sort=PUBLISHED_DESC'
 
-        new_item = ToriItem(item=item, category=category, subcategory=subcategory, product_category=product_category, region=region, city=city, area=area, telegram_id=telegram_id, link=tori_link)
+        new_item = ToriItem(
+            item=item, category=category, subcategory=subcategory, 
+            product_category=product_category, region=region, 
+            city=city, area=area, telegram_id=telegram_id, link=tori_link)
         
         session.add(new_item)
         session.commit()
@@ -446,10 +447,10 @@ def save_data(update: Update, context: CallbackContext) -> int:
         if area.lower() not in ALL_AREAS:
             message += messages['area'].format(area=area)
         message += messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
-        #message += f'Debug: The search link for the item: {tori_link}'
+        #message += f'The search link for the item: {tori_link}' DEBUG
 
-        update.message.reply_text(message, parse_mode='HTML')
+        await update.message.reply_text(message, parse_mode='HTML')
         
         session.close()
         
-        return main_menu(update, context)
+        return await main_menu(update, context)
