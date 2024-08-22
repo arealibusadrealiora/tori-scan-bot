@@ -1,38 +1,35 @@
 import logging
 import os
-from telegram.ext import Updater
+import asyncio
+from telegram.ext import ApplicationBuilder, ContextTypes
 from modules.jobs import setup_jobs
 from modules.handlers import setup_handlers
-
 
 # Configure logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 # Conversation handler states
 (LANGUAGE, ITEM, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, 
  REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU) = range(11)
 
-
-def main():
+async def main():
     '''
     The main function that sets up the bot and handles the conversation.
     '''
+    # Retrieve the bot token from environment variables/text file/hard-code it:
     #with open('token.txt', encoding='utf-8') as file:
     #     token = file.read().strip()
     token = os.getenv('TOKEN')
     if not token:
         raise ValueError("No TOKEN provided in environment variables")
-    updater = Updater(token, use_context=True)
-    job_queue = updater.job_queue
 
-    setup_handlers(updater)
-    setup_jobs(updater.job_queue)
+    application = ApplicationBuilder().token(token).build()
 
-    updater.start_polling()
-    updater.idle()
+    setup_handlers(application)
+    setup_jobs(application.job_queue)
 
+    await application.run_polling()
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
