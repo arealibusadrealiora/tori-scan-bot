@@ -1,16 +1,16 @@
 from telegram import Update
-from telegram.ext import CallbackContext
+from telegram.ext import ContextTypes
 from modules.models import UserPreferences
 from modules.load import load_messages, load_categories, load_locations
 from modules.database import get_session
 from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
 
-def save_language(update: Update, context: CallbackContext) -> int:
+async def save_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's language selection and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: main_menu;
@@ -29,21 +29,20 @@ def save_language(update: Update, context: CallbackContext) -> int:
             session.add(user_preferences)
             session.commit()
         else:
-            update.message.reply_text('❗ Please select a valid language.')
+            await update.message.reply_text('❗ Please select a valid language.')
             #yeah, this module is filled with lazy imports, needs to be reworked someday
             from modules.conversation import select_language
-            return select_language(update, context)
+            return await select_language(update, context)
         
     from modules.conversation import main_menu
-    return main_menu(update, context)
+    return await main_menu(update, context)
 
-
-def save_item_name(update: Update, context: CallbackContext) -> int:
+async def save_item_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's item input and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: select_category;
@@ -55,21 +54,20 @@ def save_item_name(update: Update, context: CallbackContext) -> int:
 
     if 'item' not in context.user_data:
         if not (3 <= len(update.message.text) <= 64):
-            update.message.reply_text(messages['invalid_item'], parse_mode='HTML')
+            await update.message.reply_text(messages['invalid_item'], parse_mode='HTML')
             from modules.conversation import add_new_item
-            return add_new_item(update, context)   
+            return await add_new_item(update, context)   
         context.user_data['item'] = update.message.text
 
     from modules.conversation import select_category
-    return select_category(update, context)
+    return await select_category(update, context)
 
-
-def save_category(update: Update, context: CallbackContext) -> int:
+async def save_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's category input and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: select_subcategory;
@@ -84,9 +82,9 @@ def save_category(update: Update, context: CallbackContext) -> int:
     if 'category' not in context.user_data:
         user_category = update.message.text
         if user_category not in categories_data:
-            update.message.reply_text(messages['invalid_category'])
+            await update.message.reply_text(messages['invalid_category'])
             from modules.conversation import select_category
-            return select_category(update, context)
+            return await select_category(update, context)
         elif user_category.lower() in ALL_CATEGORIES:
             if language == '🇫🇮 Suomi':
                 context.user_data['category'] = 'Kaikki kategoriat'
@@ -100,20 +98,19 @@ def save_category(update: Update, context: CallbackContext) -> int:
             elif language == '🇷🇺 Русский':
                 context.user_data['category'] = 'Все категории'
                 context.user_data['subcategory'] = 'Все подкатегории'
-            return save_product_category(update, context)
+            return await save_product_category(update, context)
         else:
             context.user_data['category'] = update.message.text
     
     from modules.conversation import select_subcategory
-    return select_subcategory(update, context)
+    return await select_subcategory(update, context)
 
-
-def save_subcategory(update: Update, context: CallbackContext) -> int:
+async def save_subcategory(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's subcategory input and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: select_product_category;
@@ -136,24 +133,23 @@ def save_subcategory(update: Update, context: CallbackContext) -> int:
                 context.user_data['subcategory'] = 'Всі підкатегорії'
             elif language == '🇷🇺 Русский':
                 context.user_data['subcategory'] = 'Все подкатегории'
-            return save_product_category(update, context)
+            return await save_product_category(update, context)
         elif user_subcategory not in categories_data[context.user_data['category']]['subcategories']:
-            update.message.reply_text(messages['invalid_subcategory'])
+            await update.message.reply_text(messages['invalid_subcategory'])
             from modules.conversation import select_subcategory
-            return select_subcategory(update, context)
+            return await select_subcategory(update, context)
         else:
             context.user_data['subcategory'] = update.message.text
 
     from modules.conversation import select_product_category
-    return select_product_category(update, context)
+    return await select_product_category(update, context)
 
-
-def save_product_category(update: Update, context: CallbackContext) -> int:
+async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's product category input and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: select_region;
@@ -176,22 +172,21 @@ def save_product_category(update: Update, context: CallbackContext) -> int:
             elif language == '🇷🇺 Русский':
                 context.user_data['product_category'] = 'Все категории товаров'
         elif user_product_category.lower() not in ALL_CATEGORIES and user_product_category.lower() not in ALL_SUBCATEGORIES and user_product_category not in categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']]['product_categories']:
-            update.message.reply_text(messages['invalid_product_category'])
+            await update.message.reply_text(messages['invalid_product_category'])
             from modules.conversation import select_product_category
-            return select_product_category(update, context)
+            return await select_product_category(update, context)
         else:
             context.user_data['product_category'] = update.message.text
     
     from modules.conversation import select_region
-    return select_region(update, context)
+    return await select_region(update, context)
 
-
-def save_region(update: Update, context: CallbackContext) -> int:
+async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's region input and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: select_city;
@@ -205,38 +200,40 @@ def save_region(update: Update, context: CallbackContext) -> int:
 
     if 'region' not in context.user_data:
         user_region = update.message.text
-        if user_region not in locations_data:
-            update.message.reply_text(messages['invalid_region'])
-            from modules.conversation import select_region
-            return select_region(update, context)
         if user_region.lower() in WHOLE_FINLAND:
-            context.user_data['region'] = update.message.text
             if language == '🇫🇮 Suomi':
+                context.user_data['region'] = 'Koko Suomi'
                 context.user_data['city'] = 'Kaikki kaupungit'
                 context.user_data['area'] = 'Kaikki alueet'
             elif language == '🇬🇧 English':
+                context.user_data['region'] = 'Whole Finland'
                 context.user_data['city'] = 'All cities'
                 context.user_data['area'] = 'All areas'
             elif language == '🇺🇦 Українська':
+                context.user_data['region'] = 'Вся Фінляндія'
                 context.user_data['city'] = 'Всі міста'
                 context.user_data['area'] = 'Всі області'
             elif language == '🇷🇺 Русский':
+                context.user_data['region'] = 'Вся Финляндия'
                 context.user_data['city'] = 'Все города'
                 context.user_data['area'] = 'Все области'
-            return save_area(update, context)
+            return await save_area(update, context)
+        elif user_region not in locations_data:
+            await update.message.reply_text(messages['invalid_region'])
+            from modules.conversation import select_region
+            return await select_region(update, context)
         else:
             context.user_data['region'] = update.message.text
-
+    
     from modules.conversation import select_city
-    return select_city(update, context)
+    return await select_city(update, context)
 
-
-def save_city(update: Update, context: CallbackContext) -> int:
+async def save_city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's city input and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: select_area;
@@ -250,38 +247,41 @@ def save_city(update: Update, context: CallbackContext) -> int:
 
     if 'city' not in context.user_data:
         user_city = update.message.text
-        if user_city.lower() not in WHOLE_FINLAND and user_city not in locations_data[context.user_data['region']]['cities']:
-            update.message.reply_text(messages['invalid_city'])
-            from modules.conversation import select_city
-            return select_city(update, context)
         if user_city.lower() in ALL_CITIES:
             context.user_data['city'] = update.message.text
             if language == '🇫🇮 Suomi':
                 context.user_data['area'] = 'Kaikki alueet'
+                context.user_data['city'] = 'Kaikki kaupungit'
             elif language == '🇬🇧 English':
                 context.user_data['area'] = 'All areas'
+                context.user_data['city'] = 'All cities'
             elif language == '🇺🇦 Українська':
                 context.user_data['area'] = 'Всі області'
+                context.user_data['city'] = 'Всі міста'
             elif language == '🇷🇺 Русский':
                 context.user_data['area'] = 'Все области'
-            return save_area(update, context)
+                context.user_data['city'] = 'Все города'
+            return await save_area(update, context)
+        elif user_city.lower() not in WHOLE_FINLAND and user_city not in locations_data[context.user_data['region']]['cities']:
+            await update.message.reply_text(messages['invalid_city'])
+            from modules.conversation import select_city
+            return await select_city(update, context)
         else:
             context.user_data['city'] = update.message.text
-        
+
     from modules.conversation import select_area
-    return select_area(update, context)
+    return await select_area(update, context)
 
-
-def save_area(update: Update, context: CallbackContext) -> int:
+async def save_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle the user's area input and save it to the database.
     Args:
         update (Update): The update object containing the user's message.
-        context (CallbackContext): The context object for maintaining conversation state.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
             Default: save_data;
-            Invalid: select_area;
+            Invalid: select_area.
     ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -300,11 +300,11 @@ def save_area(update: Update, context: CallbackContext) -> int:
             elif language == '🇷🇺 Русский':
                 context.user_data['product_category'] = 'Все районы'
         if user_area.lower() not in WHOLE_FINLAND and user_area not in locations_data[context.user_data['region']]['cities'][context.user_data['city']]['areas']:
-            update.message.reply_text(messages['invalid_area'])
+            await update.message.reply_text(messages['invalid_area'])
             from modules.conversation import select_area
-            return select_area(update, context)
+            return await select_area(update, context)
         else:
             context.user_data['area'] = update.message.text
 
     from modules.conversation import save_data
-    return save_data(update, context)
+    return await save_data(update, context)
