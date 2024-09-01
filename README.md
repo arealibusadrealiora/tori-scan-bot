@@ -13,7 +13,7 @@ Please note: That's a pet non-profit project. ToriScan and/or it's developer is 
 You can do it using https://t.me/BotFather. It will guide you throught the process.
 3. Put your token to bot.py:
 [Here](https://github.com/arealibusadrealiora/tori-scan-bot/blob/main/bot.py#L22) you should set up the token you've obtained in the previous step ("token" variable). You have a couple of options on how to do it:
-    - Set it as a environment variable. (Default option. For Windows, you can look for instructions [here](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-powershell-1.0/ff730964(v=technet.10)?redirectedfrom=MSDN), for Linux use echo ``` "TOKEN=your_token" > .env ```);
+    - Set it as a environment variable. (Default option. For Windows, you can look for instructions [here](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-powershell-1.0/ff730964(v=technet.10)?redirectedfrom=MSDN), for Linux use echo ``` "TOKEN=your_token" > .env ```), if you're using Docker, you can provide it when you're starting the container: ``` docker run -d --name my-bot-container -e TOKEN=your_token my-bot-image ```;
     - Put it as a token.txt in the same folder with the bot.py;
     - Hard-code it (``` token = your_token ```).
 4. Launch:
