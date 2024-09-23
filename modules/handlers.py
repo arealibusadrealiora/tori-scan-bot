@@ -11,7 +11,7 @@ from modules.save import (
     save_city,
     save_area,
 )
-from modules.conversation import start, main_menu_choice, settings_menu_choice, show_items
+from modules.conversation import start, save_data, main_menu_choice, settings_menu_choice, show_items
 
 def setup_handlers(application: Application):
     conv_handler = ConversationHandler(
@@ -26,6 +26,7 @@ def setup_handlers(application: Application):
             REGION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_region)],
             CITY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_city)],
             AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_area)],
+            CONFIRMATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_data)],
             MAIN_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, main_menu_choice)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
