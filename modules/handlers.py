@@ -1,5 +1,6 @@
 from telegram.ext import Application, CommandHandler, MessageHandler, ConversationHandler, CallbackQueryHandler, filters
 from modules.utils import remove_item, cancel
+from modules.constants import *
 from modules.save import (
     save_language,
     save_item_name,
@@ -10,13 +11,9 @@ from modules.save import (
     save_city,
     save_area,
 )
-
-# Conversation handler states
-LANGUAGE, ITEM, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU = range(11)
+from modules.conversation import start, main_menu_choice, settings_menu_choice, show_items
 
 def setup_handlers(application: Application):
-    from modules.conversation import start, save_data, main_menu_choice, settings_menu_choice, show_items
-
     conv_handler = ConversationHandler(
         entry_points=[MessageHandler(filters.TEXT & ~filters.COMMAND, start)],
         states={
@@ -29,7 +26,6 @@ def setup_handlers(application: Application):
             REGION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_region)],
             CITY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_city)],
             AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_area)],
-            CONFIRMATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_data)],
             MAIN_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, main_menu_choice)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
