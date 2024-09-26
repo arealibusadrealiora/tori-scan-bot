@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 (LANGUAGE, ITEM, CATEGORY, SUBCATEGORY, PRODUCT_CATEGORY, 
  REGION, CITY, AREA, CONFIRMATION, MAIN_MENU, SETTINGS_MENU) = range(11)
 
-async def main():
+def main():
     '''
     The main function that sets up the bot and handles the conversation.
     '''
@@ -29,7 +29,7 @@ async def main():
     setup_handlers(application)
     setup_jobs(application.job_queue)
 
-    await application.run_polling()
+    application.run_polling()
 
 if __name__ == '__main__':
     asyncio.run(main())
