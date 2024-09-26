@@ -71,5 +71,7 @@ def setup_jobs(job_queue):
     Args:
         job_queue: The job queue to which the job should be added.
     '''
+    async def wrapper(context):
+        await check_for_new_items(context)
     # interval is in seconds; 300 seconds = 5 minutes; please don't put it lower than thst, it's pointless.
     job_queue.run_repeating(check_for_new_items, interval=300, first=0)
