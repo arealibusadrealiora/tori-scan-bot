@@ -4,6 +4,18 @@ from modules.models import UserPreferences
 from modules.load import load_messages, load_categories, load_locations
 from modules.database import get_session
 from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
+from modules.conversation import (
+    main_menu,
+    select_language,
+    add_new_item,
+    select_category,
+    select_subcategory,
+    select_product_category,
+    select_region,
+    select_city,
+    select_area,
+    save_data
+)
 
 async def save_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -30,11 +42,8 @@ async def save_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
             session.commit()
         else:
             await update.message.reply_text('❗ Please select a valid language.')
-            #yeah, this module is filled with lazy imports, needs to be reworked someday
-            from modules.conversation import select_language
             return await select_language(update, context)
         
-    from modules.conversation import main_menu
     return await main_menu(update, context)
 
 async def save_item_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -55,11 +64,9 @@ async def save_item_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if 'item' not in context.user_data:
         if not (3 <= len(update.message.text) <= 64):
             await update.message.reply_text(messages['invalid_item'], parse_mode='HTML')
-            from modules.conversation import add_new_item
             return await add_new_item(update, context)   
         context.user_data['item'] = update.message.text
 
-    from modules.conversation import select_category
     return await select_category(update, context)
 
 async def save_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -83,7 +90,6 @@ async def save_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         user_category = update.message.text
         if user_category not in categories_data:
             await update.message.reply_text(messages['invalid_category'])
-            from modules.conversation import select_category
             return await select_category(update, context)
         elif user_category.lower() in ALL_CATEGORIES:
             if language == '🇫🇮 Suomi':
@@ -102,7 +108,6 @@ async def save_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         else:
             context.user_data['category'] = update.message.text
     
-    from modules.conversation import select_subcategory
     return await select_subcategory(update, context)
 
 async def save_subcategory(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -136,12 +141,10 @@ async def save_subcategory(update: Update, context: ContextTypes.DEFAULT_TYPE) -
             return await save_product_category(update, context)
         elif user_subcategory not in categories_data[context.user_data['category']]['subcategories']:
             await update.message.reply_text(messages['invalid_subcategory'])
-            from modules.conversation import select_subcategory
             return await select_subcategory(update, context)
         else:
             context.user_data['subcategory'] = update.message.text
 
-    from modules.conversation import select_product_category
     return await select_product_category(update, context)
 
 async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -173,12 +176,10 @@ async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TY
                 context.user_data['product_category'] = 'Все категории товаров'
         elif user_product_category.lower() not in ALL_CATEGORIES and user_product_category.lower() not in ALL_SUBCATEGORIES and user_product_category not in categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']]['product_categories']:
             await update.message.reply_text(messages['invalid_product_category'])
-            from modules.conversation import select_product_category
             return await select_product_category(update, context)
         else:
             context.user_data['product_category'] = update.message.text
     
-    from modules.conversation import select_region
     return await select_region(update, context)
 
 async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -220,12 +221,10 @@ async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
             return await save_area(update, context)
         elif user_region not in locations_data:
             await update.message.reply_text(messages['invalid_region'])
-            from modules.conversation import select_region
             return await select_region(update, context)
         else:
             context.user_data['region'] = update.message.text
     
-    from modules.conversation import select_city
     return await select_city(update, context)
 
 async def save_city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -264,12 +263,10 @@ async def save_city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             return await save_area(update, context)
         elif user_city.lower() not in WHOLE_FINLAND and user_city not in locations_data[context.user_data['region']]['cities']:
             await update.message.reply_text(messages['invalid_city'])
-            from modules.conversation import select_city
             return await select_city(update, context)
         else:
             context.user_data['city'] = update.message.text
 
-    from modules.conversation import select_area
     return await select_area(update, context)
 
 async def save_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -301,10 +298,8 @@ async def save_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 context.user_data['product_category'] = 'Все районы'
         if user_area.lower() not in WHOLE_FINLAND and user_area not in locations_data[context.user_data['region']]['cities'][context.user_data['city']]['areas']:
             await update.message.reply_text(messages['invalid_area'])
-            from modules.conversation import select_area
             return await select_area(update, context)
         else:
             context.user_data['area'] = update.message.text
 
-    from modules.conversation import save_data
     return await save_data(update, context)
