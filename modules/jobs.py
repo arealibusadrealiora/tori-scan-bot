@@ -1,7 +1,6 @@
 import requests
-from telegram import Update
-from telegram.ext import ContextTypes
 from datetime import datetime
+from telegram.ext import ContextTypes
 from modules.load import load_messages
 from modules.models import ToriItem
 from modules.database import get_session
@@ -48,7 +47,7 @@ async def check_for_new_items(context: ContextTypes.DEFAULT_TYPE):
             price = ad.get('price', {}).get('amount')
             image_url = ad.get('image', {}).get('url')
             message = messages['new_item'].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
-            
+
             if image_url:
                 await context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
             else:
@@ -73,5 +72,5 @@ def setup_jobs(job_queue):
     '''
     async def wrapper(context):
         await check_for_new_items(context)
-    # interval is in seconds; 300 seconds = 5 minutes; please don't put it lower than thst, it's pointless.
+    # interval is in seconds; 300 seconds = 5 minutes; please don't put it lower than that, it's pointless.
     job_queue.run_repeating(check_for_new_items, interval=300, first=0)
