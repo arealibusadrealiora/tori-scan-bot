@@ -1,21 +1,12 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from modules.models import UserPreferences
+from modules.conversation import (main_menu, select_language, add_new_item, select_category, select_subcategory,
+                                  select_product_category, select_region, select_city, select_area, save_data)
+from modules.constants import ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
 from modules.load import load_messages, load_categories, load_locations
+from modules.models import UserPreferences
 from modules.database import get_session
-from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
-from modules.conversation import (
-    main_menu,
-    select_language,
-    add_new_item,
-    select_category,
-    select_subcategory,
-    select_product_category,
-    select_region,
-    select_city,
-    select_area,
-    save_data
-)
+from modules.utils import get_language
 
 async def save_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -44,7 +35,7 @@ async def save_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
             await update.message.reply_text('❗ Please select a valid language.')
             return await select_language(update, context)
         
-    return await main_menu(update, context)
+    return await main_menu(update)
 
 async def save_item_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -67,7 +58,7 @@ async def save_item_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             return await add_new_item(update, context)   
         context.user_data['item'] = update.message.text
 
-    return await select_category(update, context)
+    return await select_category(update)
 
 async def save_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -90,7 +81,7 @@ async def save_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         user_category = update.message.text
         if user_category not in categories_data:
             await update.message.reply_text(messages['invalid_category'])
-            return await select_category(update, context)
+            return await select_category(update)
         elif user_category.lower() in ALL_CATEGORIES:
             if language == '🇫🇮 Suomi':
                 context.user_data['category'] = 'Kaikki kategoriat'
@@ -180,7 +171,7 @@ async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TY
         else:
             context.user_data['product_category'] = update.message.text
     
-    return await select_region(update, context)
+    return await select_region(update)
 
 async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -221,7 +212,7 @@ async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
             return await save_area(update, context)
         elif user_region not in locations_data:
             await update.message.reply_text(messages['invalid_region'])
-            return await select_region(update, context)
+            return await select_region(update)
         else:
             context.user_data['region'] = update.message.text
     
