@@ -1,6 +1,7 @@
 import requests
 from telegram import Update
 from telegram.ext import ContextTypes
+from telegram.error import Forbidden, BadRequest
 from datetime import datetime
 from modules.load import load_messages
 from modules.models import ToriItem
@@ -49,10 +50,22 @@ async def check_for_new_items(context: ContextTypes.DEFAULT_TYPE):
             image_url = ad.get('image', {}).get('url')
             message = messages['new_item'].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
             
-            if image_url:
-                await context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
-            else:
-                await context.bot.send_message(item.telegram_id, text=message, parse_mode='HTML')
+            try:
+                if image_url:
+                    await context.bot.send_photo(item.telegram_id, photo=image_url, caption=message, parse_mode='HTML')
+                else:
+                    await context.bot.send_message(item.telegram_id, text=message, parse_mode='HTML')
+            except Forbidden:
+                print(f"User {item.telegram_id} has blocked the bot. Removing their items from the database.")
+                session.query(ToriItem).filter_by(telegram_id=item.telegram_id).delete()
+                session.commit()
+                break
+            except BadRequest as e:
+                print(f"Bad request for user {item.telegram_id}: {e}")
+                continue
+            except Exception as e:
+                print(f"Unexpected error for user {item.telegram_id}: {e}")
+                continue
 
             if latest_item_time is None or item_time > latest_item_time:
                 latest_item_time = item_time
