@@ -213,7 +213,7 @@ async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
             elif language == '🇺🇦 Українська':
                 context.user_data['region'] = 'Вся Фінляндія'
                 context.user_data['city'] = 'Всі міста'
-                context.user_data['area'] = 'Всі області'
+                context.user_data['area'] = 'Всі райони'
             elif language == '🇷🇺 Русский':
                 context.user_data['region'] = 'Вся Финляндия'
                 context.user_data['city'] = 'Все города'
@@ -255,7 +255,7 @@ async def save_city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 context.user_data['area'] = 'All areas'
                 context.user_data['city'] = 'All cities'
             elif language == '🇺🇦 Українська':
-                context.user_data['area'] = 'Всі області'
+                context.user_data['area'] = 'Всі райони'
                 context.user_data['city'] = 'Всі міста'
             elif language == '🇷🇺 Русский':
                 context.user_data['area'] = 'Все области'
