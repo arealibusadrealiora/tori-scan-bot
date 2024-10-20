@@ -25,7 +25,8 @@ async def start_wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def setup_handlers(application: Application):
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start_wrapper)],
+        entry_points=[MessageHandler(filters.TEXT & ~filters.COMMAND, start_wrapper),
+                      CommandHandler('start', start_wrapper)],
         states={
             SETTINGS_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, settings_menu_choice)],
             LANGUAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_language)],
@@ -42,5 +43,6 @@ def setup_handlers(application: Application):
         fallbacks=[CommandHandler('cancel', cancel)],
         allow_reentry=True
     )
-
+    application.add_handler(CommandHandler('items', show_items))
+    application.add_handler(CallbackQueryHandler(remove_item))
     application.add_handler(conv_handler)
