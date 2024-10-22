@@ -15,7 +15,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     Returns:
         int: Next state for the conversation (select_language).
     '''
-
     await update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when a new item appears on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
     return await select_language(update, context)
     
@@ -28,7 +27,6 @@ async def start_again(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     Returns:
         int: Next state for the conversation (select_language).
     '''
-
     await update.message.reply_text('👋 Hi! Welcome back to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when a new item appears on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
     return await select_language(update, context)
 
