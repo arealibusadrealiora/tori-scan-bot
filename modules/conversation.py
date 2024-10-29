@@ -1,10 +1,10 @@
 from telegram import ReplyKeyboardMarkup, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
-from modules.database import get_session
 from modules.load import load_categories, load_locations, load_messages
 from modules.models import UserPreferences, ToriItem
-from modules.constants import *
+from modules.database import get_session
 from modules.utils import get_language
+from modules.constants import *
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -52,14 +52,14 @@ async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
-    
+
     session = get_session()
     user_item_count = session.query(ToriItem).filter_by(telegram_id=telegram_id).count()
     session.close()
 
     if user_item_count >= 10:  # Limiting user to 10 items to avoid spam
         await update.message.reply_text(messages['more_10'])
-        return await main_menu(update, context)
+        return await main_menu(update)
 
     await update.message.reply_text(messages['enter_item'], parse_mode='HTML')
 
@@ -81,12 +81,15 @@ async def select_language(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     if user_preferences:
         context.user_data['language'] = user_preferences.language
     else:
-        await update.message.reply_text('💬 Please select your preferred language:', reply_markup=ReplyKeyboardMarkup([['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], one_time_keyboard=True))
+        await update.message.reply_text('💬 Please select your preferred language:', 
+                                        reply_markup=ReplyKeyboardMarkup(
+                                        [['🇬🇧 English', '🇺🇦 Українська', '🇷🇺 Русский', '🇫🇮 Suomi']], 
+                                        one_time_keyboard=True))
         return LANGUAGE
 
-    return await main_menu(update, context)
+    return await main_menu(update)
 
-async def select_category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def select_category(update: Update) -> int:
     '''
     Display the category selection menu.
     Args:
@@ -152,8 +155,8 @@ async def select_product_category(update: Update, context: ContextTypes.DEFAULT_
         elif language == '🇺🇦 Українська':
             context.user_data['product_category'] = 'Всі категорії товарів'
         elif language == '🇷🇺 Русский':
-            context.user_data['product_category'] = 'Все категории товаров' 
-        return await select_region(update, context)
+            context.user_data['product_category'] = 'Все категории товаров'
+        return await select_region(update)
     
     keyboard = [[product_category] for product_category in product_categories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
@@ -161,7 +164,7 @@ async def select_product_category(update: Update, context: ContextTypes.DEFAULT_
 
     return PRODUCT_CATEGORY
 
-async def select_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def select_region(update: Update) -> int:
     '''
     Display the region selection menu.
     Args:
@@ -174,7 +177,7 @@ async def select_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     language = get_language(telegram_id)
     locations_data = load_locations(language)
     messages = load_messages(language)
-    
+   
     keyboard = [[region] for region in locations_data]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     await update.message.reply_text(messages['select_region'], reply_markup=reply_markup)
@@ -227,7 +230,7 @@ async def select_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
     return AREA
 
-async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def main_menu(update: Update) -> int:
     '''
     Display the main menu with options to add an item, view items, or access settings.
     Args:
@@ -241,7 +244,10 @@ async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    await update.message.reply_text(messages['menu'], reply_markup=ReplyKeyboardMarkup([[messages['add_item'], messages['items'], messages['settings']]], one_time_keyboard=False))
+    await update.message.reply_text(messages['menu'], reply_markup=ReplyKeyboardMarkup([[messages['add_item'],
+                                                                                         messages['items'],
+                                                                                         messages['settings']]],
+                                                                                         one_time_keyboard=False))
 
     return MAIN_MENU
 
@@ -267,7 +273,7 @@ async def main_menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -
         await update.message.reply_text(messages['lets_add'])
         return await add_new_item(update, context)
     elif choice == messages['items']:
-        return await show_items(update, context)
+        return await show_items(update)
     elif choice == messages['settings']:
         return await show_settings_menu(update, context)
 
@@ -327,12 +333,12 @@ async def settings_menu_choice(update: Update, context: ContextTypes.DEFAULT_TYP
     elif choice == messages['contact_developer']:
         await update.message.reply_text(messages['contact_developer_prompt'], parse_mode='HTML')
     elif choice == messages['back']:
-        return await main_menu(update, context)
+        return await main_menu(update)
     else:
         await update.message.reply_text(messages['invalid_choice'])
         return await show_settings_menu(update, context)
 
-async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def show_items(update: Update) -> int:
     '''
     Display the list of items added by the user with options to remove them.
     Args:
@@ -341,7 +347,7 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     Returns:
         int: The next state in the conversation (MAIN_MENU).
     '''
-    
+
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -388,7 +394,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     Returns:
         int: The next state in the conversation (main_menu).
     '''
-        
+
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -462,7 +468,8 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         #message += f'The search link for the item: {tori_link}' DEBUG
 
         await update.message.reply_text(message, parse_mode='HTML')
-        
+
         session.close()
-        
-        return await main_menu(update, context)
+
+        return await main_menu(update)
+    

@@ -45,3 +45,4 @@ def setup_handlers(application: Application):
     application.add_handler(CommandHandler('items', show_items))
     application.add_handler(CallbackQueryHandler(remove_item))
     application.add_handler(conv_handler)
+    
