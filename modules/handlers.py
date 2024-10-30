@@ -1,5 +1,4 @@
-from telegram.ext import Application, ContextTypes, CommandHandler, MessageHandler, ConversationHandler, CallbackQueryHandler, filters
-from telegram import Update
+from telegram.ext import Application, CommandHandler, MessageHandler, ConversationHandler, CallbackQueryHandler, filters
 from modules.utils import remove_item, cancel
 from modules.constants import *
 from modules.save import (
