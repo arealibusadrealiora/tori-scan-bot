@@ -11,11 +11,11 @@ from modules.save import (
     save_city,
     save_area,
 )
-from modules.conversation import start, save_data, main_menu_choice, settings_menu_choice, show_items
+from modules.conversation import start, start_again, save_data, main_menu_choice, settings_menu_choice, show_items
 
 def setup_handlers(application: Application):
-    conv_handler = ConversationHandler(
-        entry_points=[MessageHandler(filters.TEXT & ~filters.COMMAND, start)],
+    new_user_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
         states={
             SETTINGS_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, settings_menu_choice)],
             LANGUAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_language)],
@@ -30,9 +30,30 @@ def setup_handlers(application: Application):
             MAIN_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, main_menu_choice)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
+        name="new_user_conversation"
     )
 
-    application.add_handler(CommandHandler('start', start))
+    returning_user_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start_again)],
+        states={
+            SETTINGS_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, settings_menu_choice)],
+            LANGUAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_language)],
+            ITEM: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_item_name)],
+            CATEGORY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_category)],
+            SUBCATEGORY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_subcategory)],
+            PRODUCT_CATEGORY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_product_category)],
+            REGION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_region)],
+            CITY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_city)],
+            AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_area)],
+            CONFIRMATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_data)],
+            MAIN_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, main_menu_choice)],
+        },
+        fallbacks=[CommandHandler('cancel', cancel)],
+        name="returning_user_conversation",
+        allow_reentry=True
+    )
+
+    application.add_handler(new_user_handler)
+    application.add_handler(returning_user_handler)
     application.add_handler(CommandHandler('items', show_items))
     application.add_handler(CallbackQueryHandler(remove_item))
-    application.add_handler(conv_handler)
