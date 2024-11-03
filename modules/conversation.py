@@ -18,6 +18,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text('👋 Hi! Welcome to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when a new item appears on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
     return await select_language(update, context)
 
+async def start_again(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Start the conversation and display a welcome message in case if user blocked the bot or anything.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (select_language).
+    '''
+    await update.message.reply_text('👋 Hi! Welcome back to ToriScan! \n\n🤖 ToriScan is an unofficial Telegram bot that notifies users when a new item appears on tori.fi.\n🧑‍💻 Developer: @arealibusadrealiora\n\n<i>ToriScan is not affiliated with tori.fi or Schibsted Media Group.</i>', parse_mode='HTML')
+    return await select_language(update, context)
+
 async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Initiate the process of adding a new item to track.
@@ -214,6 +226,20 @@ async def select_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     await update.message.reply_text(messages['select_area'], reply_markup=reply_markup)
 
     return AREA
+
+async def add_more_locations(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Ask user if they want to add more locations to their search.
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [[messages['yes'], messages['no']]]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    await update.message.reply_text(messages['add_more_locations'], reply_markup=reply_markup)
+
+    return MORE_LOCATIONS
 
 async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
