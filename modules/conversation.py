@@ -381,11 +381,16 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 item_info += messages['subcategory'].format(subcategory=item.subcategory)
             if item.product_category != 'null':
                 item_info += messages['product_type'].format(product_category=item.product_category)
-            item_info += messages['region'].format(region=item.region)
-            if item.city != 'null':
-                item_info += messages['city'].format(city=item.city)
-            if item.area != 'null':
-                item_info += messages['area'].format(area=item.area)
+                
+            item_info += messages['locations_header']
+            for location in item.locations:
+                item_info += messages['region'].format(region=location['region'])
+                if location['city'].lower() not in ALL_CITIES:
+                    item_info += messages['city'].format(city=location['city'])
+                if location['area'].lower() not in ALL_AREAS:
+                    item_info += messages['area'].format(area=location['area'])
+                item_info += "\n"
+            
             item_info += messages['added_time'].format(time=item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
 
             remove_button = InlineKeyboardButton(messages['remove_item'], callback_data=str(item.id))
@@ -425,81 +430,85 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if missing_data:
         await update.message.reply_text(messages['missing_data'].format(missing=', '.join(missing_data)))
         return ConversationHandler.END
-    else:
-        item = context.user_data['item']
-        category = context.user_data['category']
-        subcategory = context.user_data['subcategory']
-        product_category = context.user_data['product_category']
-        locations = context.user_data['locations']
 
-        tori_link = f'https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
-        
-        if category.lower() not in ALL_CATEGORIES:
-            if subcategory.lower() not in ALL_SUBCATEGORIES:
-                if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
-                    product_category_code = categories_data[category]['subcategories'][subcategory]['product_categories'][product_category]
-                    tori_link += f'&product_category={product_category_code}'
-                else:
-                    subcategory_code = categories_data[category]['subcategories'][subcategory]['subcategory_code']
-                    tori_link += f'&sub_category={subcategory_code}'
-            else:
-                category_code = categories_data[category]['category_code']
-                tori_link += f'&category={category_code}'
-
-        for location in locations:
-            region = location['region']
-            city = location['city']
-            area = location['area']
-            
-            if region.lower() not in WHOLE_FINLAND:
-                if city.lower() not in ALL_CITIES:
-                    if area.lower() not in ALL_AREAS:
-                        area_code = locations_data[region]['cities'][city]['areas'][area]
-                        tori_link += f'&location={area_code}'
-                    else:
-                        city_code = locations_data[region]['cities'][city]['city_code']
-                        tori_link += f'&location={city_code}'
-                else:
-                    region_code = locations_data[region]['region_code']
-                    tori_link += f'&location={region_code}'
-
-        tori_link += '&sort=PUBLISHED_DESC'
-
-        new_item = ToriItem(
-            item=item,
-            category=category,
-            subcategory=subcategory,
-            product_category=product_category,
-            locations=locations,
-            telegram_id=telegram_id,
-            link=tori_link
-        )
-        
-        session.add(new_item)
-        session.commit()
-
-        message = messages['item_added']
-        message += messages['item'].format(item=item)
-        message += messages['category'].format(category=category)
+    item = context.user_data['item']
+    category = context.user_data['category']
+    subcategory = context.user_data['subcategory']
+    product_category = context.user_data['product_category']
+    locations = context.user_data['locations']
+    
+    tori_link = f'https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
+    
+    if category.lower() not in ALL_CATEGORIES:
         if subcategory.lower() not in ALL_SUBCATEGORIES:
-            message += messages['subcategory'].format(subcategory=subcategory)
-        if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
-            message += messages['product_type'].format(product_category=product_category)
-        
-        message += messages['locations_header']
-        for location in locations:
-            message += messages['region'].format(region=location['region'])
-            if location['city'].lower() not in ALL_CITIES:
-                message += messages['city'].format(city=location['city'])
-            if location['area'].lower() not in ALL_AREAS:
-                message += messages['area'].format(area=location['area'])
-            message += "\n"
-            
-        message += messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
-        #message += f'The search link for the item: {tori_link}' DEBUG PURPOSES
+            if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
+                product_category_code = categories_data[category]['subcategories'][subcategory]['product_categories'][product_category]
+                tori_link += f'&product_category={product_category_code}'
+            else:
+                subcategory_code = categories_data[category]['subcategories'][subcategory]['subcategory_code']
+                tori_link += f'&sub_category={subcategory_code}'
+        else:
+            category_code = categories_data[category]['category_code']
+            tori_link += f'&category={category_code}'
 
-        await update.message.reply_text(message, parse_mode='HTML')
+    location_params = []
+    for location in locations:
+        region = location['region']
+        city = location['city']
+        area = location['area']
         
-        session.close()
+        if region.lower() not in WHOLE_FINLAND:
+            if city.lower() not in ALL_CITIES:
+                if area.lower() not in ALL_AREAS and area != 'null':
+                    area_code = locations_data[region]['cities'][city]['areas'][area]
+                    location_params.append(f'location={area_code}')
+                else:
+                    city_code = locations_data[region]['cities'][city]['city_code']
+                    location_params.append(f'location={city_code}')
+            else:
+                region_code = locations_data[region]['region_code']
+                location_params.append(f'location={region_code}')
+
+    if location_params:
+        tori_link += '&' + '&'.join(location_params)
+
+    tori_link += '&sort=PUBLISHED_DESC'
+
+    new_item = ToriItem(
+        item=item,
+        category=category,
+        subcategory=subcategory,
+        product_category=product_category,
+        locations=locations,
+        telegram_id=telegram_id,
+        link=tori_link
+    )
+    
+    session.add(new_item)
+    session.commit()
+
+    message = messages['item_added']
+    message += messages['item'].format(item=item)
+    message += messages['category'].format(category=category)
+    if subcategory.lower() not in ALL_SUBCATEGORIES:
+        message += messages['subcategory'].format(subcategory=subcategory)
+    if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
+        message += messages['product_type'].format(product_category=product_category)
+    
+    message += messages['locations_header']
+    for location in locations:
+        message += messages['region'].format(region=location['region'])
+        if location['city'].lower() not in ALL_CITIES:
+            message += messages['city'].format(city=location['city'])
+        if location['area'].lower() not in ALL_AREAS and location['area'] != 'null':
+            message += messages['area'].format(area=location['area'])
+        message += "\n"
         
-        return await main_menu(update, context)
+    message += messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
+    message += f'The search link for the item: {tori_link}'
+
+    await update.message.reply_text(message, parse_mode='HTML')
+    
+    session.close()
+    
+    return await main_menu(update, context)
