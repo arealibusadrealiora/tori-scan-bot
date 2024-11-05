@@ -14,6 +14,7 @@ from modules.conversation import (
     select_region,
     select_city,
     select_area,
+    add_more_locations,
     save_data
 )
 
@@ -302,4 +303,35 @@ async def save_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         else:
             context.user_data['area'] = update.message.text
 
-    return await save_data(update, context)
+    return await add_more_locations(update, context)
+
+async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    if update.message.text == messages['yes']:
+        if 'locations' not in context.user_data:
+            context.user_data['locations'] = []
+        
+        current_location = {
+            'region': context.user_data['region'],
+            'city': context.user_data['city'],
+            'area': context.user_data['area']
+        }
+        context.user_data['locations'].append(current_location)
+        
+        context.user_data.pop('region', None)
+        context.user_data.pop('city', None)
+        context.user_data.pop('area', None)
+        
+        return await select_region(update, context)
+    else:
+        if 'locations' not in context.user_data:
+            context.user_data['locations'] = [{
+                'region': context.user_data['region'],
+                'city': context.user_data['city'],
+                'area': context.user_data['area']
+            }]
+        
+        return await save_data(update, context)
