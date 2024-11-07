@@ -436,9 +436,8 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     subcategory = context.user_data['subcategory']
     product_category = context.user_data['product_category']
     locations = context.user_data['locations']
-    
     tori_link = f'https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
-    
+
     if category.lower() not in ALL_CATEGORIES:
         if subcategory.lower() not in ALL_SUBCATEGORIES:
             if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
@@ -451,26 +450,21 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             category_code = categories_data[category]['category_code']
             tori_link += f'&category={category_code}'
 
-    location_params = []
-    for location in locations:
-        region = location['region']
-        city = location['city']
-        area = location['area']
-        
+    for loc in locations:
+        region = loc['region']
+        city = loc['city']
+        area = loc.get('area')
         if region.lower() not in WHOLE_FINLAND:
             if city.lower() not in ALL_CITIES:
-                if area.lower() not in ALL_AREAS and area != 'null':
+                if area and area.lower() not in ALL_AREAS:
                     area_code = locations_data[region]['cities'][city]['areas'][area]
-                    location_params.append(f'location={area_code}')
+                    tori_link += f'&location={area_code}'
                 else:
                     city_code = locations_data[region]['cities'][city]['city_code']
-                    location_params.append(f'location={city_code}')
+                    tori_link += f'&location={city_code}'
             else:
                 region_code = locations_data[region]['region_code']
-                location_params.append(f'location={region_code}')
-
-    if location_params:
-        tori_link += '&' + '&'.join(location_params)
+                tori_link += f'&location={region_code}'
 
     tori_link += '&sort=PUBLISHED_DESC'
 
@@ -494,19 +488,16 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         message += messages['subcategory'].format(subcategory=subcategory)
     if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
         message += messages['product_type'].format(product_category=product_category)
-    
     message += messages['locations_header']
-    for location in locations:
-        message += messages['region'].format(region=location['region'])
-        if location['city'].lower() not in ALL_CITIES:
-            message += messages['city'].format(city=location['city'])
-        if location['area'].lower() not in ALL_AREAS and location['area'] != 'null':
-            message += messages['area'].format(area=location['area'])
-        message += "\n"
-        
-    message += messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
-    message += f'The search link for the item: {tori_link}'
-
+    for i, loc in enumerate(locations, 1):
+        message += f"\n📍 Location {i}:\n"
+        message += messages['region'].format(region=loc['region'])
+        if loc['city'].lower() not in ALL_CITIES:
+            message += messages['city'].format(city=loc['city'])
+        if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
+            message += messages['area'].format(area=loc['area'])
+    message += f"\n{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
+    #message += f'The search link for the item: {tori_link}'
     await update.message.reply_text(message, parse_mode='HTML')
     
     session.close()
