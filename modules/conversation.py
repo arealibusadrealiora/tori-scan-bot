@@ -45,9 +45,7 @@ async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     context.user_data.pop('category', None)
     context.user_data.pop('subcategory', None)
     context.user_data.pop('product_category', None)
-    context.user_data.pop('region', None)
-    context.user_data.pop('city', None)
-    context.user_data.pop('area', None)
+    context.user_data.pop('locations', None)
 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
