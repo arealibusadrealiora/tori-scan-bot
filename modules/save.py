@@ -306,32 +306,38 @@ async def save_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return await add_more_locations(update, context)
 
 async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Handle user's response about adding more locations.
+    
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+        
+    Returns:
+        int: Next state for the conversation:
+             - select_region if user wants to add another location
+             - save_data if user is done adding locations
+    '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    if update.message.text == messages['yes']:
-        if 'locations' not in context.user_data:
-            context.user_data['locations'] = []
-        
+    if 'locations' not in context.user_data:
+        context.user_data['locations'] = []
+
+    if all(key in context.user_data for key in ['region', 'city', 'area']):
         current_location = {
-            'region': context.user_data['region'],
-            'city': context.user_data['city'],
-            'area': context.user_data['area']
+            'region': context.user_data.pop('region'),
+            'city': context.user_data.pop('city'),
+            'area': context.user_data.pop('area')
         }
         context.user_data['locations'].append(current_location)
-        
-        context.user_data.pop('region', None)
-        context.user_data.pop('city', None)
-        context.user_data.pop('area', None)
-        
+
+    if update.message.text == messages['yes']:
         return await select_region(update, context)
     else:
-        if 'locations' not in context.user_data:
-            context.user_data['locations'] = [{
-                'region': context.user_data['region'],
-                'city': context.user_data['city'],
-                'area': context.user_data['area']
-            }]
-        
+        if not context.user_data['locations']:
+            await update.message.reply_text("Error: No locations selected. Please try again.")
+            return await select_region(update, context)
         return await save_data(update, context)
+
