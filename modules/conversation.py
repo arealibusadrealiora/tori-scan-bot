@@ -382,11 +382,11 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 
             item_info += messages['locations_header']
             for location in item.locations:
-                item_info += messages['region'].format(region=location['region'])
+                item_info += "  📍 " + location['region']
                 if location['city'].lower() not in ALL_CITIES:
-                    item_info += messages['city'].format(city=location['city'])
-                if location['area'].lower() not in ALL_AREAS:
-                    item_info += messages['area'].format(area=location['area'])
+                    item_info += f", {location['city']}"
+                if 'area' in location and location['area'].lower() not in ALL_AREAS:
+                    item_info += f", {location['area']}"
                 item_info += "\n"
             
             item_info += messages['added_time'].format(time=item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
@@ -487,14 +487,14 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
         message += messages['product_type'].format(product_category=product_category)
     message += messages['locations_header']
-    for i, loc in enumerate(locations, 1):
-        message += f"\n📍 Location {i}:\n"
-        message += messages['region'].format(region=loc['region'])
-        if loc['city'].lower() not in ALL_CITIES:
-            message += messages['city'].format(city=loc['city'])
+    for loc in locations:
+        message += "  📍 " + loc['region']
+        if 'city' in loc and loc['city'].lower() not in ALL_CITIES:
+                message += f", {loc['city']}"
         if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
-            message += messages['area'].format(area=loc['area'])
-    message += f"\n{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
+                message += f", {loc['area']}"
+        message += "\n"
+    message += f"{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
     #message += f'The search link for the item: {tori_link}'
     await update.message.reply_text(message, parse_mode='HTML')
     
