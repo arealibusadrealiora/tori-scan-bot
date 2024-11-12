@@ -448,21 +448,25 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             category_code = categories_data[category]['category_code']
             tori_link += f'&category={category_code}'
 
-    for loc in locations:
-        region = loc['region']
-        city = loc['city']
-        area = loc.get('area')
-        if region.lower() not in WHOLE_FINLAND:
-            if city.lower() not in ALL_CITIES:
-                if area and area.lower() not in ALL_AREAS:
-                    area_code = locations_data[region]['cities'][city]['areas'][area]
-                    tori_link += f'&location={area_code}'
+    has_whole_finland = any(loc['region'].lower() in WHOLE_FINLAND for loc in locations)
+    
+    if not has_whole_finland:
+        for loc in locations:
+            region = loc['region']
+            city = loc['city']
+            area = loc.get('area')
+            
+            if region.lower() not in WHOLE_FINLAND:
+                if city.lower() not in ALL_CITIES:
+                    if area and area.lower() not in ALL_AREAS:
+                        area_code = locations_data[region]['cities'][city]['areas'][area]
+                        tori_link += f'&location={area_code}'
+                    else:
+                        city_code = locations_data[region]['cities'][city]['city_code']
+                        tori_link += f'&location={city_code}'
                 else:
-                    city_code = locations_data[region]['cities'][city]['city_code']
-                    tori_link += f'&location={city_code}'
-            else:
-                region_code = locations_data[region]['region_code']
-                tori_link += f'&location={region_code}'
+                    region_code = locations_data[region]['region_code']
+                    tori_link += f'&location={region_code}'
 
     tori_link += '&sort=PUBLISHED_DESC'
 
@@ -487,13 +491,19 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
         message += messages['product_type'].format(product_category=product_category)
     message += messages['locations_header']
-    for loc in locations:
-        message += "  📍 " + loc['region']
-        if 'city' in loc and loc['city'].lower() not in ALL_CITIES:
+    if has_whole_finland:
+        for loc in locations:
+            if loc['region'].lower() in WHOLE_FINLAND:
+                message += f"  📍 {loc['region']}\n"
+                break
+    else:
+        for loc in locations:
+            message += "  📍 " + loc['region']
+            if loc['city'].lower() not in ALL_CITIES:
                 message += f", {loc['city']}"
-        if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
+            if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
                 message += f", {loc['area']}"
-        message += "\n"
+            message += "\n"
     message += f"{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
     #message += f'The search link for the item: {tori_link}'
     await update.message.reply_text(message, parse_mode='HTML')
