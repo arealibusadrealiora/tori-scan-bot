@@ -193,39 +193,48 @@ async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
         int: Next state for the conversation:
             Default: select_city;
             Invalid: select_region;
-            If the choice is in WHOLE_FINLAND: save_area.
+            If the choice is in WHOLE_FINLAND: save_data.
     ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
     messages = load_messages(language)
 
-    if 'region' not in context.user_data:
-        user_region = update.message.text
-        if user_region.lower() in WHOLE_FINLAND:
-            if language == '🇫🇮 Suomi':
-                context.user_data['region'] = 'Koko Suomi'
-                context.user_data['city'] = 'Kaikki kaupungit'
-                context.user_data['area'] = 'Kaikki alueet'
-            elif language == '🇬🇧 English':
-                context.user_data['region'] = 'Whole Finland'
-                context.user_data['city'] = 'All cities'
-                context.user_data['area'] = 'All areas'
-            elif language == '🇺🇦 Українська':
-                context.user_data['region'] = 'Вся Фінляндія'
-                context.user_data['city'] = 'Всі міста'
-                context.user_data['area'] = 'Всі райони'
-            elif language == '🇷🇺 Русский':
-                context.user_data['region'] = 'Вся Финляндия'
-                context.user_data['city'] = 'Все города'
-                context.user_data['area'] = 'Все области'
-            return await save_area(update, context)
-        elif user_region not in locations_data:
-            await update.message.reply_text(messages['invalid_region'])
-            return await select_region(update, context)
-        else:
-            context.user_data['region'] = update.message.text
+    user_region = update.message.text
+    if user_region not in locations_data:
+        await update.message.reply_text(messages['invalid_region'])
+        return await select_region(update, context)
+
+    if user_region.lower() in WHOLE_FINLAND:
+        context.user_data['locations'] = []
+        if language == '🇫🇮 Suomi':
+            whole_finland_location = {
+                'region': 'Koko Suomi',
+                'city': 'Kaikki kaupungit',
+                'area': 'Kaikki alueet'
+            }
+        elif language == '🇬🇧 English':
+            whole_finland_location = {
+                'region': 'Whole Finland',
+                'city': 'All cities',
+                'area': 'All areas'
+            }
+        elif language == '🇺🇦 Українська':
+            whole_finland_location = {
+                'region': 'Вся Фінляндія',
+                'city': 'Всі міста',
+                'area': 'Всі райони'
+            }
+        elif language == '🇷🇺 Русский':
+            whole_finland_location = {
+                'region': 'Вся Финляндия',
+                'city': 'Все города',
+                'area': 'Все области'
+            }
+        context.user_data['locations'] = [whole_finland_location]
+        return await save_data(update, context)
     
+    context.user_data['region'] = update.message.text
     return await select_city(update, context)
 
 async def save_city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -331,7 +340,8 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
             'city': context.user_data.pop('city'),
             'area': context.user_data.pop('area')
         }
-        context.user_data['locations'].append(current_location)
+        if current_location['region'].lower() not in WHOLE_FINLAND:
+            context.user_data['locations'].append(current_location)
 
     if update.message.text == messages['yes']:
         return await select_region(update, context)
@@ -340,4 +350,3 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
             await update.message.reply_text("Error: No locations selected. Please try again.")
             return await select_region(update, context)
         return await save_data(update, context)
-
