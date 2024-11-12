@@ -345,8 +345,8 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
 
     if update.message.text == messages['yes']:
         return await select_region(update, context)
-    else:
-        if not context.user_data['locations']:
-            await update.message.reply_text("Error: No locations selected. Please try again.")
-            return await select_region(update, context)
-        return await save_data(update, context)
+    
+    if not context.user_data['locations']:
+        await update.message.reply_text("Error: No locations selected. Please try again.")
+        return await select_region(update, context)
+    return await save_data(update, context)
