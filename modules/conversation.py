@@ -236,7 +236,6 @@ async def add_more_locations(update: Update, context: ContextTypes.DEFAULT_TYPE)
             Default: Next state for the conversation (MORE_LOCATIONS), if user wants to add more locations.
             If they're done adding location: save_data
     '''
-
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)

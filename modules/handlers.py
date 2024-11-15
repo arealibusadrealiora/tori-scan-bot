@@ -16,7 +16,8 @@ from modules.conversation import start, start_again, save_data, main_menu_choice
 
 def setup_handlers(application: Application):
     new_user_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[MessageHandler(filters.TEXT & ~filters.COMMAND, start),
+                      CommandHandler('start', start)],
         states={
             SETTINGS_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, settings_menu_choice)],
             LANGUAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_language)],
@@ -36,7 +37,8 @@ def setup_handlers(application: Application):
     )
 
     returning_user_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start_again)],
+        entry_points=[MessageHandler(filters.TEXT & ~filters.COMMAND, start_again),
+                      CommandHandler('start', start_again)],
         states={
             SETTINGS_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, settings_menu_choice)],
             LANGUAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_language)],
