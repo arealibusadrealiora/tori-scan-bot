@@ -433,7 +433,38 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     category = context.user_data['category']
     subcategory = context.user_data['subcategory']
     product_category = context.user_data['product_category']
+    
     locations = context.user_data['locations']
+    locations.sort(key=lambda x: (
+        x['region'].lower() in WHOLE_FINLAND, 
+        x['city'].lower() in ALL_CITIES,      
+        x.get('area', '').lower() in ALL_AREAS
+    ))
+    
+    final_locations = []
+    region_coverages = {}
+    
+    for loc in locations:
+        region = loc['region']
+        if region.lower() in WHOLE_FINLAND:
+            final_locations = [loc]
+            break
+        if region in region_coverages:
+            if region_coverages[region] == 'ALL':
+                continue
+            if loc['city'].lower() in ALL_CITIES:
+                region_coverages[region] = 'ALL'
+                final_locations = [l for l in final_locations if l['region'] != region]
+                final_locations.append(loc)
+                continue
+        else:
+            if loc['city'].lower() in ALL_CITIES:
+                region_coverages[region] = 'ALL'
+            else:
+                region_coverages[region] = 'PARTIAL'
+            final_locations.append(loc)
+    
+    locations = final_locations
     tori_link = f'https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
 
     if category.lower() not in ALL_CATEGORIES:
@@ -489,7 +520,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if subcategory.lower() not in ALL_SUBCATEGORIES:
         message += messages['subcategory'].format(subcategory=subcategory)
     if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
-        message += messages['product_type'].format(product_category=product_category)
+        message += messages['product_type'].format(product_category=product_category) 
     message += messages['locations_header']
     if has_whole_finland:
         for loc in locations:
@@ -503,9 +534,10 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 message += f", {loc['city']}"
             if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
                 message += f", {loc['area']}"
-            message += "\n"
+            message += "\n"  
     message += f"{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
     #message += f'The search link for the item: {tori_link}'
+    
     await update.message.reply_text(message, parse_mode='HTML')
     
     session.close()
