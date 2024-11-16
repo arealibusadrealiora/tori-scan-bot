@@ -3,7 +3,7 @@ from telegram.ext import ContextTypes
 from modules.models import UserPreferences
 from modules.load import load_messages, load_categories, load_locations
 from modules.database import get_session
-from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
+from modules.utils import get_language, update_locations_list, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
 from modules.conversation import (
     main_menu,
     select_language,
@@ -340,13 +340,16 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
             'city': context.user_data.pop('city'),
             'area': context.user_data.pop('area')
         }
-        if current_location['region'].lower() not in WHOLE_FINLAND:
-            context.user_data['locations'].append(current_location)
+        
+        context.user_data['locations'] = update_locations_list(
+            context.user_data['locations'], 
+            current_location
+        )
 
     if update.message.text == messages['yes']:
         return await select_region(update, context)
-    
-    if not context.user_data['locations']:
-        await update.message.reply_text("Error: No locations selected. Please try again.")
-        return await select_region(update, context)
-    return await save_data(update, context)
+    else:
+        if not context.user_data['locations']:
+            await update.message.reply_text("Error: No locations selected. Please try again.")
+            return await select_region(update, context)
+        return await save_data(update, context)
