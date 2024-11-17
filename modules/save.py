@@ -317,11 +317,9 @@ async def save_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Handle user's response about adding more locations.
-    
     Args:
         update (Update): The update object containing the user's message.
         context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
-        
     Returns:
         int: Next state for the conversation:
              - select_region if user wants to add another location
