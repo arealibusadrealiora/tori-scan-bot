@@ -209,7 +209,6 @@ async def select_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     Returns:
         int: Next state for the conversation (AREA).
     '''
-
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
@@ -255,7 +254,6 @@ async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     Returns:
         int: The next state in the conversation (MAIN_MENU).
     '''
-
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -276,7 +274,6 @@ async def main_menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -
             'items': show_items;
             'settings': show_settings_menu.
     '''
-        
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -299,7 +296,6 @@ async def show_settings_menu(update: Update, context: ContextTypes.DEFAULT_TYPE)
     Returns:
         int: The next state in the conversation (SETTINGS_MENU).
     '''
-
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -329,7 +325,6 @@ async def settings_menu_choice(update: Update, context: ContextTypes.DEFAULT_TYP
             'back': main_menu;
             'invalid_choice': show_settings_menu.
     '''
-
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -360,7 +355,6 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     Returns:
         int: The next state in the conversation (MAIN_MENU).
     '''
-    
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
@@ -378,7 +372,6 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 item_info += messages['subcategory'].format(subcategory=item.subcategory)
             if item.product_category != 'null':
                 item_info += messages['product_type'].format(product_category=item.product_category)
-                
             item_info += messages['locations_header']
             for location in item.locations:
                 item_info += "  📍 " + location['region']
@@ -387,7 +380,6 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 if 'area' in location and location['area'].lower() not in ALL_AREAS:
                     item_info += f", {location['area']}"
                 item_info += "\n"
-            
             item_info += messages['added_time'].format(time=item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
 
             remove_button = InlineKeyboardButton(messages['remove_item'], callback_data=str(item.id))
@@ -412,7 +404,6 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     Returns:
         int: The next state in the conversation (main_menu).
     '''
-
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     categories_data = load_categories(language)
@@ -536,7 +527,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             message += "\n"  
     message += f"{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
     #message += f'The search link for the item: {tori_link}'
-    
+
     await update.message.reply_text(message, parse_mode='HTML')
     
     session.close()

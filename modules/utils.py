@@ -58,11 +58,9 @@ def get_language(telegram_id: int) -> str:
 def is_location_covered(new_location: dict, existing_location: dict) -> bool:
     '''
     Check if a location is already covered by an existing location based on hierarchy.
-    
     Args:
         new_location (dict): The new location to check
-        existing_location (dict): An existing location to check against
-        
+        existing_location (dict): An existing location to check against 
     Returns:
         bool: True if the new location is already covered by the existing location
     '''
@@ -86,11 +84,9 @@ def is_location_covered(new_location: dict, existing_location: dict) -> bool:
 def update_locations_list(locations: list, new_location: dict) -> list:
     '''
     Update the locations list based on hierarchy rules.
-    
     Args:
         locations (list): Current list of locations
         new_location (dict): New location to be added
-        
     Returns:
         list: Updated list of locations
     '''
