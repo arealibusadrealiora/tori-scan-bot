@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, JSON
 
 Base = declarative_base()
 
@@ -42,9 +42,7 @@ class ToriItem(Base):
     category = Column(Integer)
     subcategory = Column(Integer)
     product_category = Column(Integer)
-    region = Column(Integer)
-    city = Column(Integer)
-    area = Column(Integer)
+    locations = Column(JSON)
     telegram_id = Column(Integer)
     added_time = Column(DateTime, default=datetime.now)
     link = Column(String)

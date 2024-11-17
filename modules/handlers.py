@@ -10,6 +10,7 @@ from modules.save import (
     save_region,
     save_city,
     save_area,
+    more_locations_response
 )
 from modules.conversation import start, start_again, save_data, main_menu_choice, settings_menu_choice, show_items
 
@@ -27,6 +28,7 @@ def setup_handlers(application: Application):
             REGION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_region)],
             CITY: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_city)],
             AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_area)],
+            MORE_LOCATIONS: [MessageHandler(filters.TEXT & ~filters.COMMAND, more_locations_response)],
             CONFIRMATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_data)],
             MAIN_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, main_menu_choice)],
         },

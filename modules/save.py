@@ -3,7 +3,7 @@ from telegram.ext import ContextTypes
 from modules.models import UserPreferences
 from modules.load import load_messages, load_categories, load_locations
 from modules.database import get_session
-from modules.utils import get_language, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
+from modules.utils import get_language, update_locations_list, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
 from modules.conversation import (
     main_menu,
     select_language,
@@ -14,6 +14,7 @@ from modules.conversation import (
     select_region,
     select_city,
     select_area,
+    add_more_locations,
     save_data
 )
 
@@ -192,39 +193,48 @@ async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
         int: Next state for the conversation:
             Default: select_city;
             Invalid: select_region;
-            If the choice is in WHOLE_FINLAND: save_area.
+            If the choice is in WHOLE_FINLAND: save_data.
     ''' 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     locations_data = load_locations(language)
     messages = load_messages(language)
 
-    if 'region' not in context.user_data:
-        user_region = update.message.text
-        if user_region.lower() in WHOLE_FINLAND:
-            if language == '🇫🇮 Suomi':
-                context.user_data['region'] = 'Koko Suomi'
-                context.user_data['city'] = 'Kaikki kaupungit'
-                context.user_data['area'] = 'Kaikki alueet'
-            elif language == '🇬🇧 English':
-                context.user_data['region'] = 'Whole Finland'
-                context.user_data['city'] = 'All cities'
-                context.user_data['area'] = 'All areas'
-            elif language == '🇺🇦 Українська':
-                context.user_data['region'] = 'Вся Фінляндія'
-                context.user_data['city'] = 'Всі міста'
-                context.user_data['area'] = 'Всі райони'
-            elif language == '🇷🇺 Русский':
-                context.user_data['region'] = 'Вся Финляндия'
-                context.user_data['city'] = 'Все города'
-                context.user_data['area'] = 'Все области'
-            return await save_area(update, context)
-        elif user_region not in locations_data:
-            await update.message.reply_text(messages['invalid_region'])
-            return await select_region(update, context)
-        else:
-            context.user_data['region'] = update.message.text
+    user_region = update.message.text
+    if user_region not in locations_data:
+        await update.message.reply_text(messages['invalid_region'])
+        return await select_region(update, context)
+
+    if user_region.lower() in WHOLE_FINLAND:
+        context.user_data['locations'] = []
+        if language == '🇫🇮 Suomi':
+            whole_finland_location = {
+                'region': 'Koko Suomi',
+                'city': 'Kaikki kaupungit',
+                'area': 'Kaikki alueet'
+            }
+        elif language == '🇬🇧 English':
+            whole_finland_location = {
+                'region': 'Whole Finland',
+                'city': 'All cities',
+                'area': 'All areas'
+            }
+        elif language == '🇺🇦 Українська':
+            whole_finland_location = {
+                'region': 'Вся Фінляндія',
+                'city': 'Всі міста',
+                'area': 'Всі райони'
+            }
+        elif language == '🇷🇺 Русский':
+            whole_finland_location = {
+                'region': 'Вся Финляндия',
+                'city': 'Все города',
+                'area': 'Все области'
+            }
+        context.user_data['locations'] = [whole_finland_location]
+        return await save_data(update, context)
     
+    context.user_data['region'] = update.message.text
     return await select_city(update, context)
 
 async def save_city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -302,4 +312,42 @@ async def save_area(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         else:
             context.user_data['area'] = update.message.text
 
-    return await save_data(update, context)
+    return await add_more_locations(update, context)
+
+async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Handle user's response about adding more locations.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+             - select_region if user wants to add another location
+             - save_data if user is done adding locations
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    if 'locations' not in context.user_data:
+        context.user_data['locations'] = []
+
+    if all(key in context.user_data for key in ['region', 'city', 'area']):
+        current_location = {
+            'region': context.user_data.pop('region'),
+            'city': context.user_data.pop('city'),
+            'area': context.user_data.pop('area')
+        }
+        
+        context.user_data['locations'] = update_locations_list(
+            context.user_data['locations'], 
+            current_location
+        )
+
+    if update.message.text == messages['yes']:
+        return await select_region(update, context)
+    else:
+        if not context.user_data['locations']:
+            await update.message.reply_text("Error: No locations selected. Please try again.")
+            return await select_region(update, context)
+        return await save_data(update, context)
