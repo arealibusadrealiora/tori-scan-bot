@@ -351,3 +351,31 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
             await update.message.reply_text("Error: No locations selected. Please try again.")
             return await select_region(update, context)
         return await save_data(update, context)
+
+async def more_categories_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    if 'categories' not in context.user_data:
+        context.user_data['categories'] = []
+
+    if all(key in context.user_data for key in ['category', 'subcategory', 'product_category']):
+        new_category = {
+            'category': context.user_data.pop('category'),
+            'subcategory': context.user_data.pop('subcategory'),
+            'product_category': context.user_data.pop('product_category')
+        }
+        
+        context.user_data['categories'] = update_categories_list(
+            context.user_data['categories'],
+            new_category
+        )
+
+    if update.message.text == messages['yes']:
+        return await select_category(update, context)
+    else:
+        if not context.user_data['categories']:
+            await update.message.reply_text("Error: No categories selected. Please try again.")
+            return await select_category(update, context)
+        return await select_region(update, context)
