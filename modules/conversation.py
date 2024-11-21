@@ -4,7 +4,7 @@ from modules.database import get_session
 from modules.load import load_categories, load_locations, load_messages
 from modules.models import UserPreferences, ToriItem
 from modules.constants import *
-from modules.utils import get_language
+from modules.utils import get_language, update_categories_list
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -141,7 +141,11 @@ async def select_product_category(update: Update, context: ContextTypes.DEFAULT_
     categories_data = load_categories(language)
     messages = load_messages(language)
 
+    if 'subcategory' not in context.user_data:
+        context.user_data['subcategory'] = update.message.text
+
     product_categories = categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']].get('product_categories')
+    
     if not product_categories:
         if language == '🇫🇮 Suomi':
             context.user_data['product_category'] = 'Kaikki tuoteluokat'
@@ -150,8 +154,22 @@ async def select_product_category(update: Update, context: ContextTypes.DEFAULT_
         elif language == '🇺🇦 Українська':
             context.user_data['product_category'] = 'Всі категорії товарів'
         elif language == '🇷🇺 Русский':
-            context.user_data['product_category'] = 'Все категории товаров' 
-        return await select_region(update, context)
+            context.user_data['product_category'] = 'Все категории товаров'
+
+        if 'categories' not in context.user_data:
+            context.user_data['categories'] = []
+
+        new_category = {
+            'category': context.user_data.pop('category'),
+            'subcategory': context.user_data.pop('subcategory'),
+            'product_category': context.user_data.pop('product_category')
+        }
+        context.user_data['categories'] = update_categories_list(
+            context.user_data['categories'],
+            new_category
+        )
+        
+        return await add_more_categories(update, context)
     
     keyboard = [[product_category] for product_category in product_categories]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
@@ -244,6 +262,17 @@ async def add_more_locations(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await update.message.reply_text(messages['add_more_locations'], reply_markup=reply_markup)
 
     return MORE_LOCATIONS
+
+async def add_more_categories(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [[messages['yes'], messages['no']]]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    await update.message.reply_text(messages['add_more_categories'], reply_markup=reply_markup)
+
+    return MORE_CATEGORIES
 
 async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -412,7 +441,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     session = get_session()
 
-    required_data = ['item', 'category', 'subcategory', 'product_category', 'locations']
+    required_data = ['item', 'categories', 'locations']
     missing_data = [key for key in required_data if key not in context.user_data]
 
     if missing_data:
@@ -420,9 +449,38 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return ConversationHandler.END
 
     item = context.user_data['item']
-    category = context.user_data['category']
-    subcategory = context.user_data['subcategory']
-    product_category = context.user_data['product_category']
+    categories = context.user_data['categories']
+    
+    categories.sort(key=lambda x: (
+        x['category'].lower() in ALL_CATEGORIES,
+        x['subcategory'].lower() in ALL_SUBCATEGORIES,
+        x['product_category'].lower() in ALL_PRODUCT_CATEGORIES
+    ))
+    
+    final_categories = []
+    category_coverages = {}
+    
+    for cat in categories:
+        category = cat['category']
+        if category.lower() in ALL_CATEGORIES:
+            final_categories = [cat]
+            break
+        if category in category_coverages:
+            if category_coverages[category] == 'ALL':
+                continue
+            if cat['subcategory'].lower() in ALL_SUBCATEGORIES:
+                category_coverages[category] = 'ALL'
+                final_categories = [c for c in final_categories if c['category'] != category]
+                final_categories.append(cat)
+                continue
+        else:
+            if cat['subcategory'].lower() in ALL_SUBCATEGORIES:
+                category_coverages[category] = 'ALL'
+            else:
+                category_coverages[category] = 'PARTIAL'
+            final_categories.append(cat)
+    
+    categories = final_categories
     
     locations = context.user_data['locations']
     locations.sort(key=lambda x: (
@@ -455,22 +513,25 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             final_locations.append(loc)
     
     locations = final_locations
+    
     tori_link = f'https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
 
-    if category.lower() not in ALL_CATEGORIES:
-        if subcategory.lower() not in ALL_SUBCATEGORIES:
-            if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
-                product_category_code = categories_data[category]['subcategories'][subcategory]['product_categories'][product_category]
-                tori_link += f'&product_category={product_category_code}'
-            else:
-                subcategory_code = categories_data[category]['subcategories'][subcategory]['subcategory_code']
-                tori_link += f'&sub_category={subcategory_code}'
-        else:
-            category_code = categories_data[category]['category_code']
-            tori_link += f'&category={category_code}'
+    has_all_categories = any(cat['category'].lower() in ALL_CATEGORIES for cat in categories)
+    if not has_all_categories:
+        for cat in categories:
+            if cat['category'].lower() not in ALL_CATEGORIES:
+                if cat['subcategory'].lower() not in ALL_SUBCATEGORIES:
+                    if cat['product_category'].lower() not in ALL_PRODUCT_CATEGORIES:
+                        product_category_code = categories_data[cat['category']]['subcategories'][cat['subcategory']]['product_categories'][cat['product_category']]
+                        tori_link += f'&product_category={product_category_code}'
+                    else:
+                        subcategory_code = categories_data[cat['category']]['subcategories'][cat['subcategory']]['subcategory_code']
+                        tori_link += f'&sub_category={subcategory_code}'
+                else:
+                    category_code = categories_data[cat['category']]['category_code']
+                    tori_link += f'&category={category_code}'
 
     has_whole_finland = any(loc['region'].lower() in WHOLE_FINLAND for loc in locations)
-    
     if not has_whole_finland:
         for loc in locations:
             region = loc['region']
@@ -493,9 +554,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     new_item = ToriItem(
         item=item,
-        category=category,
-        subcategory=subcategory,
-        product_category=product_category,
+        categories=categories,
         locations=locations,
         telegram_id=telegram_id,
         link=tori_link
@@ -506,11 +565,22 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     message = messages['item_added']
     message += messages['item'].format(item=item)
-    message += messages['category'].format(category=category)
-    if subcategory.lower() not in ALL_SUBCATEGORIES:
-        message += messages['subcategory'].format(subcategory=subcategory)
-    if product_category.lower() not in ALL_PRODUCT_CATEGORIES:
-        message += messages['product_type'].format(product_category=product_category) 
+    
+    message += messages['categories_header']
+    if has_all_categories:
+        for cat in categories:
+            if cat['category'].lower() in ALL_CATEGORIES:
+                message += f"  📋 {cat['category']}\n"
+                break
+    else:
+        for cat in categories:
+            message += "  📋 " + cat['category']
+            if cat['subcategory'].lower() not in ALL_SUBCATEGORIES:
+                message += f" > {cat['subcategory']}"
+                if cat['product_category'].lower() not in ALL_PRODUCT_CATEGORIES:
+                    message += f" > {cat['product_category']}"
+            message += "\n"
+    
     message += messages['locations_header']
     if has_whole_finland:
         for loc in locations:
@@ -524,10 +594,11 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 message += f", {loc['city']}"
             if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
                 message += f", {loc['area']}"
-            message += "\n"  
+            message += "\n"
+            
     message += f"{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
     #message += f'The search link for the item: {tori_link}'
-
+    
     await update.message.reply_text(message, parse_mode='HTML')
     
     session.close()
