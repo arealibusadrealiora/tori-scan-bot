@@ -10,7 +10,8 @@ from modules.save import (
     save_region,
     save_city,
     save_area,
-    more_locations_response
+    more_locations_response,
+    more_categories_response
 )
 from modules.conversation import start, start_again, save_data, main_menu_choice, settings_menu_choice, show_items
 
