@@ -3,7 +3,7 @@ from telegram.ext import ContextTypes
 from modules.models import UserPreferences
 from modules.load import load_messages, load_categories, load_locations
 from modules.database import get_session
-from modules.utils import get_language, update_locations_list, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
+from modules.utils import get_language, update_locations_list, update_categories_list, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
 from modules.conversation import (
     main_menu,
     select_language,
@@ -15,6 +15,7 @@ from modules.conversation import (
     select_city,
     select_area,
     add_more_locations,
+    add_more_categories,
     save_data
 )
 
@@ -181,7 +182,7 @@ async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TY
         else:
             context.user_data['product_category'] = update.message.text
     
-    return await select_region(update, context)
+    return await add_more_categories(update, context)
 
 async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -366,7 +367,6 @@ async def more_categories_response(update: Update, context: ContextTypes.DEFAULT
             'subcategory': context.user_data.pop('subcategory'),
             'product_category': context.user_data.pop('product_category')
         }
-        
         context.user_data['categories'] = update_categories_list(
             context.user_data['categories'],
             new_category
