@@ -138,4 +138,10 @@ def update_categories_list(categories: list, new_category: dict) -> list:
              existing_cat['product_category'].lower() in ALL_PRODUCT_CATEGORIES)):
             return categories
 
+    for existing_cat in categories:
+        if (existing_cat['category'] == new_category['category'] and
+            existing_cat['subcategory'] == new_category['subcategory'] and
+            existing_cat['product_category'] == new_category['product_category']):
+            return categories
+
     return categories + [new_category]
