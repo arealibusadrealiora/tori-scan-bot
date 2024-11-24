@@ -45,7 +45,11 @@ async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     context.user_data.pop('category', None)
     context.user_data.pop('subcategory', None)
     context.user_data.pop('product_category', None)
-    context.user_data.pop('locations', None)
+    context.user_data.pop('region', None)
+    context.user_data.pop('city', None)
+    context.user_data.pop('area', None)
+    context.user_data.pop('categories', None)
+    context.user_data.pop('locations', None) 
 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -395,26 +399,45 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         await update.message.reply_text(messages['items_list'])
         items_message = ''
         for item in user_items:
-            item_info = messages['item'].format(item=item.item)
-            item_info += messages['category'].format(category=item.category)
-            if item.subcategory != 'null':
-                item_info += messages['subcategory'].format(subcategory=item.subcategory)
-            if item.product_category != 'null':
-                item_info += messages['product_type'].format(product_category=item.product_category)
-            item_info += messages['locations_header']
-            for location in item.locations:
-                item_info += "  📍 " + location['region']
-                if location['city'].lower() not in ALL_CITIES:
-                    item_info += f", {location['city']}"
-                if 'area' in location and location['area'].lower() not in ALL_AREAS:
-                    item_info += f", {location['area']}"
-                item_info += "\n"
-            item_info += messages['added_time'].format(time=item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
+            items_message = messages['item'].format(item=item.item)
+            
+            has_all_categories = any(cat['category'].lower() in ALL_CATEGORIES for cat in item.categories)
+            if has_all_categories:
+                for cat in item.categories:
+                    if cat['category'].lower() in ALL_CATEGORIES:
+                        items_message += messages['category'].format(category=cat['category'])
+                        break
+            else:
+                items_message += messages['categories_header']
+                for cat in item.categories:
+                    items_message += "  📋 " + cat['category']
+                    if cat['subcategory'].lower() not in ALL_SUBCATEGORIES:
+                        items_message += f" > {cat['subcategory']}"
+                        if cat['product_category'].lower() not in ALL_PRODUCT_CATEGORIES:
+                            items_message += f" > {cat['product_category']}"
+                    items_message += "\n"
+
+            has_whole_finland = any(loc['region'].lower() in WHOLE_FINLAND for loc in item.locations)
+            items_message += messages['locations_header']
+            if has_whole_finland:
+                for loc in item.locations:
+                    if loc['region'].lower() in WHOLE_FINLAND:
+                        items_message += f"  📍 {loc['region']}\n"
+                        break
+            else:
+                for loc in item.locations:
+                    items_message += "  📍 " + loc['region']
+                    if loc['city'].lower() not in ALL_CITIES:
+                        items_message += f", {loc['city']}"
+                    if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
+                        items_message += f", {loc['area']}"
+                    items_message += "\n"
+            
+            items_message += messages['added_time'].format(time=item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
 
             remove_button = InlineKeyboardButton(messages['remove_item'], callback_data=str(item.id))
             keyboard = [[remove_button]]
             reply_markup = InlineKeyboardMarkup(keyboard)
-            items_message += item_info
             await update.message.reply_text(items_message, parse_mode='HTML', reply_markup=reply_markup)
             items_message = ''
     else:
@@ -423,7 +446,6 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     session.close()
     
     return MAIN_MENU
-
 async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Save the user data and generate the search link.
