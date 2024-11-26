@@ -165,22 +165,19 @@ async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TY
     categories_data = load_categories(language)
     messages = load_messages(language)
     
-    if 'product_category' not in context.user_data:
-        user_product_category = update.message.text
-        if user_product_category.lower() in ALL_CATEGORIES or user_product_category.lower() in ALL_SUBCATEGORIES:
-            if language == '🇫🇮 Suomi':
-                context.user_data['product_category'] = 'Kaikki tuoteluokat'
-            elif language == '🇬🇧 English':
-                context.user_data['product_category'] = 'All product categories'
-            elif language == '🇺🇦 Українська':
-                context.user_data['product_category'] = 'Всі категорії товарів'
-            elif language == '🇷🇺 Русский':
-                context.user_data['product_category'] = 'Все категории товаров'
-        elif user_product_category.lower() not in ALL_CATEGORIES and user_product_category.lower() not in ALL_SUBCATEGORIES and user_product_category not in categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']]['product_categories']:
-            await update.message.reply_text(messages['invalid_product_category'])
-            return await select_product_category(update, context)
-        else:
-            context.user_data['product_category'] = update.message.text
+    if 'categories' not in context.user_data:
+        context.user_data['categories'] = []
+
+    context.user_data['product_category'] = update.message.text
+
+    new_category = {
+        'category': context.user_data.pop('category'),
+        'subcategory': context.user_data.pop('subcategory'),
+        'product_category': context.user_data.pop('product_category')
+    }
+    context.user_data['categories'].append(new_category)
+    
+    print("After adding category - Updated categories:", context.user_data['categories'])
     
     return await add_more_categories(update, context)
 
@@ -367,10 +364,14 @@ async def more_categories_response(update: Update, context: ContextTypes.DEFAULT
             'subcategory': context.user_data.pop('subcategory'),
             'product_category': context.user_data.pop('product_category')
         }
-        context.user_data['categories'] = update_categories_list(
-            context.user_data['categories'],
-            new_category
-        )
+        
+        if not any(
+            cat['category'] == new_category['category'] and
+            cat['subcategory'] == new_category['subcategory'] and
+            cat['product_category'] == new_category['product_category']
+            for cat in context.user_data['categories']
+        ):
+            context.user_data['categories'].append(new_category)
 
     if update.message.text == messages['yes']:
         return await select_category(update, context)
