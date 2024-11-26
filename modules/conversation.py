@@ -168,11 +168,7 @@ async def select_product_category(update: Update, context: ContextTypes.DEFAULT_
             'subcategory': context.user_data.pop('subcategory'),
             'product_category': context.user_data.pop('product_category')
         }
-        context.user_data['categories'] = update_categories_list(
-            context.user_data['categories'],
-            new_category
-        )
-        
+        context.user_data['categories'].append(new_category)
         return await add_more_categories(update, context)
     
     keyboard = [[product_category] for product_category in product_categories]
@@ -446,6 +442,7 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     session.close()
     
     return MAIN_MENU
+
 async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Save the user data and generate the search link.
@@ -479,62 +476,12 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         x['product_category'].lower() in ALL_PRODUCT_CATEGORIES
     ))
     
-    final_categories = []
-    category_coverages = {}
-    
-    for cat in categories:
-        category = cat['category']
-        if category.lower() in ALL_CATEGORIES:
-            final_categories = [cat]
-            break
-        if category in category_coverages:
-            if category_coverages[category] == 'ALL':
-                continue
-            if cat['subcategory'].lower() in ALL_SUBCATEGORIES:
-                category_coverages[category] = 'ALL'
-                final_categories = [c for c in final_categories if c['category'] != category]
-                final_categories.append(cat)
-                continue
-        else:
-            if cat['subcategory'].lower() in ALL_SUBCATEGORIES:
-                category_coverages[category] = 'ALL'
-            else:
-                category_coverages[category] = 'PARTIAL'
-            final_categories.append(cat)
-    
-    categories = final_categories
-    
     locations = context.user_data['locations']
     locations.sort(key=lambda x: (
         x['region'].lower() in WHOLE_FINLAND, 
         x['city'].lower() in ALL_CITIES,      
         x.get('area', '').lower() in ALL_AREAS
     ))
-    
-    final_locations = []
-    region_coverages = {}
-    
-    for loc in locations:
-        region = loc['region']
-        if region.lower() in WHOLE_FINLAND:
-            final_locations = [loc]
-            break
-        if region in region_coverages:
-            if region_coverages[region] == 'ALL':
-                continue
-            if loc['city'].lower() in ALL_CITIES:
-                region_coverages[region] = 'ALL'
-                final_locations = [l for l in final_locations if l['region'] != region]
-                final_locations.append(loc)
-                continue
-        else:
-            if loc['city'].lower() in ALL_CITIES:
-                region_coverages[region] = 'ALL'
-            else:
-                region_coverages[region] = 'PARTIAL'
-            final_locations.append(loc)
-    
-    locations = final_locations
     
     tori_link = f'https://beta.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
 
