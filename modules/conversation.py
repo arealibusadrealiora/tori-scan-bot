@@ -398,21 +398,21 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             items_message = messages['item'].format(item=item.item)
             
             has_all_categories = any(cat['category'].lower() in ALL_CATEGORIES for cat in item.categories)
+            items_message += messages['categories_header']
             if has_all_categories:
                 for cat in item.categories:
                     if cat['category'].lower() in ALL_CATEGORIES:
-                        items_message += messages['category'].format(category=cat['category'])
+                        items_message += "  🏷️ " + cat['category']
                         break
             else:
-                items_message += messages['categories_header']
                 for cat in item.categories:
-                    items_message += "  📋 " + cat['category']
+                    items_message += "  🏷️ " + cat['category']
                     if cat['subcategory'].lower() not in ALL_SUBCATEGORIES:
                         items_message += f" > {cat['subcategory']}"
                         if cat['product_category'].lower() not in ALL_PRODUCT_CATEGORIES:
                             items_message += f" > {cat['product_category']}"
-                    items_message += "\n"
-
+                    
+            items_message += "\n"
             has_whole_finland = any(loc['region'].lower() in WHOLE_FINLAND for loc in item.locations)
             items_message += messages['locations_header']
             if has_whole_finland:
@@ -539,11 +539,11 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if has_all_categories:
         for cat in categories:
             if cat['category'].lower() in ALL_CATEGORIES:
-                message += f"  📋 {cat['category']}\n"
+                message += f"  🏷️ {cat['category']}\n"
                 break
     else:
         for cat in categories:
-            message += "  📋 " + cat['category']
+            message += "  🏷️ " + cat['category']
             if cat['subcategory'].lower() not in ALL_SUBCATEGORIES:
                 message += f" > {cat['subcategory']}"
                 if cat['product_category'].lower() not in ALL_PRODUCT_CATEGORIES:
