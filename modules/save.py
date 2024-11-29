@@ -177,7 +177,8 @@ async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TY
     }
     context.user_data['categories'].append(new_category)
     
-    print("After adding category - Updated categories:", context.user_data['categories'])
+    if new_category['category'].lower() in ALL_CATEGORIES:
+        return await select_region(update, context)
     
     return await add_more_categories(update, context)
 
