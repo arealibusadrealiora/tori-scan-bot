@@ -403,6 +403,7 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 for cat in item.categories:
                     if cat['category'].lower() in ALL_CATEGORIES:
                         items_message += "  🏷️ " + cat['category']
+                        items_message += "\n"
                         break
             else:
                 for cat in item.categories:
@@ -411,8 +412,8 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                         items_message += f" > {cat['subcategory']}"
                         if cat['product_category'].lower() not in ALL_PRODUCT_CATEGORIES:
                             items_message += f" > {cat['product_category']}"
+                    items_message += "\n"
                     
-            items_message += "\n"
             has_whole_finland = any(loc['region'].lower() in WHOLE_FINLAND for loc in item.locations)
             items_message += messages['locations_header']
             if has_whole_finland:
