@@ -3,7 +3,7 @@ from telegram.ext import ContextTypes
 from modules.models import UserPreferences
 from modules.load import load_messages, load_categories, load_locations
 from modules.database import get_session
-from modules.utils import get_language, update_locations_list, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
+from modules.utils import get_language, update_locations_list, update_categories_list, ALL_CATEGORIES, ALL_SUBCATEGORIES, WHOLE_FINLAND, ALL_CITIES
 from modules.conversation import (
     main_menu,
     select_language,
@@ -15,6 +15,7 @@ from modules.conversation import (
     select_city,
     select_area,
     add_more_locations,
+    add_more_categories,
     save_data
 )
 
@@ -164,24 +165,22 @@ async def save_product_category(update: Update, context: ContextTypes.DEFAULT_TY
     categories_data = load_categories(language)
     messages = load_messages(language)
     
-    if 'product_category' not in context.user_data:
-        user_product_category = update.message.text
-        if user_product_category.lower() in ALL_CATEGORIES or user_product_category.lower() in ALL_SUBCATEGORIES:
-            if language == '🇫🇮 Suomi':
-                context.user_data['product_category'] = 'Kaikki tuoteluokat'
-            elif language == '🇬🇧 English':
-                context.user_data['product_category'] = 'All product categories'
-            elif language == '🇺🇦 Українська':
-                context.user_data['product_category'] = 'Всі категорії товарів'
-            elif language == '🇷🇺 Русский':
-                context.user_data['product_category'] = 'Все категории товаров'
-        elif user_product_category.lower() not in ALL_CATEGORIES and user_product_category.lower() not in ALL_SUBCATEGORIES and user_product_category not in categories_data[context.user_data['category']]['subcategories'][context.user_data['subcategory']]['product_categories']:
-            await update.message.reply_text(messages['invalid_product_category'])
-            return await select_product_category(update, context)
-        else:
-            context.user_data['product_category'] = update.message.text
+    if 'categories' not in context.user_data:
+        context.user_data['categories'] = []
+
+    context.user_data['product_category'] = update.message.text
+
+    new_category = {
+        'category': context.user_data.pop('category'),
+        'subcategory': context.user_data.pop('subcategory'),
+        'product_category': context.user_data.pop('product_category')
+    }
+    context.user_data['categories'].append(new_category)
     
-    return await select_region(update, context)
+    if new_category['category'].lower() in ALL_CATEGORIES:
+        return await select_region(update, context)
+    
+    return await add_more_categories(update, context)
 
 async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -351,3 +350,34 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
             await update.message.reply_text("Error: No locations selected. Please try again.")
             return await select_region(update, context)
         return await save_data(update, context)
+
+async def more_categories_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    if 'categories' not in context.user_data:
+        context.user_data['categories'] = []
+
+    if all(key in context.user_data for key in ['category', 'subcategory', 'product_category']):
+        new_category = {
+            'category': context.user_data.pop('category'),
+            'subcategory': context.user_data.pop('subcategory'),
+            'product_category': context.user_data.pop('product_category')
+        }
+        
+        if not any(
+            cat['category'] == new_category['category'] and
+            cat['subcategory'] == new_category['subcategory'] and
+            cat['product_category'] == new_category['product_category']
+            for cat in context.user_data['categories']
+        ):
+            context.user_data['categories'].append(new_category)
+
+    if update.message.text == messages['yes']:
+        return await select_category(update, context)
+    else:
+        if not context.user_data['categories']:
+            await update.message.reply_text("Error: No categories selected. Please try again.")
+            return await select_category(update, context)
+        return await select_region(update, context)

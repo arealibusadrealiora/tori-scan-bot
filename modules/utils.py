@@ -107,3 +107,41 @@ def update_locations_list(locations: list, new_location: dict) -> list:
             return locations 
 
     return locations + [new_location]
+
+def update_categories_list(categories: list, new_category: dict) -> list:
+    '''
+    Update the categories list based on hierarchy rules.
+    Args:
+        categories (list): Current list of categories
+        new_category (dict): New category to be added containing category, subcategory, and product_category
+    Returns:
+        list: Updated list of categories
+    '''
+    if new_category['category'].lower() in ALL_CATEGORIES:
+        return [new_category]
+
+    if new_category['subcategory'].lower() in ALL_SUBCATEGORIES:
+        return [cat for cat in categories if cat['category'] != new_category['category']] + [new_category]
+
+    if new_category['product_category'].lower() in ALL_PRODUCT_CATEGORIES:
+        return [cat for cat in categories if not (
+            cat['category'] == new_category['category'] and 
+            cat['subcategory'] == new_category['subcategory']
+        )] + [new_category]
+
+    for existing_cat in categories:
+        if (existing_cat['category'] == new_category['category'] and
+            existing_cat['subcategory'] == new_category['subcategory'] and
+            existing_cat['product_category'] == new_category['product_category']):
+            return categories
+
+    for existing_cat in categories:
+        if (existing_cat['category'].lower() in ALL_CATEGORIES or
+            (existing_cat['category'] == new_category['category'] and 
+             existing_cat['subcategory'].lower() in ALL_SUBCATEGORIES) or
+            (existing_cat['category'] == new_category['category'] and
+             existing_cat['subcategory'] == new_category['subcategory'] and
+             existing_cat['product_category'].lower() in ALL_PRODUCT_CATEGORIES)):
+            return categories
+
+    return categories + [new_category]

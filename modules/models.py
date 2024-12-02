@@ -24,12 +24,8 @@ class ToriItem(Base):
     Attributes:
         id (int): Primary key.
         item (str): Name of the item.
-        category (int): Category ID.
-        subcategory (int): Subcategory ID.
-        product_category (int): Product category ID.
-        region (int): Region ID.
-        city (int): City ID.
-        area (int): Area ID.
+        categories (JSON): List of category dictionaries containing category, subcategory, and product_category.
+        locations (JSON): List of location dictionaries.
         telegram_id (int): The user's Telegram ID.
         added_time (datetime): Time when the item was added.
         link (str): URL link to the item on Tori.fi.
@@ -39,9 +35,7 @@ class ToriItem(Base):
 
     id = Column(Integer, primary_key=True)
     item = Column(String)
-    category = Column(Integer)
-    subcategory = Column(Integer)
-    product_category = Column(Integer)
+    categories = Column(JSON)
     locations = Column(JSON)
     telegram_id = Column(Integer)
     added_time = Column(DateTime, default=datetime.now)

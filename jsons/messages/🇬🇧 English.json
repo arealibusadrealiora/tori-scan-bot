@@ -41,9 +41,11 @@
     "settings_menu": "🛠 Settings. Please make a selection.",
     "invalid_choice": "🤷‍♂️ There is no such option. Please make a valid selection.",
     "change_language_prompt": "🔄 Let's change your preferred language.",
+    "add_more_categories": "🤔 Would you like to add more categories to search in?",
     "add_more_locations": "🤔 Would you like to add more locations to search in?",
     "yes": "➕ Yes",
     "no": "❌ No",
+    "categories_header": "📋 <b>Categories:</b>\n",
     "locations_header": "🌍 <b>Search Locations:</b>\n",
     "contact_developer_prompt": "🧑‍💻<b> Contact the developer:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>E-mail:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>PLEASE NOTE:</b> <i>I (the developer) am <b>not related</b> to tori.fi or Schibsted Media Group in any way so I can only answer questions regarding the bot functionality (or have a chit-chat with you 🤗).\nIf you need assistance with your deals or anything related directly to tori.fi, you should probably contact their support:</i> https://tuki.tori.fi/"
 }
