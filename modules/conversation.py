@@ -4,7 +4,7 @@ from modules.database import get_session
 from modules.load import load_categories, load_locations, load_messages
 from modules.models import UserPreferences, ToriItem
 from modules.constants import *
-from modules.utils import get_language, update_categories_list
+from modules.utils import get_language, update_categories_list, format_helsinki_time
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -430,7 +430,7 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                         items_message += f", {loc['area']}"
                     items_message += "\n"
             
-            items_message += messages['added_time'].format(time=item.added_time.strftime('%Y-%m-%d %H:%M:%S'))
+            items_message += messages['added_time'].format(time=format_helsinki_time(item.added_time))
 
             remove_button = InlineKeyboardButton(messages['remove_item'], callback_data=str(item.id))
             keyboard = [[remove_button]]
@@ -566,7 +566,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 message += f", {loc['area']}"
             message += "\n"
             
-    message += f"{messages['added_time'].format(time=new_item.added_time.strftime('%Y-%m-%d %H:%M:%S'))}"
+    message += f"{messages['added_time'].format(time=format_helsinki_time(new_item.added_time))}"
     #message += f'The search link for the item: {tori_link}'
     
     await update.message.reply_text(message, parse_mode='HTML')

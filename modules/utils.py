@@ -1,9 +1,11 @@
+import pytz
 from telegram import Update
 from telegram.ext import ConversationHandler, ContextTypes
 from modules.models import UserPreferences, ToriItem
 from modules.database import get_session
 from modules.load import load_messages
 from modules.constants import *
+from datetime import datetime
 
 async def remove_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     '''
@@ -145,3 +147,12 @@ def update_categories_list(categories: list, new_category: dict) -> list:
             return categories
 
     return categories + [new_category]
+
+def convert_to_helsinki_time(dt: datetime) -> datetime:
+    helsinki_tz = pytz.timezone('Europe/Helsinki')
+    helsinki_time = dt.astimezone(helsinki_tz)
+    return helsinki_time
+
+def format_helsinki_time(dt: datetime) -> str:
+    helsinki_time = convert_to_helsinki_time(dt)
+    return helsinki_time.strftime('%Y-%m-%d %H:%M:%S')
