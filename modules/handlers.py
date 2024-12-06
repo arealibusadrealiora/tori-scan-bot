@@ -13,7 +13,7 @@ from modules.save import (
     more_locations_response,
     more_categories_response
 )
-from modules.conversation import start, start_again, save_data, main_menu_choice, settings_menu_choice, show_items
+from modules.conversation import start, start_again, save_data, main_menu_choice, settings_menu_choice, show_items, main_menu, show_settings_menu
 
 def setup_handlers(application: Application):
     new_user_handler = ConversationHandler(
@@ -64,4 +64,6 @@ def setup_handlers(application: Application):
     application.add_handler(new_user_handler)
     application.add_handler(returning_user_handler)
     application.add_handler(CommandHandler('items', show_items))
+    application.add_handler(CommandHandler('menu', main_menu))
+    application.add_handler(CommandHandler('settings', show_settings_menu))
     application.add_handler(CallbackQueryHandler(remove_item))
