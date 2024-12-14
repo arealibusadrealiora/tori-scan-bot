@@ -1,5 +1,7 @@
 import json
 
+# This script creates a JSON based on tori categories which are later used in the bot.
+
 def extract_category_hierarchy(filters):
     hierarchy = {}
 

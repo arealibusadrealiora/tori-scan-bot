@@ -1,5 +1,7 @@
 import json
 
+# This script creates a JSON based on tori locations which are later used in the bot.
+
 def extract_hierarchy(filters):
     hierarchy = {}
 
