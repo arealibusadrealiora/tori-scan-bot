@@ -18,38 +18,53 @@ async def check_for_new_items(context: ContextTypes.DEFAULT_TYPE):
     session = get_session()
     try:
         items = session.query(ToriItem).all()
+        print(f"Checking {len(items)} items")
         for item in items:
+            print(f"Processing item: {item.item}, URL: {item.link}")
             telegram_id = item.telegram_id
             language = get_language(telegram_id)
             messages = load_messages(language)
 
             response = requests.get(item.link)
+            print(f"API response status: {response.status_code}")
+
             if response.status_code != 200:
                 continue
 
             data = response.json()
             new_items = data.get('docs', [])
+            print(f"Found {len(new_items)} items in response")
 
             if not new_items:
                 continue
 
             latest_time = item.latest_time or item.added_time
+            #print(f"Latest time from DB: {latest_time}")
             latest_item_time = None
 
             for ad in new_items:
                 timestamp = ad.get('timestamp')
                 if timestamp is None:
+                    #print("Missing timestamp, skipping item")
                     continue
 
                 item_time = datetime.fromtimestamp(timestamp / 1000.0)
-                if item_time <= latest_time:
-                    continue
+                #print(f"Item time: {item_time}, Compare result: {item_time > latest_time}")
 
+                if item_time <= latest_time:
+                    #print("Item is not new, skipping")
+                    continue
+                
                 itemname = ad.get('heading')
+                #print(f"Name field: {itemname}")
                 region = ad.get('location')
+                #print(f"Region: {region}")
                 canonical_url = ad.get('canonical_url')
+                #print(f"URL: {canonical_url}")
                 price = ad.get('price', {}).get('amount')
+                #print(f"Price: {price}")
                 image_url = ad.get('image', {}).get('url')
+                #print(f"Image URL: {image_url}")
                 message = messages['new_item'].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
                 
                 try:
