@@ -1,4 +1,5 @@
 python-telegram-bot==21.4
+python-telegram-bot[job-queue]
 Requests==2.32.3
 SQLAlchemy==2.0.27
 pytz>=2024.1
