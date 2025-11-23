@@ -107,5 +107,5 @@ def setup_jobs(job_queue):
     '''
     async def wrapper(context):
         await check_for_new_items(context)
-    # interval is in seconds; 300 seconds = 5 minutes; please don't put it lower than thst, it's pointless.
-    job_queue.run_repeating(check_for_new_items, interval=300, first=0)
+    # Interval is in seconds, I might regret this, lol...
+    job_queue.run_repeating(check_for_new_items, interval=60, first=0)
