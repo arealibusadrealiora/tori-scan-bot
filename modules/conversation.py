@@ -484,7 +484,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         x.get('area', '').lower() in ALL_AREAS
     ))
     
-    tori_link = f'https://www.tori.fi/recommerce-search-page/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
+    tori_link = f'https://www.tori.fi/recommerce/forsale/search/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
 
     has_all_categories = any(cat['category'].lower() in ALL_CATEGORIES for cat in categories)
     if not has_all_categories:
