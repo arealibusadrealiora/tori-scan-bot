@@ -47,6 +47,12 @@
     "no": "❌ Ei",
     "categories_header": "📋 <b>Luokat:</b>\n",
     "locations_header": "🌍 <b>Hae sijainneista:</b>\n",
+    "select_dealer_segment": "🔍 Valitse myyjän tyyppi:",
+    "invalid_dealer_segment": "❗ Ole hyvä ja valitse kelvollinen myyjän tyyppi!",
+    "dealer_segment_yksityinen": "👤 Yksityinen",
+    "dealer_segment_yritys": "🏢 Yritys",
+    "dealer_segment_all": "👥 Kaikki",
+    "dealer_segment_label": "👔 <b>Myyjän tyyppi:</b> {dealer_segment}\n",
     "contact_developer_prompt": "🧑‍💻<b> Ota yhteyttä kehittäjään:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>Sähköposti:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>HUOMAA:</b> <i>En ole (kehittäjä) millään tavalla yhteydessä tori.fi:hin tai Schibsted Media Groupiin, joten voin vastata vain kysymyksiin botin toiminnallisuudesta (tai jutella kanssasi 🤗).\nJos tarvitset apua kauppojesi tai minkä tahansa suoraan tori.fi:hin liittyvän asian kanssa, sinun kannattaa ottaa yhteyttä heidän tukeensa:</i> https://tuki.tori.fi/"
 }
 
