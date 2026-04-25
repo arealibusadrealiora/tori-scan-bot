@@ -16,6 +16,7 @@ from modules.conversation import (
     select_area,
     add_more_locations,
     add_more_categories,
+    select_dealer_segment,
     save_data
 )
 
@@ -349,7 +350,7 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
         if not context.user_data['locations']:
             await update.message.reply_text("Error: No locations selected. Please try again.")
             return await select_region(update, context)
-        return await save_data(update, context)
+        return await select_dealer_segment(update, context)
 
 async def more_categories_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     telegram_id = update.message.from_user.id
@@ -381,3 +382,42 @@ async def more_categories_response(update: Update, context: ContextTypes.DEFAULT
             await update.message.reply_text("Error: No categories selected. Please try again.")
             return await select_category(update, context)
         return await select_region(update, context)
+
+async def save_dealer_segment(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Handle the user's dealer segment input and save it to the context.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: save_data;
+            Invalid: select_dealer_segment.
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    user_choice = update.message.text
+
+    valid_choices = [
+        messages['dealer_segment_yksityinen'],
+        messages['dealer_segment_yritys'],
+        messages['dealer_segment_all']
+    ]
+
+    if user_choice not in valid_choices:
+        await update.message.reply_text(messages['invalid_dealer_segment'])
+        return await select_dealer_segment(update, context)
+
+    if 'dealer_segments' not in context.user_data:
+        context.user_data['dealer_segments'] = []
+
+    if user_choice == messages['dealer_segment_yksityinen']:
+        context.user_data['dealer_segments'] = ['yksityinen']
+    elif user_choice == messages['dealer_segment_yritys']:
+        context.user_data['dealer_segments'] = ['yritys']
+    else:
+        context.user_data['dealer_segments'] = ['yksityinen', 'yritys']
+
+    return await save_data(update, context)
