@@ -49,7 +49,8 @@ async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     context.user_data.pop('city', None)
     context.user_data.pop('area', None)
     context.user_data.pop('categories', None)
-    context.user_data.pop('locations', None) 
+    context.user_data.pop('locations', None)
+    context.user_data.pop('dealer_segments', None) 
 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -274,6 +275,29 @@ async def add_more_categories(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     return MORE_CATEGORIES
 
+async def select_dealer_segment(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Display the dealer segment selection menu.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (DEALER_SEGMENT).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [
+        [messages['dealer_segment_yksityinen']],
+        [messages['dealer_segment_yritys']],
+        [messages['dealer_segment_all']]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    await update.message.reply_text(messages['select_dealer_segment'], reply_markup=reply_markup)
+
+    return DEALER_SEGMENT
+
 async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the main menu with options to add an item, view items, or access settings.
@@ -429,7 +453,17 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                     if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
                         items_message += f", {loc['area']}"
                     items_message += "\n"
-            
+
+            dealer_segments = item.dealer_segments if item.dealer_segments else ['yksityinen', 'yritys']
+            dealer_segment_display = ""
+            if len(dealer_segments) == 2:
+                dealer_segment_display = messages['dealer_segment_all']
+            elif 'yksityinen' in dealer_segments:
+                dealer_segment_display = messages['dealer_segment_yksityinen']
+            elif 'yritys' in dealer_segments:
+                dealer_segment_display = messages['dealer_segment_yritys']
+
+            items_message += messages['dealer_segment_label'].format(dealer_segment=dealer_segment_display)
             items_message += messages['added_time'].format(time=format_helsinki_time(item.added_time))
 
             remove_button = InlineKeyboardButton(messages['remove_item'], callback_data=str(item.id))
@@ -520,12 +554,21 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                     region_code = locations_data[region]['region_code']
                     tori_link += f'&location={region_code}'
 
+    dealer_segments = context.user_data.get('dealer_segments', ['yksityinen', 'yritys'])
+
+    for segment in dealer_segments:
+        if segment == 'yksityinen':
+            tori_link += '&dealer_segment=1'
+        elif segment == 'yritys':
+            tori_link += '&dealer_segment=3'
+
     tori_link += '&sort=PUBLISHED_DESC'
 
     new_item = ToriItem(
         item=item,
         categories=categories,
         locations=locations,
+        dealer_segments=dealer_segments,
         telegram_id=telegram_id,
         link=tori_link
     )
@@ -565,7 +608,16 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             if 'area' in loc and loc['area'].lower() not in ALL_AREAS:
                 message += f", {loc['area']}"
             message += "\n"
-            
+
+    dealer_segment_display = ""
+    if len(dealer_segments) == 2:
+        dealer_segment_display = messages['dealer_segment_all']
+    elif 'yksityinen' in dealer_segments:
+        dealer_segment_display = messages['dealer_segment_yksityinen']
+    elif 'yritys' in dealer_segments:
+        dealer_segment_display = messages['dealer_segment_yritys']
+
+    message += messages['dealer_segment_label'].format(dealer_segment=dealer_segment_display)
     message += f"{messages['added_time'].format(time=format_helsinki_time(new_item.added_time))}"
     #message += f'The search link for the item: {tori_link}'
     
