@@ -556,11 +556,13 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     dealer_segments = context.user_data.get('dealer_segments', ['yksityinen', 'yritys'])
 
-    for segment in dealer_segments:
-        if segment == 'yksityinen':
+    # Добавляем dealer_segment только если выбран один конкретный тип
+    if len(dealer_segments) == 1:
+        if dealer_segments[0] == 'yksityinen':
             tori_link += '&dealer_segment=1'
-        elif segment == 'yritys':
+        elif dealer_segments[0] == 'yritys':
             tori_link += '&dealer_segment=3'
+    # Если выбраны оба типа - не добавляем параметр вообще
 
     tori_link += '&sort=PUBLISHED_DESC'
 
