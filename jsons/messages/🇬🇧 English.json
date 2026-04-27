@@ -47,5 +47,11 @@
     "no": "❌ No",
     "categories_header": "📋 <b>Categories:</b>\n",
     "locations_header": "🌍 <b>Search Locations:</b>\n",
+    "select_dealer_segment": "🔍 Please choose a seller type:",
+    "invalid_dealer_segment": "❗ Please select a valid seller type!",
+    "dealer_segment_yksityinen": "👤 Private seller",
+    "dealer_segment_yritys": "🏢 Company",
+    "dealer_segment_all": "👥 All",
+    "dealer_segment_label": "👔 <b>Seller type:</b> {dealer_segment}\n",
     "contact_developer_prompt": "🧑‍💻<b> Contact the developer:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>E-mail:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>PLEASE NOTE:</b> <i>I (the developer) am <b>not related</b> to tori.fi or Schibsted Media Group in any way so I can only answer questions regarding the bot functionality (or have a chit-chat with you 🤗).\nIf you need assistance with your deals or anything related directly to tori.fi, you should probably contact their support:</i> https://tuki.tori.fi/"
 }
