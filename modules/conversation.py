@@ -50,7 +50,8 @@ async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     context.user_data.pop('area', None)
     context.user_data.pop('categories', None)
     context.user_data.pop('locations', None)
-    context.user_data.pop('dealer_segments', None) 
+    context.user_data.pop('dealer_segments', None)
+    context.user_data.pop('shipping_types', None) 
 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -298,6 +299,28 @@ async def select_dealer_segment(update: Update, context: ContextTypes.DEFAULT_TY
 
     return DEALER_SEGMENT
 
+async def select_shipping_types(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Display the shipping types selection menu.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (SHIPPING_TYPES).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [
+        [messages['shipping_types_toridiili']],
+        [messages['shipping_types_all']]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    await update.message.reply_text(messages['select_shipping_types'], reply_markup=reply_markup)
+
+    return SHIPPING_TYPES
+
 async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the main menu with options to add an item, view items, or access settings.
@@ -464,6 +487,15 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 dealer_segment_display = messages['dealer_segment_yritys']
 
             items_message += messages['dealer_segment_label'].format(dealer_segment=dealer_segment_display)
+
+            shipping_types = item.shipping_types if item.shipping_types else ['all']
+            shipping_types_display = ""
+            if 'toridiili' in shipping_types:
+                shipping_types_display = messages['shipping_types_toridiili']
+            else:
+                shipping_types_display = messages['shipping_types_all']
+
+            items_message += messages['shipping_types_label'].format(shipping_types=shipping_types_display)
             items_message += messages['added_time'].format(time=format_helsinki_time(item.added_time))
 
             remove_button = InlineKeyboardButton(messages['remove_item'], callback_data=str(item.id))
@@ -518,7 +550,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         x.get('area', '').lower() in ALL_AREAS
     ))
     
-    tori_link = f'https://www.tori.fi/recommerce/forsale/search/api/search/SEARCH_ID_BAP_COMMON?q={item.lower()}'
+    tori_link = f'https://www.tori.fi/recommerce/forsale/search/api/pole-position/SEARCH_ID_BAP_COMMON?q={item.lower()}'
 
     has_all_categories = any(cat['category'].lower() in ALL_CATEGORIES for cat in categories)
     if not has_all_categories:
@@ -564,6 +596,13 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             tori_link += '&dealer_segment=3'
     # Если выбраны оба типа - не добавляем параметр вообще
 
+    shipping_types = context.user_data.get('shipping_types', ['all'])
+
+    # Добавляем shipping_types=0 только если выбран ToriDiili
+    if 'toridiili' in shipping_types:
+        tori_link += '&shipping_types=0'
+    # Если выбран "all" - не добавляем параметр
+
     tori_link += '&sort=PUBLISHED_DESC'
 
     new_item = ToriItem(
@@ -571,6 +610,7 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         categories=categories,
         locations=locations,
         dealer_segments=dealer_segments,
+        shipping_types=shipping_types,
         telegram_id=telegram_id,
         link=tori_link
     )
@@ -620,6 +660,14 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         dealer_segment_display = messages['dealer_segment_yritys']
 
     message += messages['dealer_segment_label'].format(dealer_segment=dealer_segment_display)
+
+    shipping_types_display = ""
+    if 'toridiili' in shipping_types:
+        shipping_types_display = messages['shipping_types_toridiili']
+    else:
+        shipping_types_display = messages['shipping_types_all']
+
+    message += messages['shipping_types_label'].format(shipping_types=shipping_types_display)
     message += f"{messages['added_time'].format(time=format_helsinki_time(new_item.added_time))}"
     #message += f'The search link for the item: {tori_link}'
     
