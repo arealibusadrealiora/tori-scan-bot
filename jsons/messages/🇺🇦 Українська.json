@@ -53,5 +53,10 @@
     "dealer_segment_yritys": "🏢 Компанія",
     "dealer_segment_all": "👥 Всі",
     "dealer_segment_label": "👔 <b>Тип продавця:</b> {dealer_segment}\n",
+    "select_shipping_types": "🔍 Будь ласка, виберіть тип доставки:",
+    "invalid_shipping_types": "❗ Будь ласка, виберіть допустимий тип доставки!",
+    "shipping_types_toridiili": "📦 Тільки ToriDiili",
+    "shipping_types_all": "🌐 Всі товари",
+    "shipping_types_label": "📦 <b>Доставка:</b> {shipping_types}\n",
     "contact_developer_prompt": "🧑‍💻<b> Зв'яжіться з розробником:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>Електронна пошта:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>УВАГА:</b> <i>Я (розробник) не маю ніякого відношення до tori.fi або Schibsted Media Group, тому я можу відповідати тільки на запитання щодо функціоналу бота (або просто потеревенити з вами 🤗).\nЯкщо вам необхідна допомога з вашими покупками або чого-сь пов'язанного безпосередньо з tori.fi, вам необхідно звернутися до їх служби підтримки:</i> https://tuki.tori.fi/"
 }

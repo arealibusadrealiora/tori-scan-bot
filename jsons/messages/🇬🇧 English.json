@@ -53,5 +53,10 @@
     "dealer_segment_yritys": "🏢 Company",
     "dealer_segment_all": "👥 All",
     "dealer_segment_label": "👔 <b>Seller type:</b> {dealer_segment}\n",
+    "select_shipping_types": "🔍 Please choose a shipping type:",
+    "invalid_shipping_types": "❗ Please select a valid shipping type!",
+    "shipping_types_toridiili": "📦 ToriDiili only",
+    "shipping_types_all": "🌐 All items",
+    "shipping_types_label": "📦 <b>Shipping:</b> {shipping_types}\n",
     "contact_developer_prompt": "🧑‍💻<b> Contact the developer:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>E-mail:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>PLEASE NOTE:</b> <i>I (the developer) am <b>not related</b> to tori.fi or Schibsted Media Group in any way so I can only answer questions regarding the bot functionality (or have a chit-chat with you 🤗).\nIf you need assistance with your deals or anything related directly to tori.fi, you should probably contact their support:</i> https://tuki.tori.fi/"
 }

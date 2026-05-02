@@ -17,6 +17,7 @@ from modules.conversation import (
     add_more_locations,
     add_more_categories,
     select_dealer_segment,
+    select_shipping_types,
     save_data
 )
 
@@ -391,7 +392,7 @@ async def save_dealer_segment(update: Update, context: ContextTypes.DEFAULT_TYPE
         context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
-            Default: save_data;
+            Default: select_shipping_types;
             Invalid: select_dealer_segment.
     '''
     telegram_id = update.message.from_user.id
@@ -419,5 +420,38 @@ async def save_dealer_segment(update: Update, context: ContextTypes.DEFAULT_TYPE
         context.user_data['dealer_segments'] = ['yritys']
     else:
         context.user_data['dealer_segments'] = ['yksityinen', 'yritys']
+
+    return await select_shipping_types(update, context)
+
+async def save_shipping_types(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Handle the user's shipping types input and save it to the context.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: save_data;
+            Invalid: select_shipping_types.
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    user_choice = update.message.text
+
+    valid_choices = [
+        messages['shipping_types_toridiili'],
+        messages['shipping_types_all']
+    ]
+
+    if user_choice not in valid_choices:
+        await update.message.reply_text(messages['invalid_shipping_types'])
+        return await select_shipping_types(update, context)
+
+    if user_choice == messages['shipping_types_toridiili']:
+        context.user_data['shipping_types'] = ['toridiili']
+    else:
+        context.user_data['shipping_types'] = ['all']
 
     return await save_data(update, context)
