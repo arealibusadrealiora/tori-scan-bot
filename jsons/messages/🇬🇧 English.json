@@ -58,5 +58,9 @@
     "shipping_types_toridiili": "📦 ToriDiili only",
     "shipping_types_all": "🌐 All items",
     "shipping_types_label": "📦 <b>Shipping:</b> {shipping_types}\n",
+    "select_price_range": "💰 Enter price range in format \"from-to\" (e.g., \"100-500\") or press \"Skip\" to search without price limit:",
+    "skip_price_range": "⏭️ Skip",
+    "invalid_price_range": "❗ Invalid format! Use format \"from-to\" (e.g., \"10-1000\") or press \"Skip\".",
+    "price_range_label": "💰 <b>Price range:</b> {price_range}\n",
     "contact_developer_prompt": "🧑‍💻<b> Contact the developer:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>E-mail:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>PLEASE NOTE:</b> <i>I (the developer) am <b>not related</b> to tori.fi or Schibsted Media Group in any way so I can only answer questions regarding the bot functionality (or have a chit-chat with you 🤗).\nIf you need assistance with your deals or anything related directly to tori.fi, you should probably contact their support:</i> https://tuki.tori.fi/"
 }
