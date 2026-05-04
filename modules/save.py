@@ -18,6 +18,7 @@ from modules.conversation import (
     add_more_categories,
     select_dealer_segment,
     select_shipping_types,
+    select_price_range,
     save_data
 )
 
@@ -431,7 +432,7 @@ async def save_shipping_types(update: Update, context: ContextTypes.DEFAULT_TYPE
         context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
         int: Next state for the conversation:
-            Default: save_data;
+            Default: select_price_range;
             Invalid: select_shipping_types.
     '''
     telegram_id = update.message.from_user.id
@@ -454,4 +455,47 @@ async def save_shipping_types(update: Update, context: ContextTypes.DEFAULT_TYPE
     else:
         context.user_data['shipping_types'] = ['all']
 
-    return await save_data(update, context)
+    return await select_price_range(update, context)
+
+async def save_price_range(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Handle the user's price range input and save it to the context.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+            Default: save_data;
+            Invalid: select_price_range.
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    user_input = update.message.text
+
+    # Check if user wants to skip
+    if user_input == messages['skip_price_range']:
+        context.user_data['price_from'] = None
+        context.user_data['price_to'] = None
+        return await save_data(update, context)
+
+    # Parse the price range format "from-to"
+    if '-' in user_input:
+        parts = user_input.split('-')
+        if len(parts) == 2:
+            try:
+                price_from = int(parts[0].strip())
+                price_to = int(parts[1].strip())
+
+                # Validate that prices are positive and from <= to
+                if price_from > 0 and price_to > 0 and price_from <= price_to:
+                    context.user_data['price_from'] = price_from
+                    context.user_data['price_to'] = price_to
+                    return await save_data(update, context)
+            except ValueError:
+                pass  # Will show error message below
+
+    # Invalid format
+    await update.message.reply_text(messages['invalid_price_range'])
+    return await select_price_range(update, context)
