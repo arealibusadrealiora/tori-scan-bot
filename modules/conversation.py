@@ -51,7 +51,9 @@ async def add_new_item(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     context.user_data.pop('categories', None)
     context.user_data.pop('locations', None)
     context.user_data.pop('dealer_segments', None)
-    context.user_data.pop('shipping_types', None) 
+    context.user_data.pop('shipping_types', None)
+    context.user_data.pop('price_from', None)
+    context.user_data.pop('price_to', None) 
 
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
@@ -321,6 +323,25 @@ async def select_shipping_types(update: Update, context: ContextTypes.DEFAULT_TY
 
     return SHIPPING_TYPES
 
+async def select_price_range(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Display the price range input prompt.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (PRICE_RANGE).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [[messages['skip_price_range']]]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    await update.message.reply_text(messages['select_price_range'], reply_markup=reply_markup)
+
+    return PRICE_RANGE
+
 async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the main menu with options to add an item, view items, or access settings.
@@ -496,6 +517,18 @@ async def show_items(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 shipping_types_display = messages['shipping_types_all']
 
             items_message += messages['shipping_types_label'].format(shipping_types=shipping_types_display)
+
+            # Добавляем отображение диапазона цен, если он указан
+            if item.price_from is not None or item.price_to is not None:
+                price_range_display = ""
+                if item.price_from is not None and item.price_to is not None:
+                    price_range_display = f"{item.price_from}-{item.price_to} EUR"
+                elif item.price_from is not None:
+                    price_range_display = f"от {item.price_from} EUR"
+                elif item.price_to is not None:
+                    price_range_display = f"до {item.price_to} EUR"
+                items_message += messages['price_range_label'].format(price_range=price_range_display)
+
             items_message += messages['added_time'].format(time=format_helsinki_time(item.added_time))
 
             remove_button = InlineKeyboardButton(messages['remove_item'], callback_data=str(item.id))
@@ -603,6 +636,15 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         tori_link += '&shipping_types=0'
     # Если выбран "all" - не добавляем параметр
 
+    price_from = context.user_data.get('price_from')
+    price_to = context.user_data.get('price_to')
+
+    # Добавляем параметры цены только если они указаны
+    if price_from is not None:
+        tori_link += f'&price_from={price_from}'
+    if price_to is not None:
+        tori_link += f'&price_to={price_to}'
+
     tori_link += '&sort=PUBLISHED_DESC'
 
     new_item = ToriItem(
@@ -611,6 +653,8 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         locations=locations,
         dealer_segments=dealer_segments,
         shipping_types=shipping_types,
+        price_from=price_from,
+        price_to=price_to,
         telegram_id=telegram_id,
         link=tori_link
     )
@@ -668,6 +712,18 @@ async def save_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         shipping_types_display = messages['shipping_types_all']
 
     message += messages['shipping_types_label'].format(shipping_types=shipping_types_display)
+
+    # Добавляем отображение диапазона цен, если он указан
+    if price_from is not None or price_to is not None:
+        price_range_display = ""
+        if price_from is not None and price_to is not None:
+            price_range_display = f"{price_from}-{price_to} EUR"
+        elif price_from is not None:
+            price_range_display = f"от {price_from} EUR"
+        elif price_to is not None:
+            price_range_display = f"до {price_to} EUR"
+        message += messages['price_range_label'].format(price_range=price_range_display)
+
     message += f"{messages['added_time'].format(time=format_helsinki_time(new_item.added_time))}"
     #message += f'The search link for the item: {tori_link}'
     
