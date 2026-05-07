@@ -58,5 +58,12 @@
     "shipping_types_toridiili": "📦 Тільки ToriDiili",
     "shipping_types_all": "🌐 Всі товари",
     "shipping_types_label": "📦 <b>Доставка:</b> {shipping_types}\n",
+    "select_price_from": "💰 Вкажіть мінімальну ціну (наприклад, \"100\") або натисніть \"Пропустити\":",
+    "skip_price_from": "⏭️ Пропустити",
+    "invalid_price_from": "❗ Невірний формат! Введіть ціле додатне число або натисніть \"Пропустити\".",
+    "select_price_to": "💰 Вкажіть максимальну ціну (наприклад, \"500\") або натисніть \"Пропустити\":",
+    "skip_price_to": "⏭️ Пропустити",
+    "invalid_price_to": "❗ Невірний формат! Введіть ціле додатне число або натисніть \"Пропустити\".",
+    "price_range_label": "💰 <b>Діапазон цін:</b> {price_range}\n",
     "contact_developer_prompt": "🧑‍💻<b> Зв'яжіться з розробником:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>Електронна пошта:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>УВАГА:</b> <i>Я (розробник) не маю ніякого відношення до tori.fi або Schibsted Media Group, тому я можу відповідати тільки на запитання щодо функціоналу бота (або просто потеревенити з вами 🤗).\nЯкщо вам необхідна допомога з вашими покупками або чого-сь пов'язанного безпосередньо з tori.fi, вам необхідно звернутися до їх служби підтримки:</i> https://tuki.tori.fi/"
 }

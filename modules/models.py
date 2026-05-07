@@ -28,6 +28,8 @@ class ToriItem(Base):
         locations (JSON): List of location dictionaries.
         dealer_segments (JSON): List of dealer segment types (yksityinen, yritys).
         shipping_types (JSON): Shipping type filter (toridiili or all).
+        price_from (Integer): Minimum price filter (optional).
+        price_to (Integer): Maximum price filter (optional).
         telegram_id (int): The user's Telegram ID.
         added_time (datetime): Time when the item was added.
         link (str): URL link to the item on Tori.fi.
@@ -41,6 +43,8 @@ class ToriItem(Base):
     locations = Column(JSON)
     dealer_segments = Column(JSON)
     shipping_types = Column(JSON)
+    price_from = Column(Integer)
+    price_to = Column(Integer)
     telegram_id = Column(Integer)
     added_time = Column(DateTime, default=datetime.now)
     link = Column(String)

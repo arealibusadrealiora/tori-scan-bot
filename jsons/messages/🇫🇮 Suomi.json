@@ -58,6 +58,13 @@
     "shipping_types_toridiili": "📦 Vain ToriDiili",
     "shipping_types_all": "🌐 Kaikki tuotteet",
     "shipping_types_label": "📦 <b>Toimitus:</b> {shipping_types}\n",
+    "select_price_from": "💰 Anna vähimmäishinta (esim. \"100\") tai paina \"Ohita\":",
+    "skip_price_from": "⏭️ Ohita",
+    "invalid_price_from": "❗ Virheellinen muoto! Anna positiivinen kokonaisluku tai paina \"Ohita\".",
+    "select_price_to": "💰 Anna enimmäishinta (esim. \"500\") tai paina \"Ohita\":",
+    "skip_price_to": "⏭️ Ohita",
+    "invalid_price_to": "❗ Virheellinen muoto! Anna positiivinen kokonaisluku tai paina \"Ohita\".",
+    "price_range_label": "💰 <b>Hintaväli:</b> {price_range}\n",
     "contact_developer_prompt": "🧑‍💻<b> Ota yhteyttä kehittäjään:</b>\n\n👋 <b>Telegram:</b> @arealibusadrealiora\n💼 <b>Linkedin:</b> https://www.linkedin.com/in/sergii-dobrovoljskii/\n✉️ <b>Sähköposti:</b> arealibusadrealiora@proton.me\n\n⚠️ <b>HUOMAA:</b> <i>En ole (kehittäjä) millään tavalla yhteydessä tori.fi:hin tai Schibsted Media Groupiin, joten voin vastata vain kysymyksiin botin toiminnallisuudesta (tai jutella kanssasi 🤗).\nJos tarvitset apua kauppojesi tai minkä tahansa suoraan tori.fi:hin liittyvän asian kanssa, sinun kannattaa ottaa yhteyttä heidän tukeensa:</i> https://tuki.tori.fi/"
 }
 
