@@ -374,7 +374,12 @@ async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    await update.message.reply_text(messages['menu'], reply_markup=ReplyKeyboardMarkup([[messages['add_item'], messages['items'], messages['settings']]], one_time_keyboard=False))
+    keyboard = [
+        [messages['add_item'], messages['items']],
+        [messages['settings']]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=False, resize_keyboard=True)
+    await update.message.reply_text(messages['menu'], reply_markup=reply_markup)
 
     return MAIN_MENU
 
