@@ -14,7 +14,8 @@ from modules.save import (
     more_categories_response,
     save_dealer_segment,
     save_shipping_types,
-    save_price_range
+    save_price_from,
+    save_price_to
 )
 from modules.conversation import start, start_again, save_data, main_menu_choice, settings_menu_choice, show_items, main_menu, show_settings_menu
 
@@ -47,7 +48,8 @@ def setup_handlers(application: Application):
             MORE_CATEGORIES: [MessageHandler(filters.TEXT & ~filters.COMMAND, more_categories_response)],
             DEALER_SEGMENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_dealer_segment)],
             SHIPPING_TYPES: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_shipping_types)],
-            PRICE_RANGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_price_range)],
+            PRICE_FROM: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_price_from)],
+            PRICE_TO: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_price_to)],
             CONFIRMATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_data)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],
@@ -82,7 +84,8 @@ def setup_handlers(application: Application):
             MORE_CATEGORIES: [MessageHandler(filters.TEXT & ~filters.COMMAND, more_categories_response)],
             DEALER_SEGMENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_dealer_segment)],
             SHIPPING_TYPES: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_shipping_types)],
-            PRICE_RANGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_price_range)],
+            PRICE_FROM: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_price_from)],
+            PRICE_TO: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_price_to)],
             CONFIRMATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_data)],
         },
         fallbacks=[CommandHandler('cancel', cancel)],

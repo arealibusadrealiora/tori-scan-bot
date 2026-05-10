@@ -323,24 +323,43 @@ async def select_shipping_types(update: Update, context: ContextTypes.DEFAULT_TY
 
     return SHIPPING_TYPES
 
-async def select_price_range(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def select_price_from(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
-    Display the price range input prompt.
+    Display the minimum price input prompt.
     Args:
         update (Update): The update object containing the user's message.
         context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
     Returns:
-        int: Next state for the conversation (PRICE_RANGE).
+        int: Next state for the conversation (PRICE_FROM).
     '''
     telegram_id = update.message.from_user.id
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    keyboard = [[messages['skip_price_range']]]
+    keyboard = [[messages['skip_price_from']]]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    await update.message.reply_text(messages['select_price_range'], reply_markup=reply_markup)
+    await update.message.reply_text(messages['select_price_from'], reply_markup=reply_markup)
 
-    return PRICE_RANGE
+    return PRICE_FROM
+
+async def select_price_to(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Display the maximum price input prompt.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (PRICE_TO).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [[messages['skip_price_to']]]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    await update.message.reply_text(messages['select_price_to'], reply_markup=reply_markup)
+
+    return PRICE_TO
 
 async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
@@ -355,7 +374,12 @@ async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     language = get_language(telegram_id)
     messages = load_messages(language)
 
-    await update.message.reply_text(messages['menu'], reply_markup=ReplyKeyboardMarkup([[messages['add_item'], messages['items'], messages['settings']]], one_time_keyboard=False))
+    keyboard = [
+        [messages['add_item'], messages['items']],
+        [messages['settings']]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=False, resize_keyboard=True)
+    await update.message.reply_text(messages['menu'], reply_markup=reply_markup)
 
     return MAIN_MENU
 
