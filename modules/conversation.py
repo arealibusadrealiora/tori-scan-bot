@@ -278,6 +278,25 @@ async def add_more_categories(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     return MORE_CATEGORIES
 
+async def select_additional_filters(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Ask user if they want to add additional search filters.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation (ADDITIONAL_FILTERS).
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [[messages['yes'], messages['no']]]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
+    await update.message.reply_text(messages['add_additional_filters'], reply_markup=reply_markup)
+
+    return ADDITIONAL_FILTERS
+
 async def select_dealer_segment(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
     Display the dealer segment selection menu.
