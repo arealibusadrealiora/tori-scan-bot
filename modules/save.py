@@ -16,6 +16,7 @@ from modules.conversation import (
     select_area,
     add_more_locations,
     add_more_categories,
+    select_additional_filters,
     select_dealer_segment,
     select_shipping_types,
     select_price_from,
@@ -353,7 +354,7 @@ async def more_locations_response(update: Update, context: ContextTypes.DEFAULT_
         if not context.user_data['locations']:
             await update.message.reply_text("Error: No locations selected. Please try again.")
             return await select_region(update, context)
-        return await select_dealer_segment(update, context)
+        return await select_additional_filters(update, context)
 
 async def more_categories_response(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     telegram_id = update.message.from_user.id
@@ -385,6 +386,31 @@ async def more_categories_response(update: Update, context: ContextTypes.DEFAULT
             await update.message.reply_text("Error: No categories selected. Please try again.")
             return await select_category(update, context)
         return await select_region(update, context)
+
+async def save_additional_filters_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    '''
+    Handle user's choice about adding additional filters.
+    Args:
+        update (Update): The update object containing the user's message.
+        context (ContextTypes.DEFAULT_TYPE): The context object for maintaining conversation state.
+    Returns:
+        int: Next state for the conversation:
+             - select_dealer_segment if user wants to add filters
+             - save_data if user skips additional filters (with default values)
+    '''
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    if update.message.text == messages['yes']:
+        return await select_dealer_segment(update, context)
+    else:
+        # Set default values for all additional filters
+        context.user_data['dealer_segments'] = ['yksityinen', 'yritys']  # All sellers
+        context.user_data['shipping_types'] = ['all']  # All items
+        context.user_data['price_from'] = None  # No minimum price
+        context.user_data['price_to'] = None  # No maximum price
+        return await save_data(update, context)
 
 async def save_dealer_segment(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     '''
