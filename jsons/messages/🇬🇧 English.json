@@ -43,6 +43,7 @@
     "change_language_prompt": "🔄 Let's change your preferred language.",
     "add_more_categories": "🤔 Would you like to add more categories to search in?",
     "add_more_locations": "🤔 Would you like to add more locations to search in?",
+    "add_additional_filters": "🎚️ Would you like to add additional search filters? (seller type, shipping, price range)",
     "yes": "➕ Yes",
     "no": "❌ No",
     "categories_header": "📋 <b>Categories:</b>\n",

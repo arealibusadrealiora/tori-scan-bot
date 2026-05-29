@@ -43,6 +43,7 @@
     "change_language_prompt": "🔄 Vaihdetaan haluamaasi kieltä.",
     "add_more_categories": "🤔 Haluatko lisätä lisää luokkia hakuun?",
     "add_more_locations": "🤔 Haluatko lisätä lisää sijainteja hakuun?",
+    "add_additional_filters": "🎚️ Haluatko lisätä lisäsuodattimia? (myyjän tyyppi, toimitus, hintaväli)",
     "yes": "➕ Kyllä",
     "no": "❌ Ei",
     "categories_header": "📋 <b>Luokat:</b>\n",
