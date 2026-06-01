@@ -1,6 +1,15 @@
 from telegram.ext import Application, CommandHandler, MessageHandler, ConversationHandler, CallbackQueryHandler, filters
 from modules.utils import remove_item, cancel
 from modules.constants import *
+from modules.admin import (
+    admin_panel,
+    admin_menu_choice,
+    select_broadcast_language,
+    save_broadcast_language,
+    save_broadcast_message,
+    confirm_broadcast,
+    cancel_admin
+)
 from modules.save import (
     save_language,
     save_item_name,
@@ -125,4 +134,28 @@ def setup_handlers(application: Application):
     )
     
     application.add_handler(fallback_handler)
+
+    # Admin panel handler
+    admin_handler = ConversationHandler(
+        entry_points=[CommandHandler('admin', admin_panel)],
+        states={
+            ADMIN_MENU: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, admin_menu_choice)
+            ],
+            ADMIN_BROADCAST_SELECT_LANGUAGE: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, save_broadcast_language)
+            ],
+            ADMIN_BROADCAST_MESSAGE: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, save_broadcast_message)
+            ],
+            ADMIN_BROADCAST_CONFIRM: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, confirm_broadcast)
+            ],
+        },
+        fallbacks=[CommandHandler('cancel', cancel_admin)],
+        name="admin_conversation",
+        allow_reentry=True
+    )
+
+    application.add_handler(admin_handler)
     application.add_handler(CallbackQueryHandler(remove_item))
