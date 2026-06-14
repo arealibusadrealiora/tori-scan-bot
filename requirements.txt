@@ -1,6 +1,6 @@
 python-telegram-bot==21.4
 python-telegram-bot[job-queue]
 Requests==2.32.3
-SQLAlchemy==2.0.27
+SQLAlchemy>=2.0.36
 pytz>=2024.1
 python-dotenv==1.0.0
