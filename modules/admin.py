@@ -1,14 +1,15 @@
-from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
 from modules.database import get_session
 from modules.models import UserPreferences
+from modules.load import load_messages
+from modules.utils import get_language
 from modules.constants import (
     ADMIN_ID,
     ADMIN_MENU,
     ADMIN_BROADCAST_SELECT_LANGUAGE,
     ADMIN_BROADCAST_MESSAGE,
-    ADMIN_BROADCAST_CONFIRM,
-    MAIN_MENU
+    ADMIN_BROADCAST_CONFIRM
 )
 
 
@@ -65,9 +66,20 @@ async def admin_menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     if choice == "📢 Рассылка сообщений":
         return await select_broadcast_language(update, context)
     elif choice == "❌ Закрыть админ-панель":
+        # Return to main menu with keyboard
+        telegram_id = update.message.from_user.id
+        language = get_language(telegram_id)
+        messages = load_messages(language)
+
+        keyboard = [
+            [messages['add_item'], messages['items']],
+            [messages['settings']]
+        ]
+        reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=False, resize_keyboard=True)
+
         await update.message.reply_text(
-            "✅ Админ-панель закрыта.",
-            reply_markup=ReplyKeyboardRemove()
+            "✅ Админ-панель закрыта.\n\n" + messages['menu'],
+            reply_markup=reply_markup
         )
         return ConversationHandler.END
     else:
@@ -282,9 +294,19 @@ async def confirm_broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE) 
 
 
 async def cancel_admin(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Cancel admin panel."""
+    """Cancel admin panel and return to main menu."""
+    telegram_id = update.message.from_user.id
+    language = get_language(telegram_id)
+    messages = load_messages(language)
+
+    keyboard = [
+        [messages['add_item'], messages['items']],
+        [messages['settings']]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=False, resize_keyboard=True)
+
     await update.message.reply_text(
-        "❌ Админ-панель закрыта.",
-        reply_markup=ReplyKeyboardRemove()
+        "❌ Админ-панель отменена.\n\n" + messages['menu'],
+        reply_markup=reply_markup
     )
     return ConversationHandler.END
