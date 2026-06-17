@@ -236,7 +236,7 @@ async def save_region(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
                 'area': 'Все области'
             }
         context.user_data['locations'] = [whole_finland_location]
-        return await save_data(update, context)
+        return await select_additional_filters(update, context)
     
     context.user_data['region'] = update.message.text
     return await select_city(update, context)

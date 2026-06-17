@@ -35,6 +35,14 @@ async def check_for_new_items(context: ContextTypes.DEFAULT_TYPE):
             new_items = data.get('docs', [])
             print(f"Found {len(new_items)} items in response")
 
+            # Debug: show API response structure when no items found
+            if len(new_items) == 0:
+                print(f"API response keys: {list(data.keys())}")
+                if 'docs' in data:
+                    print("'docs' key exists but is empty")
+                else:
+                    print("'docs' key missing from response")
+
             if not new_items:
                 continue
 
