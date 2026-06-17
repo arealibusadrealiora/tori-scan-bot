@@ -71,7 +71,8 @@ async def check_for_new_items(context: ContextTypes.DEFAULT_TYPE):
                 #print(f"URL: {canonical_url}")
                 price = ad.get('price', {}).get('amount')
                 #print(f"Price: {price}")
-                image_url = ad.get('image', {}).get('url')
+                image = ad.get('image')
+                image_url = image.get('url') if image else None
                 #print(f"Image URL: {image_url}")
                 message = messages['new_item'].format(itemname=itemname, region=region, price=price, canonical_url=canonical_url)
                 
